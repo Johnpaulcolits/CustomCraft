@@ -1,0 +1,230 @@
+body{
+    margin: 0;
+}
+/*--------------Navbar--------------*/
+
+.navbar{
+    background-color: #02766f;
+    height: 70px;
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+   
+}
+
+/*Left Side*/
+.craft-logo{
+height: 40px;
+
+}
+.craft-text{
+
+    color: white;
+    font-family: "Archivo Black", sans-serif;
+    font-weight:900;
+    font-size: 22px;
+
+}
+.left-side{
+    display: flex; 
+    align-items: center;
+    width: 250px;
+
+    height: 70px;
+    margin-left: 40px;
+
+
+    
+}
+
+.left-part{
+    width: 60px; 
+}
+
+/*Right Side*/
+.right-side{
+display: flex;
+align-items: center;
+
+margin-right: 20px;
+}
+.craft-circle{
+    height: 40px;
+    width: 40px;
+    background-color: #03615b;
+    border-radius: 20px;
+    margin-right: 4px;
+
+    
+}
+.craft-menu{
+ height: 30px;
+ width: 30px;
+
+  
+}
+.craft-admin{
+    height: 30px;
+}
+.right-part{
+    position: relative;
+ 
+  
+}
+
+.craft-admin{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+
+}
+.craft-vertical{
+    opacity: 0.5;
+}
+
+.craft-admin-text{
+    color: white;
+    margin-right: 10px;
+    font-family: "Archivo Black", sans-serif;
+    font-size: 15px;
+}
+/*--------------Sidebar--------------*/
+.sidebar{
+    position: fixed;
+    background-color: #153c34;
+    bottom: 0;
+    top: 70px;
+    width: 220px;
+}
+
+/*--------------Main-Body--------------*/
+.main-body{
+    background-image: url('../img/img-back.png');
+  position: fixed;
+  left: 220px;
+  top: 70px;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+ 
+  
+
+    
+}
+.craft-body{
+  
+ position: fixed;
+right: 0;
+width: 83%;
+width: 100%px;
+ height: 536px;
+ bottom: 0;
+ 
+}
+
+.craft-dash-text{
+    color: white;
+    font-family: "Bakbak One", sans-serif;
+    font-size: 27px;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+.dash-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+
+}
+.container-sub{
+    background-color: white;
+    width: 300px;
+    height: 140px;
+    border-radius: 30px;
+    margin-left: 20px;
+    margin-right: 20px;
+    
+}
+.upper-part{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-left: 30px;
+    
+    
+   
+}
+
+/*Sales Side*/
+.black-vert{
+ width: 18px;  
+ height: 25px;
+ 
+}
+.craft-sales{
+    font-family: "Poppins", sans-serif;
+    font-size: 18px;
+    color: #153c34;
+    font-weight:400;
+}
+.craft-today{
+    font-family: "Poppins", sans-serif;
+    font-size: 10px;
+    color: #153c34;
+    font-weight: 500;
+}
+.item-circle{
+    background-color: #03615b;
+    height: 70px;
+    width: 70px;
+    border-radius: 35px;
+    position: relative;
+   
+}
+.craft-number{
+color: #39c5b8;
+font-size: 40px;
+font-weight: 900;
+font-family: "Poppins", sans-serif;
+
+
+}
+.buttom-part{
+    margin-left: 30px;
+    display: flex;
+    justify-content: space-between;
+    width: 180px;
+    align-items: center;
+   
+}
+.craft-cart{
+    position: absolute;
+    height: 40px;
+    top: 15px;
+    left: 12px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
