@@ -10,37 +10,33 @@
 }
 body{
     font-family: 'Poppins', sans-serif;
+    
 }
 .img-logo{
-    width: 30px;
+    width: 70px;
 }
 h1{
-    font-size: 2.5rem;
-    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
 }
 h2{
-     font-size: 1.8rem;
-     font-weight: 600;
+    
+     font-family: 'Poppins', sans-serif;
 }
 h3{
-    font-size: 1.5rem;
-    font-weight: 800;
+    font-family: 'Poppins', sans-serif;
 }
 h4{
-    font-size: 1.2rem;
-    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
 }
 h5{
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
 }
 h6{
     color: #D8D8D8;
 }
 button{
 
-    font-size: 0.8rem;
-    font-weight: 900;
+    font-family: 'Poppins', sans-serif;
     outline: none;
     border: none;
     background-color: #1d1d1d;
@@ -56,7 +52,7 @@ button:hover{
 }
 
 .navbar{
-    font-size: 16px;
+    font-size: 18px;
     padding-top: 2rem !important;
     padding-bottom: 2rem !important;
     top: 0;
@@ -117,3 +113,123 @@ button:hover{
     color: coral;
 }
 
+#new .one img{
+width: 100%;
+height: 100%;
+background-position: center;
+background-repeat: no-repeat;
+background-size: cover;
+
+}
+
+#new .one{
+position: relative;
+}
+
+#new .one .details{
+position: absolute;
+top: 0;
+left: 0;
+color: burlywood;
+font-weight:bold ;
+transition: 0.4s ease;
+opacity: 0.8;
+background-color: rgb(1, 1, 1);
+width: 100%;
+height: 100%;
+}
+#new .one .details:hover{
+    background-color: darkgoldenrod;
+}
+
+#new .one:nth-child(1) .details{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: start;
+    
+}
+#new .one:nth-child(2) .details{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+#new .one:nth-child(3) .details{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: end;
+}
+
+/*Product*/
+
+.product{
+    cursor: pointer;
+    margin-bottom: 2rem;
+}
+
+.product img{
+    transition: 0.3s all;
+}
+
+.product:hover img{
+    opacity: 0.7;
+
+}
+.product .buy-btn{
+    background-color: #fb77fb;
+    transform: translateY(50px);
+    opacity: 0;
+    transition: 0.3s all;
+}
+
+.product:hover .buy-btn{
+    transform: translateY(0px);
+    opacity: 1;
+}
+hr{
+    width: 30px;
+    height: 3px !important;
+    opacity: 1 !important;
+    background-color: #fb77fb;
+}
+
+.star{
+    padding: 10px 0;
+
+}
+
+.star i{
+    font-size: 0.9rem;
+    color: goldenrod;
+}
+
+#banner{
+    background-image: url('../imgs/back1.jpg');
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y:80px ;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+#banner h4{
+    color: coral;
+}
+
+#banner button{
+    background-color: #fb774b;
+}
+#banner button:hover{
+    background-color: #1d1d1d;
+}
