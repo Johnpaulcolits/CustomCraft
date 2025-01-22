@@ -57,6 +57,7 @@ button:hover{
     padding-bottom: 2rem !important;
     top: 0;
     left: 0;
+    right: 20px;
 }
 .navbar-light .navbar-nav .nav-link{
     padding: 0 20px;
@@ -98,7 +99,7 @@ button:hover{
 
 #home{
     background-image:url('../imgs/back1.jpg') ;
-    width: 120%;
+    width: 110%;
     height: 100vh;
     background-size: cover;
     /* background-position-x: 90px; */
