@@ -13,10 +13,7 @@ body{
     
 }
 .img-logo{
-    width: 50px;
-}
-.navbar-toggler{
-    margin-right: 100px;
+    width: 70px;
 }
 h1{
     font-family: 'Poppins', sans-serif;
@@ -101,7 +98,7 @@ button:hover{
 
 #home{
     background-image:url('../imgs/back1.jpg') ;
-    width: 100%;
+    width: 105%;
     height: 100vh;
     background-size: cover;
     /* background-position-x: 90px; */
@@ -117,7 +114,7 @@ button:hover{
 }
 
 #new .one img{
-width: 100%;
+width: 105%;
 height: 100%;
 background-position: center;
 background-repeat: no-repeat;
@@ -138,7 +135,7 @@ font-weight:bold ;
 transition: 0.4s ease;
 opacity: 0.8;
 background-color: rgb(1, 1, 1);
-width: 100%;
+width: 105%;
 height: 100%;
 }
 #new .one .details:hover{
@@ -213,7 +210,7 @@ hr{
 
 #banner{
     background-image: url('../imgs/back1.jpg');
-    width: 100%;
+    width: 105%;
     height: 100vh;
     background-size: cover;
     background-position-x: center;
