@@ -15,6 +15,9 @@ body{
 .img-logo{
     width: 50px;
 }
+.navbar-toggler{
+    margin-right: 100px;
+}
 h1{
     font-family: 'Poppins', sans-serif;
 }
