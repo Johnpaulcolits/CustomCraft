@@ -7,7 +7,6 @@
 
 <?php include_once "header.php"; ?>
 <body>
-  <p>tang ina mo lester</p>
   <div class="wrapper">
     <section class="form signup">
       <header>Realtime Chat App</header>
