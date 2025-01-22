@@ -167,7 +167,7 @@ height: 100%;
 
 /*Product*/
 
-/* .product{
+.product{
     cursor: pointer;
     margin-bottom: 2rem;
 }
@@ -232,4 +232,4 @@ hr{
 }
 #banner button:hover{
     background-color: #1d1d1d;
-} */
+}
