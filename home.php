@@ -1,32 +1,42 @@
+<?php 
+  session_start();
+  include_once "php/config.php";
+  if(!isset($_SESSION['unique_id'])){
+    header("location: login.php");
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/solid.css" integrity="sha384-Tv5i09RULyHKMwX0E8wJUqSOaXlyu3SQxORObAI08iUwIalMmN5L6AvlPX2LMoSE" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous"/>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="shortcut icon" href="assets/imgs/icon-logo.png" type="image">
+    <link rel="stylesheet" href="assets/css/chat.css">
 </head>
 <body>
-    <!--Navbar-->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light py-3 fixed-top">
+    <!--Navbar--> 
+    <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top" style="background-color: #02766f;">
         <div class="container">
           <img src="assets/imgs/icon-logo.png" class="img-logo">
+          <h2 class="brand">CustomCraft</h2>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse nav-buttons" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li> -->
+              <li class="nav-item">
+                <a class="nav-link" href="product.html">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Shop</a>
+                <a class="nav-link" href="shop.html">Shop</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Blog</a>
@@ -299,13 +309,13 @@
 
       <!--Footer-->
       <footer class="mt-5 py-5">
-        <div class="row">
+        <div class="row container mx-auto pt-5">
           <div class="footer1 col-lg-3 col-md-6 col-sm-12">
-            <img src="assets/imgs/icon-logo.png">
+            <img src="assets/imgs/">
             <p class="pt-3">We Provide the best products for the most affordable prices</p>
           </div>
           <div class="footer-one col-lg-3 col-md-6 col-sm-12">
-            <p class="pt-3">Featured</p>
+            <h5 class="">Featured</h5>
             <ul class="text-uppercase">
               <li><a href="#">men</a></li>
               <li><a href="#">women</a></li>
@@ -346,8 +356,74 @@
           </div>
         </div>
 
+
+        <div class="copyright mt-5">
+          <div class="row container mx-auto text-nowrap mb-2">
+            <div class="col-lg-3 col-md-5 col-sm-12 mb-4">
+                <img src="https://logodix.com/logo/335568.png">
+            </div>
+            <div class="col-lg-3 col-md-5 col-sm-12 mb-4">
+              <p>eCommerce @ 2025 All Rights Reserve</p>
+          </div>
+          <div class="col-lg-3 col-md-5 col-sm-12 mb-4">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+        </div>
+          </div>
+        </div>
+
       </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-</body>
+   
+   
+   
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+      <button id="toggle-chat" class="toggle-chat"><img src="message.png" alt=""></button>
+      <div class="wrapper" id="chat-wrapper" style="display: none;">
+    <section class="users">
+      <header>
+        <div class="content">
+          <?php 
+            $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+            if(mysqli_num_rows($sql) > 0){
+              $row = mysqli_fetch_assoc($sql);
+            }
+          ?>
+          <img src="php/images/<?php echo $row['img']; ?>" alt="">
+          <div class="details">
+            <span><?php echo $row['fname']. " " . $row['lname'] ?></span>
+            <p><?php echo $row['status']; ?></p>
+          </div>
+        </div>
+        <a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout">Logout</a>
+      </header>
+      <div class="search">
+        <span class="text">Select an user to start chat</span>
+        <input type="text" placeholder="Enter name to search...">
+        <button><i class="fas fa-search"></i></button>
+      </div>
+      <div class="users-list">
+  
+      </div>
+    </section>
+  </div>
+
+  <script src="javascript/users.js"></script>
+
+  <script>
+  document.getElementById('toggle-chat').addEventListener('click', function () {
+    const chatWrapper = document.getElementById('chat-wrapper');
+    if (chatWrapper.style.display === 'none' || chatWrapper.style.display === '') {
+      chatWrapper.style.display = 'block'; // Show the chat
+    } else {
+      chatWrapper.style.display = 'none'; // Hide the chat
+    }
+  });
+</script>
+
+
+    </body>
 </html>
