@@ -53,6 +53,10 @@
         </div>
       </nav>
 
+
+
+
+      
       <!--Home-->
       <section id="home">
         <div class="container">
@@ -381,7 +385,7 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
 
-      <button id="toggle-chat" class="toggle-chat"><img src="message.png" alt=""></button>
+      <button id="toggle-chat" class="toggle-chat"><img src="assets/imgs/message.png" alt=""></button>
   <div class="wrapper" id="chat-wrapper" style="display: none;">
     <section class="users">
       <header>
@@ -417,7 +421,7 @@
   document.getElementById('toggle-chat').addEventListener('click', function () {
     const chatWrapper = document.getElementById('chat-wrapper');
     if (chatWrapper.style.display === 'none' || chatWrapper.style.display === '') {
-      chatWrapper.style.display = 'block'; // Show the chat
+      chatWrapper.style.display = 'block'; 
     } else {
       chatWrapper.style.display = 'none'; // Hide the chat
     }
