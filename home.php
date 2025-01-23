@@ -382,7 +382,7 @@
 
 
       <button id="toggle-chat" class="toggle-chat"><img src="message.png" alt=""></button>
-      <div class="wrapper" id="chat-wrapper" style="display: none;">
+  <div class="wrapper" id="chat-wrapper" style="display: none;">
     <section class="users">
       <header>
         <div class="content">
@@ -392,7 +392,7 @@
               $row = mysqli_fetch_assoc($sql);
             }
           ?>
-          <img src="php/images/<?php echo $row['img']; ?>" alt="">
+          <img src="php/images/<?php echo $row['img']; ?>" alt="" class="profile-ni">
           <div class="details">
             <span><?php echo $row['fname']. " " . $row['lname'] ?></span>
             <p><?php echo $row['status']; ?></p>
