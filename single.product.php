@@ -1,4 +1,5 @@
 <?php
+
 include_once "php/config.php";
 if(isset($_GET['product_name'])){
   
@@ -19,6 +20,8 @@ if(isset($_GET['product_name'])){
 }
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,8 +88,11 @@ if(isset($_GET['product_name'])){
     <!--Single product-->
   <section class="container single-product my-5 pt-5">
     <div class="row mt-5">
+    <?php while($row = $product->fetch_assoc()){?>
+
+
+
         <div class="col-lg-5 col-sm-12">
-          <?php while($row = $product->fetch_assoc()){?>
             <img src="assets/imgs/<?php echo $row['product_image']; ?>" class="img-fluid w-100 pd-1" id="mainImg">
             <div class="small-img-group">
                 <div class="small-img-col">
@@ -109,13 +115,24 @@ if(isset($_GET['product_name'])){
           <h6>Men/Shoes</h6>
           <h3><?php echo $row['product_name']; ?></h3>
           <h2>₱<?php echo $row['product_price']; ?></h2>
-          <input type="number" value="1">
-          <button class="buy-btn">Add to Cart</button>
+
+          
+
+          <form action="cart.php" method="POST">
+        <input type="hidden" name="product_id" value="<?php echo $row['product_id'];?>">
+        <input type="hidden" name="product_image" value="<?php echo $row['product_image']; ?>">
+        <input type="hidden" name="product_name" value="<?php echo $row['product_name']; ?>">
+        <input type="hidden" name="product_price" value="<?php echo $row['product_price']; ?>">
+          <input type="number" value="1" name="product_quantity">
+          <button class="buy-btn" type="submit" name="add_to_cart">Add to Cart</button>
+          </form>
           <h4 class="mt-5 mb-5">Product details</h4>
           <span><?php echo $row['product_description']; ?>
           </span>
          
         </div>
+      
+     
         <?php }?>
     </div>
   </section>
@@ -267,5 +284,69 @@ if(isset($_GET['product_name'])){
    
 
     </script>
+
+
+
+<script>
+  // JavaScript code for handling Add to Cart functionality
+document.addEventListener("DOMContentLoaded", () => {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+
+  const addToCartButtons = document.querySelectorAll(".buy-btn");
+
+  addToCartButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.preventDefault(); // Prevent default form submission
+
+      // Get the product data from the hidden inputs
+      const productElement = event.target.closest("form");
+      const productId = productElement.querySelector("input[name='product_id']").value;
+      const productImage = productElement.querySelector("input[name='product_image']").value;
+      const productName = productElement.querySelector("input[name='product_name']").value;
+      const productPrice = productElement.querySelector("input[name='product_price']").value;
+      const productQuantity = productElement.querySelector("input[name='product_quantity']").value;
+
+      // Create the product object
+      const product = {
+        product_id: productId,
+        product_name: productName,
+        product_price: parseFloat(productPrice),
+        product_image: productImage,
+        product_quantity: parseInt(productQuantity),
+      };
+
+      // Get the cart from localStorage
+      let cart = JSON.parse(localStorage.getItem("cart")) || {};
+
+      // Check if the product is already in the cart
+      if (cart[productId]) {
+        Toast.fire({
+          icon: "warning",
+          title: "Product is already in the cart."
+        });
+      } else {
+        // Add the product to the cart
+        cart[productId] = product;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        Toast.fire({
+          icon: "success",
+          title: "Product added to the cart successfully."
+        });
+      }
+    });
+  });
+});
+
+</script>
 </body>
 </html>

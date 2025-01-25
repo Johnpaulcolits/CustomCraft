@@ -1,3 +1,66 @@
+<?php
+
+session_start();
+
+if(isset($_POST['add_to_cart'])){
+  //if user has already added a product to cart
+  if(isset($_SESSION['cart'])){
+
+    $products_array_ids = array_column($_SESSION['cart'],"product_id");
+    //if product has already been added cart or not
+    if(!in_array($_POST['product_id'], $products_array_ids)){
+
+      $product_id =   $_POST['product_id'];
+      $product_name =   $_POST['product_name'];
+      $product_price =   $_POST['product_price'];
+      $product_image = $_POST['product_image'];
+      $product_quantity =   $_POST['product_quantity'];
+    
+    
+    $product_array = array(
+      'product_id' => $_POST['product_id'],
+      'product_name'=>$_POST['product_name'],
+      'product_price' =>$_POST['product_price'],
+      'product_image' =>$_POST['product_image'],
+      'product_quantity' =>$_POST['product_quantity'] 
+    
+    );
+    
+    $_SESSION['cart'][$product_id] = $product_array;
+    }else{
+      echo '<script>alert("Product was already to cart");</script>';
+      // echo '<script>window.location="home.php";</script>';
+      
+    }
+
+    //if this is the first product
+  }else{
+  $product_id =   $_POST['product_id'];
+  $product_name =   $_POST['product_name'];
+  $product_price =   $_POST['product_price'];
+  $product_image = $_POST['product_image'];
+  $product_quantity =   $_POST['product_quantity'];
+
+
+$product_array = array(
+  'product_id' =>$product_id,
+  'product_name'=>$product_name,
+  'product_price' => $product_price,
+  'product_image' => $product_image,
+  'product_quantity' => $product_quantity
+
+);
+
+$_SESSION['cart'][$product_id] = $product_array;
+
+  }
+}else{
+  header('location: home.php');
+}
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +72,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous"/>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="shortcut icon" href="assets/imgs/icon-logo.png" type="image">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
@@ -58,20 +122,22 @@
                     <th>Quantity</th>
                     <th>Subtotal</th>
                 </tr>
+
+                <?php foreach($_SESSION['cart'] as $key => $value) { ?>
                 <tr>
                     <td>
                         <div class="product-info">
-                            <img src="assets/imgs/2.jpg" >
+                            <img src="assets/imgs/<?php echo $value['product_image']; ?>" >
                             <div>
-                                <p>White Shoes</p>
-                                <small><span>₱</span>155</small>
+                                <p><?php echo $value['product_name']; ?></p>
+                                <small><span>₱</span><?php echo $value['product_price']; ?></small>
                                 <br>
                                 <a href="#" class="remove-btn">Remove</a>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <input type="number" value="1">
+                        <input type="number" value="<?php echo $value['product_quantity']; ?>">
                         <a href="#" class="edit-btn" >Edit</a>
                     </td>
                     <td>
@@ -79,48 +145,7 @@
                         <span class="product-price">155</span>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <div class="product-info">
-                            <img src="assets/imgs/2.jpg" >
-                            <div>
-                                <p>White Shoes</p>
-                                <small><span>₱</span>155</small>
-                                <br>
-                                <a href="#" class="remove-btn">Remove</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" value="1">
-                        <a href="#" class="edit-btn" >Edit</a>
-                    </td>
-                    <td>
-                        <span>₱</span>
-                        <span class="product-price">155</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="product-info">
-                            <img src="assets/imgs/2.jpg" >
-                            <div>
-                                <p>White Shoes</p>
-                                <small><span>₱</span>155</small>
-                                <br>
-                                <a href="#" class="remove-btn">Remove</a>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <input type="number" value="1">
-                        <a href="#" class="edit-btn" >Edit</a>
-                    </td>
-                    <td>
-                        <span>₱</span>
-                        <span class="product-price">155</span>
-                    </td>
-                </tr>
+                <?php }?>
             </table>
 
             <div class="cart-total">
@@ -133,6 +158,8 @@
                 <td>Total</td>
                 <td>₱155</td>
             </tr>
+
+           
         </table>
             </div>
            
@@ -144,8 +171,6 @@
     
       </section>
 
-
-      
            <!--Footer-->
            <footer class="mt-5 py-5">
             <div class="row container mx-auto pt-5">
