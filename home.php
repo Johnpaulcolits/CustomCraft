@@ -116,8 +116,14 @@
           <p>Here you check our featured products</p>
         </div>
         <div class="row mx-auto container-fluid">
+
+          <?php include('server/get.featured.products.php'); ?>
+
+          <?php while($row=$featured_products->fetch_assoc()){
+
+          ?>
           <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img src="assets/imgs/f1.png" class="img-fluid mb-3">
+            <img src="assets/imgs/<?php echo $row['product_image'];?>" class="img-fluid mb-3">
             <div class="star">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
@@ -125,49 +131,12 @@
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
             </div>
-            <h5 class="p-name">Sports Jersey</h5>
-            <h4 class="p-price">₱199</h4>
-            <button class="buy-btn">Buy Now</button>
+            <h5 class="p-name"><?php echo $row['product_name']; ?></h5>
+            <h4 class="p-price">₱<?php echo $row['product_price'];?></h4>
+            <a href="<?php echo "single.product.php?product_name=".  $row['product_name']; ?>"><button class="buy-btn">Buy Now</button></a>
           </div>
-          <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img src="assets/imgs/f1.png" class="img-fluid mb-3">
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Jersey</h5>
-            <h4 class="p-price">₱199</h4>
-            <button class="buy-btn">Buy Now</button>
-          </div>
-          <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img src="assets/imgs/f1.png" class="img-fluid mb-3">
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Jersey</h5>
-            <h4 class="p-price">₱199</h4>
-            <button class="buy-btn">Buy Now</button>
-          </div>
-          <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img src="assets/imgs/f1.png" class="img-fluid mb-3">
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Jersey</h5>
-            <h4 class="p-price">₱199</h4>
-            <button class="buy-btn">Buy Now</button>
-          </div>
+         
+          <?php  }?>
         </div>
       </section>
 
@@ -189,8 +158,11 @@
           <p>Here you check our amazing clothes</p>
         </div>
         <div class="row mx-auto container-fluid">
+          <?php   include('server/get.clothes.products.php');  ?>
+
+          <?php while($row=$clothes_products->fetch_assoc()){ ?>
           <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img src="assets/imgs/brand2.jpg" class="img-fluid mb-3">
+            <img src="assets/imgs/<?php echo $row['product_image']; ?>" class="img-fluid mb-3">
             <div class="star">
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
@@ -198,49 +170,12 @@
               <i class="fas fa-star"></i>
               <i class="fas fa-star"></i>
             </div>
-            <h5 class="p-name">Sports Jersey</h5>
-            <h4 class="p-price">₱199</h4>
+            <h5 class="p-name"><?php echo $row['product_name'] ?></h5>
+            <h4 class="p-price">₱<?php echo $row['product_price'];?></h4>
             <button class="buy-btn">Buy Now</button>
           </div>
-          <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img src="assets/imgs/brand2.jpg" class="img-fluid mb-3">
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Jersey</h5>
-            <h4 class="p-price">₱199</h4>
-            <button class="buy-btn">Buy Now</button>
-          </div>
-          <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img src="assets/imgs/brand2.jpg" class="img-fluid mb-3">
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Jersey</h5>
-            <h4 class="p-price">₱199</h4>
-            <button class="buy-btn">Buy Now</button>
-          </div>
-          <div class="product text-center col-lg-3 col-md-4 col-sm-12">
-            <img src="assets/imgs/brand2.jpg" class="img-fluid mb-3">
-            <div class="star">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-            </div>
-            <h5 class="p-name">Sports Jersey</h5>
-            <h4 class="p-price">₱199</h4>
-            <button class="buy-btn">Buy Now</button>
-          </div>
+
+          <?php }?>
         </div>
       </section>
       

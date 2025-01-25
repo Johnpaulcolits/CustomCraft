@@ -1,3 +1,25 @@
+<?php
+include_once "php/config.php";
+if(isset($_GET['product_name'])){
+  
+
+
+  $product_id = $_GET['product_name'];
+
+  $stmt = $conn->prepare("SELECT * FROM products WHERE product_name=? LIMIT 1");
+  $stmt->bind_param("s",$product_id);
+  
+  $stmt->execute();
+  
+  
+  $product = $stmt->get_result();
+  
+}else{
+  header('location: home.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,38 +86,37 @@
   <section class="container single-product my-5 pt-5">
     <div class="row mt-5">
         <div class="col-lg-5 col-sm-12">
-            <img src="assets/imgs/f1.png" class="img-fluid w-100 pd-1" id="mainImg">
+          <?php while($row = $product->fetch_assoc()){?>
+            <img src="assets/imgs/<?php echo $row['product_image']; ?>" class="img-fluid w-100 pd-1" id="mainImg">
             <div class="small-img-group">
                 <div class="small-img-col">
-                    <img src="assets/imgs/f1.png" width="100%" class="small-img">
+                    <img src="assets/imgs/<?php echo $row['product_image']; ?>" width="100%" class="small-img">
                 </div>
                 <div class="small-img-col">
-                    <img src="assets/imgs/brand1.jpg" width="100%" class="small-img">
+                    <img src="assets/imgs/<?php echo $row['product_image2']; ?>" width="100%" class="small-img">
                 </div>
                 <div class="small-img-col">
-                    <img src="assets/imgs/brand3.jpg" width="100%" class="small-img">
+                    <img src="assets/imgs/<?php echo $row['product_image3']; ?>" width="100%" class="small-img">
                 </div>
                 <div class="small-img-col">
-                    <img src="assets/imgs/shoes.jpg" width="100%" class="small-img">
+                    <img src="assets/imgs/<?php echo $row['product_image4']; ?>" width="100%" class="small-img">
                 </div>
             </div>
+           
         </div>
-        
+      
         <div class="col-lg-6 col-md-12 col-12">
           <h6>Men/Shoes</h6>
-          <h3>Men's Fashion</h3>
-          <h2>₱155</h2>
+          <h3><?php echo $row['product_name']; ?></h3>
+          <h2>₱<?php echo $row['product_price']; ?></h2>
           <input type="number" value="1">
           <button class="buy-btn">Add to Cart</button>
           <h4 class="mt-5 mb-5">Product details</h4>
-          <span>The details of this product will be displayed shortly.
-            The details of this product will be displayed shortly.
-            The details of this product will be displayed shortly.
-            The details of this product will be displayed shortly.
-            The details of this product will be displayed shortly.
+          <span><?php echo $row['product_description']; ?>
           </span>
          
         </div>
+        <?php }?>
     </div>
   </section>
 
