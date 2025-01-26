@@ -1,6 +1,47 @@
+/* Ensure profile section stays responsive */
+.profile-section {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    gap: 8px; /* Adds some spacing between the image and the name */
+  }
+  
+  .profile-image {
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    flex-shrink: 0; /* Prevents the image from shrinking when the name length increases */
+  }
+    
+  /* Adjust for smaller screens */
+  @media (max-width: 768px) {
+    .profile-section {
+      display: none; /* Hide profile section on smaller screens, or create a dropdown menu */
+    }
+  }
+  
+  div {
+    position: relative;
+    display: inline-block;
+}
+
+#cart-count {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+}
+
+
+
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 .nav-buttons{
-    margin-left: 45%;
+    margin-left: 40%;
 }
 
 *{
@@ -12,6 +53,11 @@ body{
     font-family: 'Poppins', sans-serif;
     /* background-image: url('../imgs/bg.png'); */
     
+}
+.user-profile{
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
 }
 .img-logo{
     width: 60px;

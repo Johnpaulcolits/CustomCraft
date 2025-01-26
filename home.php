@@ -4,6 +4,33 @@
   if(!isset($_SESSION['unique_id'])){
     header("location: login.php");
   }
+
+
+
+            $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+            if(mysqli_num_rows($sql) > 0){
+              $row = mysqli_fetch_assoc($sql);
+            }
+include_once "php/config.php";
+
+// Get the unique_id of the logged-in user
+$unique_id = $_SESSION['unique_id'] ?? null;
+
+// Initialize cart count
+$cart_count = 0;
+
+// Query the cart count for the logged-in user
+if ($unique_id) {
+    $sql = "SELECT COUNT(DISTINCT product_id) as total_items FROM cart WHERE unique_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $unique_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+    $cart_count = $data['total_items'] ?? 0;
+}
+
+          
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,11 +72,26 @@
                 <a class="nav-link" href="#">Contact Us</a>
               </li>
               <li class="nav-item">
-                <i class="fas fa-shopping-bag"></i>
-                <i class="fas fa-user"></i>
+              <div>
+    <i class="fas fa-shopping-bag" id="cart-icon"></i>
+    <span id="cart-count">0</span>
+</div>
               </li>   
             </ul>
+
+             <!-- Profile Section -->
+             <div class="d-flex align-items-center profile-section">
+    <img 
+      src="php/images/<?php echo $row['img']; ?>" 
+      alt="Profile" 
+      class="rounded-circle profile-image me-2"
+    />
+    
+  </div>
+
+</div>
           </div>
+          
         </div>
       </nav>
 
@@ -363,6 +405,15 @@
   });
 </script>
 
+<script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cartCount = document.getElementById("cart-count");
+
+            // Set the cart count using PHP data
+            const cartTotal = <?php echo $cart_count; ?>;
+            cartCount.textContent = cartTotal;
+        });
+    </script>
 
     </body>
 </html>

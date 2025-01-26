@@ -1,23 +1,40 @@
 <?php
 
+session_start();
 include_once "php/config.php";
-if(isset($_GET['product_name'])){
-  
-
-
-  $product_id = $_GET['product_name'];
-
-  $stmt = $conn->prepare("SELECT * FROM products WHERE product_name=? LIMIT 1");
-  $stmt->bind_param("s",$product_id);
-  
-  $stmt->execute();
-  
-  
-  $product = $stmt->get_result();
-  
-}else{
-  header('location: home.php');
+if(!isset($_SESSION['unique_id'])){
+  header("location: login.php");
 }
+
+
+  include_once "php/config.php";
+  if(isset($_GET['product_name'])){
+    
+
+
+    $product_id = $_GET['product_name'];
+
+    $stmt = $conn->prepare("SELECT * FROM products WHERE product_name=? LIMIT 1");
+    $stmt->bind_param("s",$product_id);
+    
+    $stmt->execute();
+    
+    
+    $product = $stmt->get_result();
+    
+  }else{
+    header('location: home.php');
+  }
+
+
+
+
+
+
+
+
+
+
 
 ?>
 
@@ -49,6 +66,7 @@ if(isset($_GET['product_name'])){
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous"/>
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="shortcut icon" href="assets/imgs/icon-logo.png" type="image">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
    <!--Navbar--> 
@@ -88,6 +106,7 @@ if(isset($_GET['product_name'])){
     <!--Single product-->
   <section class="container single-product my-5 pt-5">
     <div class="row mt-5">
+      
     <?php while($row = $product->fetch_assoc()){?>
 
 
@@ -118,14 +137,15 @@ if(isset($_GET['product_name'])){
 
           
 
-          <form action="cart.php" method="POST">
-        <input type="hidden" name="product_id" value="<?php echo $row['product_id'];?>">
-        <input type="hidden" name="product_image" value="<?php echo $row['product_image']; ?>">
-        <input type="hidden" name="product_name" value="<?php echo $row['product_name']; ?>">
-        <input type="hidden" name="product_price" value="<?php echo $row['product_price']; ?>">
-          <input type="number" value="1" name="product_quantity">
-          <button class="buy-btn" type="submit" name="add_to_cart">Add to Cart</button>
-          </form>
+          <form id="cartForm">
+    <input type="hidden" name="unique_id" value="<?php echo $_SESSION['unique_id']; ?>" id="unique_id">
+    <input type="hidden" name="product_id" value="<?php echo $row['product_id'];?>" id="product_id">
+    <input type="hidden" name="product_image" value="<?php echo $row['product_image']; ?>" id="product_image">
+    <input type="hidden" name="product_name" value="<?php echo $row['product_name']; ?>" id="product_name">
+    <input type="hidden" name="product_price" value="<?php echo $row['product_price']; ?>" id="product_price">
+    <input type="number" value="1" name="product_quantity" id="product_quantity">
+    <button type="button" class="buy-btn" id="add_to_cart" onclick="addToCart()">Add to Cart</button>
+</form>
           <h4 class="mt-5 mb-5">Product details</h4>
           <span><?php echo $row['product_description']; ?>
           </span>
@@ -286,67 +306,77 @@ if(isset($_GET['product_name'])){
     </script>
 
 
-
-<script>
-  // JavaScript code for handling Add to Cart functionality
-document.addEventListener("DOMContentLoaded", () => {
-  const Toast = Swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.onmouseenter = Swal.stopTimer;
-      toast.onmouseleave = Swal.resumeTimer;
-    }
-  });
-
-  const addToCartButtons = document.querySelectorAll(".buy-btn");
-
-  addToCartButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
-      event.preventDefault(); // Prevent default form submission
-
-      // Get the product data from the hidden inputs
-      const productElement = event.target.closest("form");
-      const productId = productElement.querySelector("input[name='product_id']").value;
-      const productImage = productElement.querySelector("input[name='product_image']").value;
-      const productName = productElement.querySelector("input[name='product_name']").value;
-      const productPrice = productElement.querySelector("input[name='product_price']").value;
-      const productQuantity = productElement.querySelector("input[name='product_quantity']").value;
-
-      // Create the product object
-      const product = {
-        product_id: productId,
-        product_name: productName,
-        product_price: parseFloat(productPrice),
-        product_image: productImage,
-        product_quantity: parseInt(productQuantity),
-      };
-
-      // Get the cart from localStorage
-      let cart = JSON.parse(localStorage.getItem("cart")) || {};
-
-      // Check if the product is already in the cart
-      if (cart[productId]) {
-        Toast.fire({
-          icon: "warning",
-          title: "Product is already in the cart."
-        });
-      } else {
-        // Add the product to the cart
-        cart[productId] = product;
-        localStorage.setItem("cart", JSON.stringify(cart));
-        Toast.fire({
-          icon: "success",
-          title: "Product added to the cart successfully."
-        });
-      }
+<script type="text/javascript">
+    // SweetAlert2 Toast Configuration
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
     });
-  });
-});
 
+    function addToCart() {
+        // Grab form data
+        var unique_id = document.getElementById("unique_id").value;
+        var product_id = document.getElementById("product_id").value;
+        var product_image = document.getElementById("product_image").value;
+        var product_name = document.getElementById("product_name").value;
+        var product_price = document.getElementById("product_price").value;
+        var product_quantity = document.getElementById("product_quantity").value;
+
+        // Validation (check if quantity is a valid number)
+        if (product_quantity < 1 || isNaN(product_quantity)) {
+            alert("Please enter a valid quantity.");
+            return; // Stop further action if validation fails
+        }
+
+        // Prepare data to send in the request
+        var data = new FormData();
+        data.append("unique_id", unique_id);
+        data.append("product_id", product_id);
+        data.append("product_image", product_image);
+        data.append("product_name", product_name);
+        data.append("product_price", product_price);
+        data.append("product_quantity", product_quantity);
+        data.append("add_to_cart", true);  // Send the button name as well
+
+        // Send the request using Fetch API (AJAX)
+        fetch('server/upload.cart.php', {
+            method: 'POST',
+            body: data
+        })
+        .then(response => response.json())  // Assuming server returns JSON response
+        .then(data => {
+            if (data.success) {
+                // Show success toast notification
+                Toast.fire({
+                    icon: "success",
+                    title: "Product added to cart successfully!"
+                });
+            } else {
+                // Show error toast notification
+                Toast.fire({
+                    icon: "error",
+                    title: "Error: " + data.message
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            Toast.fire({
+                icon: "error",
+                title: 'There was an error adding the product to the cart.'
+            });
+        });
+    }
 </script>
+
+
+
 </body>
 </html>
