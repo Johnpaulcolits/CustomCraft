@@ -10,6 +10,14 @@
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="shortcut icon" href="assets/imgs/icon-logo.png" type="image">
     <link rel="stylesheet" href="assets/css/chat.css">
+    <style>
+      .mycheckout{
+        margin-left: 300px;
+      }
+      .btn{
+        margin-left: 1105%;
+      }
+    </style>
 </head>
 
 <body>
@@ -51,13 +59,13 @@
 
 
   <!--CheckOut-->
-<section class="my-5 py-5">
+<section class="my-5 py-5 mycheckout">
     <div class="container text-center mt-3 pt-5" >
         <h2 class="form-weight-bold">Check Out</h2>
         <hr class="mx-auto">
     </div>
     <div class="mx-auto container">
-        <form action="" id="checkout-form">
+        <form action="server/place.order.php" id="checkout-form" method="POST">
             <div class="form-group checkout-small-element">
                 <label>Name</label>
                 <input type="text" class="form-control" id="checkout-name" name="checkout-name" placeholder="Name" required>
@@ -81,7 +89,7 @@
               <input type="text" class="form-control" id="checkout-address" name="address" placeholder="Address" required>
             </div>
             <div class="form-group checkout-btn-container">
-              <input type="submit" class="btn" id="checkout-btn" value="Checkout">
+              <input type="submit" class="btn" id="checkout-btn" value="Place Order" name="place_order">
             </div>
         </form>
     </div>

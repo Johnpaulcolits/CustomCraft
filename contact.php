@@ -1,3 +1,48 @@
+<?php
+
+session_start();
+include_once "php/config.php";
+if(!isset($_SESSION['unique_id'])){
+  header("location: login.php");
+}
+
+
+
+          $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+          if(mysqli_num_rows($sql) > 0){
+            $row = mysqli_fetch_assoc($sql);
+          }
+include_once "php/config.php";
+
+// Get the unique_id of the logged-in user
+$unique_id = $_SESSION['unique_id'] ?? null;
+
+// Initialize cart count
+$cart_count = 0;
+
+// Query the cart count for the logged-in user
+if ($unique_id) {
+  $sql = "SELECT COUNT(DISTINCT product_id) as total_items FROM cart WHERE unique_id = ?";
+  $stmt = $conn->prepare($sql);
+  $stmt->bind_param("i", $unique_id);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $data = $result->fetch_assoc();
+  $cart_count = $data['total_items'] ?? 0;
+}
+
+
+
+
+
+
+
+?>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,40 +59,54 @@
 
 <body>
 
- <!--Navbar--> 
- <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top" style="background-color: #02766f;">
-    <div class="container">
-      <img src="assets/imgs/icon-logo.png" class="img-logo">
-      <h2 class="brand">CustomCraft</h2>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse nav-buttons" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <!-- <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li> -->
-          <li class="nav-item">
-            <a class="nav-link" href="product.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="shop.html">Shop</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact Us</a>
-          </li>
-          <li class="nav-item">
-            <i class="fas fa-shopping-bag"></i>
-            <i class="fas fa-user"></i>
-          </li>   
-        </ul>
-      </div>
-    </div>
-  </nav>
+        <!--Navbar--> 
+        <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top" style="background-color: #02766f;">
+        <div class="container">
+          <img src="assets/imgs/icon-logo.png" class="img-logo">
+          <h2 class="brand">CustomCraft</h2>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse nav-buttons" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li> -->
+              <li class="nav-item">
+                <a class="nav-link" href="home.php">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="shop.php">Shop</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.php">Contact Us</a>
+              </li>
+              <li class="nav-item">
+              <div>
+    <i class="fas fa-shopping-bag" id="cart-icon"></i>
+    <span id="cart-count">0</span>
+</div>
+              </li>   
+            </ul>
 
+             <!-- Profile Section -->
+             <div class="d-flex align-items-center profile-section">
+    <img 
+      src="php/images/<?php echo $row['img']; ?>" 
+      alt="Profile" 
+      class="rounded-circle profile-image me-2"
+    />
+    
+  </div>
+
+</div>
+          </div>
+          
+        </div>
+      </nav>
 
 <!--Contact-->
 <section id="contact" class="container my-5 py-5">
@@ -137,3 +196,12 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
+<script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cartCount = document.getElementById("cart-count");
+
+            // Set the cart count using PHP data
+            const cartTotal = <?php echo $cart_count; ?>;
+            cartCount.textContent = cartTotal;
+        });
+    </script>

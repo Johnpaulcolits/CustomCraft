@@ -420,7 +420,9 @@ margin-right: 10px;
     color: #fb774b;
     text-decoration: none;
     font-size: 14px;
-
+    background-color: none;
+    border: none;
+    width: 100px;
 }
 
 .cart .edit-btn{

@@ -6,6 +6,68 @@ if(!isset($_SESSION['unique_id'])){
   header("location: login.php");
 }
 
+include_once "php/config.php";
+// Get the unique_id of the logged-in user
+$unique_id = $_SESSION['unique_id'] ?? null;
+
+if($unique_id){
+$stmt = $conn->prepare(" SELECT 
+            unique_id,
+            product_id,
+            product_name,
+            product_image,
+            product_price,
+            SUM(product_quantity) AS total_quantity
+        FROM cart 
+        WHERE unique_id = ? 
+        GROUP BY product_id");
+
+if($stmt){
+  $stmt->bind_param("i",$unique_id);
+  $stmt->execute();
+  
+  $cart = $stmt->get_result();
+}
+}
+
+
+
+if (isset($_POST['delete-product'])) {
+  if (isset($_SESSION['unique_id'])) {
+      // Get the unique_id from the session
+      $unique_id = $_SESSION['unique_id'];
+
+      // Ensure $conn is valid
+      if ($conn instanceof mysqli) {
+          // Prepare the DELETE query for all rows with the same unique_id
+          $stmt = $conn->prepare("DELETE FROM cart WHERE unique_id = ?");
+          $stmt->bind_param("s", $unique_id);
+
+          // Execute the query
+          if ($stmt->execute()) {
+              // Success message
+              echo "<script>alert('All items with unique_id $unique_id were deleted successfully.');</script>";
+          } else {
+              // Log the error and show a generic message to the user
+              error_log("Error deleting items: " . $stmt->error); // Logs error for debugging
+              echo "<script>alert('An error occurred while deleting items.');</script>";
+          }
+
+          // Close the statement
+          $stmt->close();
+
+          // Close the database connection
+          $conn->close();
+      } else {
+          echo "<script>alert('Database connection failed.');</script>";
+      }
+  } else {
+      echo "<script>alert('No unique_id in session.');</script>";
+  }
+}
+
+
+
 ?>
 
 
@@ -21,6 +83,7 @@ if(!isset($_SESSION['unique_id'])){
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="shortcut icon" href="assets/imgs/icon-logo.png" type="image">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
 
@@ -71,26 +134,35 @@ if(!isset($_SESSION['unique_id'])){
                     <th>Subtotal</th>
                 </tr>
 
-                <?php foreach($_SESSION['cart'] as $key => $value) { ?>
+                <?php 
+                $total = 0; // Initialize total variable
+                while($row =$cart->fetch_assoc()) { 
+                  // Calculate the product's total price
+    $productTotal = $row['total_quantity'] * $row['product_price']; 
+    $total += $productTotal; // Add to the running total
+
+    ?>
                 <tr>
                     <td>
                         <div class="product-info">
-                            <img src="assets/imgs/<?php echo $value['product_image']; ?>" >
+                            <img src="assets/imgs/<?php echo $row['product_image']; ?>" >
                             <div>
-                                <p><?php echo $value['product_name']; ?></p>
-                                <small><span>₱</span><?php echo $value['product_price']; ?></small>
+                                <p><?php echo $row['product_name']; ?></p>
+                                <small><span>₱</span><?php echo $row['product_price']; ?></small>
                                 <br>
-                                <a href="#" class="remove-btn">Remove</a>
+                                <form method="POST" action="cart.php">
+                                 <input type="submit" class="remove-btn" value="Delete" name="delete-product">
+                                  </form>
                             </div>
                         </div>
                     </td>
                     <td>
-                        <input type="number" value="<?php echo $value['product_quantity']; ?>">
+                        <input type="number" value="<?php echo $row['total_quantity']; ?>">
                         <a href="#" class="edit-btn" >Edit</a>
                     </td>
                     <td>
                         <span>₱</span>
-                        <span class="product-price">155</span>
+                        <span class="product-price"><?php echo $row['total_quantity'] * $row['product_price']?></span>
                     </td>
                 </tr>
                 <?php }?>
@@ -99,12 +171,8 @@ if(!isset($_SESSION['unique_id'])){
             <div class="cart-total">
         <table>
             <tr>
-                <td>Subtotal</td>
-                <td>₱155</td>
-            </tr>
-            <tr>
                 <td>Total</td>
-                <td>₱155</td>
+                <td>₱<?php echo $total; ?></td>
             </tr>
 
            
@@ -114,7 +182,10 @@ if(!isset($_SESSION['unique_id'])){
 
         </div>
         <div class="checkout-container">
-            <button class="btn checkout-btn">Checkout</button>
+                  <form action="checkout.php" method="POST">
+                  <input type="submit" class="btn checkout-btn" value="Checkout" name="checkout">
+                  </form>
+           
           </div>
     
       </section>
@@ -190,3 +261,70 @@ if(!isset($_SESSION['unique_id'])){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const removeButtons = document.querySelectorAll('.remove-btn');
+
+    removeButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default link behavior
+
+            const cartId = button.getAttribute('data-cart-id'); // Get the cart_id from data attribute
+
+            if (cartId) {
+                // Send the POST request to delete the cart item
+                fetch('cart.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: new URLSearchParams({ 'cart_id': cartId }).toString() // Properly encode the body
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Success Toast
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "success",
+                            title: data.message // Message from PHP
+                        });
+
+                        button.closest('tr').remove(); // Remove the row from the table
+                    } else {
+                        // Error Toast
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: "top-end",
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                                toast.onmouseenter = Swal.stopTimer;
+                                toast.onmouseleave = Swal.resumeTimer;
+                            }
+                        });
+                        Toast.fire({
+                            icon: "error",
+                            title: data.message // Message from PHP
+                        });
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+});
+
+    </script>
