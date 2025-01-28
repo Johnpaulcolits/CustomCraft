@@ -1,3 +1,50 @@
+<?php
+session_start();
+include_once "php/config.php";
+if(!isset($_SESSION['unique_id'])){
+  header("location: login.php");
+}
+
+include_once "php/config.php";
+// Get the unique_id of the logged-in user
+$unique_id = $_SESSION['unique_id'] ?? null;
+
+if($unique_id){
+$stmt = $conn->prepare(" SELECT 
+            unique_id,
+            product_id,
+            product_name,
+            product_image,
+            product_price,
+            SUM(product_quantity) AS total_quantity
+        FROM cart 
+        WHERE unique_id = ? 
+        GROUP BY product_id");
+
+if($stmt){
+  $stmt->bind_param("i",$unique_id);
+  $stmt->execute();
+  
+  $cart = $stmt->get_result();
+}
+}
+
+
+if (!isset($_SESSION['checkout_allowed']) || $_SESSION['checkout_allowed'] !== true) {
+    header('Location: home.php'); // Redirect to home.php if accessed directly
+    exit;
+}
+
+// Unset the session flag to prevent re-accessing without the button click
+unset($_SESSION['checkout_allowed']);
+
+
+
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,17 +54,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/solid.css" integrity="sha384-Tv5i09RULyHKMwX0E8wJUqSOaXlyu3SQxORObAI08iUwIalMmN5L6AvlPX2LMoSE" crossorigin="anonymous"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/fontawesome.css" integrity="sha384-jLKHWM3JRmfMU0A5x5AkjWkw/EYfGUAGagvnfryNV3F9VqM98XiIH7VBGVoxVSc7" crossorigin="anonymous"/>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/checkout.css">
+    <link rel="stylesheet" href="assets/css/navbar.css">
     <link rel="shortcut icon" href="assets/imgs/icon-logo.png" type="image">
     <link rel="stylesheet" href="assets/css/chat.css">
-    <style>
-      .mycheckout{
-        margin-left: 300px;
-      }
-      .btn{
-        margin-left: 1105%;
-      }
-    </style>
+    <link rel="stylesheet" href="assets/css/footer.css">
 </head>
 
 <body>
@@ -89,6 +130,11 @@
               <input type="text" class="form-control" id="checkout-address" name="address" placeholder="Address" required>
             </div>
             <div class="form-group checkout-btn-container">
+           
+          
+              <p>Total amount: ₱<?php echo  $_SESSION['cart_total']; ?></p>
+              
+             
               <input type="submit" class="btn" id="checkout-btn" value="Place Order" name="place_order">
             </div>
         </form>

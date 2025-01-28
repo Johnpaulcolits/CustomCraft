@@ -54,6 +54,9 @@ $cart_count = $data['total_items'] ?? 0;
             color: #fff;
             background-color: coral;
         }
+       .cart-icon{
+        color: black;
+       }
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -91,10 +94,10 @@ $cart_count = $data['total_items'] ?? 0;
                 <a class="nav-link" href="contact.php">Contact Us</a>
               </li>
               <li class="nav-item">
-              <div>
-    <i class="fas fa-shopping-bag" id="cart-icon"></i>
+              <a href="cart.php"><div>
+    <i class="fas fa-shopping-bag  cart-icon" id="cart-icon" ></i>
     <span id="cart-count">0</span>
-</div>
+          </div></a>
               </li>   
             </ul>
 

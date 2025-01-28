@@ -1,6 +1,7 @@
 
 <?php
 
+session_start();
 include_once "../php/config.php";
 
 
@@ -25,5 +26,36 @@ if (isset($_POST['add_to_cart'])) {
         echo json_encode(['success' => false, 'message' => 'Error: ' . $conn->error]);
     }
 }
+elseif (isset($_POST['delete-product'])) {
+    
+    $cartid = $_SESSION['cartid'] ?? null;
+
+    if ($cartid === null) {
+        echo json_encode(['success' => false, 'message' => 'User is not logged in. Cannot delete record.']);
+        exit;
+    }
+
+    // Prepare and execute the DELETE query using a prepared statement
+    $sql = "DELETE FROM cart WHERE cart_id = ?";
+    $stmt = $conn->prepare($sql);
+
+    if ($stmt) {
+        $stmt->bind_param("i", $cartid);
+
+        if ($stmt->execute()) {
+            echo json_encode(['success' => true, 'message' => 'Product deleted successfully']);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Error deleting record: ' . $stmt->error]);
+        }
+
+        $stmt->close();
+    } else {
+        echo json_encode(['success' => false, 'message' => 'Error preparing statement: ' . $conn->error]);
+    }
+
+    $conn->close();
+    exit;
+}
+
 ?>
 

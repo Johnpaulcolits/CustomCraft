@@ -1,0 +1,47 @@
+footer{
+    background-color: #222222;
+}
+footer h5{
+    color: #D8D8D8;
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+
+footer li {
+    padding-bottom: 4px;
+}
+footer li a{
+    font-size: 0.8rem;
+    color: #999;
+    text-decoration: none;
+}
+
+
+footer li a:hover{
+    color: #D8D8D8;
+} 
+
+footer .copyright a{
+    color: #000;
+    height: 40px;
+    width: 40px;
+    background-color: #fff;
+    display: inline-block;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 38px;
+    transition: 0.3 ease;
+    margin: 0 5px;
+}
+footer .copyright a:hover{
+    color: #fff;
+    background-color: #fb774b;
+}
+
+footer p{
+    color: white;
+}
+footer .copyright img{
+    width: 30%;
+}

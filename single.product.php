@@ -6,12 +6,13 @@ if(!isset($_SESSION['unique_id'])){
   header("location: login.php");
 }
 
+$sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+if(mysqli_num_rows($sql) > 0){
+  $row = mysqli_fetch_assoc($sql);
+}
 
   include_once "php/config.php";
   if(isset($_GET['product_name'])){
-    
-
-
     $product_id = $_GET['product_name'];
 
     $stmt = $conn->prepare("SELECT * FROM products WHERE product_name=? LIMIT 1");
@@ -27,6 +28,22 @@ if(!isset($_SESSION['unique_id'])){
   }
 
 
+// Get the unique_id of the logged-in user
+$unique_id = $_SESSION['unique_id'] ?? null;
+
+// Initialize cart count
+$cart_count = 0;
+
+// Query the cart count for the logged-in user
+if ($unique_id) {
+    $sql = "SELECT COUNT(DISTINCT product_id) as total_items FROM cart WHERE unique_id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $unique_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+    $cart_count = $data['total_items'] ?? 0;
+}
 
 
 
@@ -44,6 +61,7 @@ if(!isset($_SESSION['unique_id'])){
 <html lang="en">
 <head>
     <style>
+      
         .products img{
             width: 100%;
             height: auto;
@@ -57,6 +75,11 @@ if(!isset($_SESSION['unique_id'])){
             color: #fff;
             background-color: coral;
         }
+       
+      .cart-count{
+        color: black;
+      }
+   
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -69,39 +92,54 @@ if(!isset($_SESSION['unique_id'])){
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
-   <!--Navbar--> 
-   <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top" style="background-color: #02766f;">
-    <div class="container">
-      <img src="assets/imgs/icon-logo.png" class="img-logo">
-      <h2 class="brand">CustomCraft</h2>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse nav-buttons" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <!-- <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li> -->
-          <li class="nav-item">
-            <a class="nav-link" href="product.html">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="shop.html">Shop</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Blog</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact Us</a>
-          </li>
-          <li class="nav-item">
-            <i class="fas fa-shopping-bag"></i>
-            <i class="fas fa-user"></i>
-          </li>   
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <!--Navbar--> 
+  <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top" style="background-color: #02766f;">
+        <div class="container">
+          <img src="assets/imgs/icon-logo.png" class="img-logo">
+          <h2 class="brand">CustomCraft</h2>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse nav-buttons" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <!-- <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+              </li> -->
+              <li class="nav-item">
+                <a class="nav-link" href="home.php">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="shop.php">Shop</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="contact.php">Contact Us</a>
+              </li>
+              <li class="nav-item">
+           <a href="cart.php" class="cart-count"><div>
+    <i class="fas fa-shopping-bag" id="cart-icon"></i>
+    <span id="cart-count">0</span>
+          </div></a>
+              </li>   
+            </ul>
+
+             <!-- Profile Section -->
+             <div class="d-flex align-items-center profile-section">
+    <img 
+      src="php/images/<?php echo $row['img']; ?>" 
+      alt="Profile" 
+      class="rounded-circle profile-image me-2"
+    />
+    
+  </div>
+
+</div>
+          </div>
+          
+        </div>
+      </nav>
 
     <!--Single product-->
   <section class="container single-product my-5 pt-5">
@@ -312,7 +350,7 @@ if(!isset($_SESSION['unique_id'])){
         toast: true,
         position: "top-end",
         showConfirmButton: false,
-        timer: 3000,
+        timer: 1500,
         timerProgressBar: true,
         didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
@@ -376,6 +414,15 @@ if(!isset($_SESSION['unique_id'])){
     }
 </script>
 
+<script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            const cartCount = document.getElementById("cart-count");
+
+            // Set the cart count using PHP data
+            const cartTotal = <?php echo $cart_count; ?>;
+            cartCount.textContent = cartTotal;
+        });
+    </script>
 
 
 </body>

@@ -55,6 +55,11 @@ if ($unique_id) {
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="shortcut icon" href="assets/imgs/icon-logo.png" type="image">
     <link rel="stylesheet" href="assets/css/chat.css">
+    <style>
+        .cart-count{
+        color: black;
+      }
+    </style>
 </head>
 
 <body>
@@ -85,10 +90,10 @@ if ($unique_id) {
                 <a class="nav-link" href="contact.php">Contact Us</a>
               </li>
               <li class="nav-item">
-              <div>
+              <a href="cart.php" class="cart-count"><div>
     <i class="fas fa-shopping-bag" id="cart-icon"></i>
     <span id="cart-count">0</span>
-</div>
+          </div></a>
               </li>   
             </ul>
 
