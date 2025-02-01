@@ -51,54 +51,40 @@ if ($unique_id) {
     </style>
 </head>
 <body>
-    <!--Navbar--> 
-    <nav class="navbar navbar-expand-lg navbar-light py-3 fixed-top" style="background-color: #02766f;">
-        <div class="container">
-          <img src="assets/imgs/icon-logo.png" class="img-logo">
-          <h2 class="brand">CustomCraft</h2>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #02766f;">
+    <div class="container d-flex align-items-center">
+       <img src="assets/imgs/icon-logo.png" class="img-logo">
+       <h2 class="brand">CustomCraft</h2>
+
+
+        <!-- Mobile Toggle Button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse nav-buttons" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <!-- <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li> -->
-              <li class="nav-item">
-                <a class="nav-link" href="home.php">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="shop.php">Shop</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Blog</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="contact.php">Contact Us</a>
-              </li>
-              <li class="nav-item">
-           <a href="cart.php" class="cart-count"><div>
-    <i class="fas fa-shopping-bag" id="cart-icon"></i>
-    <span id="cart-count">0</span>
-          </div></a>
-              </li>   
+        </button>
+
+        <!-- Navbar Content -->
+        <div class="collapse navbar-collapse nav-buttons" id="navbarContent">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="shop.php">Shop</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.php">Contact Us</a></li>
+                <li class="nav-item">
+                    <a href="cart.php" class="cart-container">
+                        <i class="fas fa-shopping-bag" id="cart-icon"></i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </li>
             </ul>
 
-             <!-- Profile Section -->
-             <div class="d-flex align-items-center profile-section">
-    <img 
-      src="php/images/<?php echo $row['img']; ?>" 
-      alt="Profile" 
-      class="rounded-circle profile-image me-2"
-    />
-    
-  </div>
-
-</div>
-          </div>
-          
+            <!-- Profile Section -->
+            <div class="profile-section">
+                <img src="php/images/<?php echo $row['img']; ?>" alt="Profile" class="profile-image">
+            </div>
         </div>
-      </nav>
+    </div>
+</nav>
 
 
 

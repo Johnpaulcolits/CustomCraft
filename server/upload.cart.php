@@ -28,7 +28,7 @@ if (isset($_POST['add_to_cart'])) {
 }
 elseif (isset($_POST['delete-product'])) {
     
-    $cartid = $_SESSION['cartid'] ?? null;
+    $cartid = $_SESSION['productid'] ?? null;
 
     if ($cartid === null) {
         echo json_encode(['success' => false, 'message' => 'User is not logged in. Cannot delete record.']);
@@ -36,7 +36,7 @@ elseif (isset($_POST['delete-product'])) {
     }
 
     // Prepare and execute the DELETE query using a prepared statement
-    $sql = "DELETE FROM cart WHERE cart_id = ?";
+    $sql = "DELETE FROM cart WHERE product_id = ?";
     $stmt = $conn->prepare($sql);
 
     if ($stmt) {

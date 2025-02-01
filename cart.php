@@ -119,8 +119,10 @@ if($stmt){
                 $productTotal = $row['total_quantity'] * $row['product_price']; 
                 $total += $productTotal; // Add to the running total
                 $cartid = $row['cart_id'];
+                $productid = $row['product_id'];
                 $_SESSION['cart_total'] = $total; // Save total amount in session
                 $_SESSION['cartid'] = $cartid; // Save cart ID in session
+                $_SESSION['productid'] = $productid;
             ?>
             <tr id="product-<?php echo $row['cart_id']; ?>"> <!-- Assign a unique ID to the product row -->
                 <td>
