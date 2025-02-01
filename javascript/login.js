@@ -14,7 +14,7 @@ continueBtn.onclick = () => {
             if(xhr.status === 200){
                 let data = xhr.response.trim();
                 if(data === "admin"){
-                    location.href = "admin/index.html"; // Redirect admin users
+                    location.href = "admin/index.php"; // Redirect admin users
                 } else if (data === "user"){
                     location.href = "users.php"; // Redirect regular users
                 } else {

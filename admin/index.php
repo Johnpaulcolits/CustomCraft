@@ -1,3 +1,16 @@
+
+<?php 
+  session_start();
+  include_once "../php/config.php";
+  if(!isset($_SESSION['unique_id'])){
+    header("location: login.php");
+  }
+
+  $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
+  if(mysqli_num_rows($sql) > 0){
+	$row = mysqli_fetch_assoc($sql);
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +22,7 @@
 	<!-- My CSS -->
 	<link rel="stylesheet" href="style.css">
 
-	<title>AdminHub</title>
+	<title>CustomCraft - Admin</title>
 </head>
 <body>
 
@@ -18,7 +31,7 @@
 	<section id="sidebar">
 		<a href="#" class="brand">
 			<i class='bx bxs-smile'></i>
-			<span class="text">AdminHub</span>
+			<span class="text">CustomCraft</span>
 		</a>
 		<ul class="side-menu top">
 			<li>
@@ -60,7 +73,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="#" class="logout">
+				<a href="../php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout">
 					<i class='bx bxs-log-out-circle' ></i>
 					<span class="text">Logout</span>
 				</a>
@@ -90,7 +103,7 @@
 				<span class="num">8</span>
 			</a>
 			<a href="#" class="profile">
-				<img src="img/people.png">
+				<img src="../php/images/<?php echo $row['img']; ?>">
 			</a>
 		</nav>
 		<!-- NAVBAR -->
