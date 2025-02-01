@@ -1,25 +1,15 @@
 <?php 
   session_start();
   if(isset($_SESSION['unique_id'])){
-    header("location: home.php");
+    header("location: users.php");
   }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Register</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
-  <link rel="shortcut icon" href="assets/imgs/icon-logo.png" type="image">
-</head>
+<?php include_once "header.php"; ?>
 <body>
   <div class="wrapper">
     <section class="form signup">
-      <header>Registration</header>
+      <header>Realtime Chat App</header>
       <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
         <div class="error-text"></div>
         <div class="name-details">

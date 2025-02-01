@@ -16,10 +16,10 @@
           if(mysqli_num_rows($sql) > 0){
             $row = mysqli_fetch_assoc($sql);
           }else{
-            header("location: home.php");
+            header("location: users.php");
           }
         ?>
-        <a href="home.php" class="back-icon"><i class="fas fa-arrow-left"></i></a>
+        <a href="users.php" class="back-icon"><i class="fas fa-arrow-left"></i></a>
         <img src="php/images/<?php echo $row['img']; ?>" alt="">
         <div class="details">
           <span><?php echo $row['fname']. " " . $row['lname'] ?></span>
