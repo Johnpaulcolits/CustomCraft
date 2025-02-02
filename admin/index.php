@@ -2,9 +2,12 @@
 <?php 
   session_start();
   include_once "../php/config.php";
-  if(!isset($_SESSION['usertype']) ){
-    header("location: login.php");
-  }
+// Check if the user is an admin
+if($_SESSION['usertype'] !== "admin"){
+    header("Location: ../login.php"); // Redirect to login if not admin
+    exit();
+}
+
 
   $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
   if(mysqli_num_rows($sql) > 0){
@@ -38,7 +41,7 @@
     <!-- ======== sidebar-nav start =========== -->
     <aside class="sidebar-nav-wrapper">
       <div class="navbar-logo">
-        <a href="index.html">
+        <a href="index.php">
           <img src="assets/images/logo/logo.svg" alt="logo" />
         </a>
       </div>
@@ -65,7 +68,7 @@
             </a>
             <ul id="ddmenu_1" class="collapse show dropdown-nav">
               <li>
-                <a href="index.html" class="active"> eCommerce </a>
+                <a href="index.php" class="active"> eCommerce </a>
               </li>
             </ul>
           </li>
@@ -311,7 +314,7 @@
             <div class="col-lg-7 col-md-7 col-6">
               <div class="header-right">
                 <!-- notification start -->
-                <div class="notification-box ml-15 d-none d-md-flex">
+                <!-- <div class="notification-box ml-15 d-none d-md-flex">
                   <button class="dropdown-toggle" type="button" id="notification" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -366,10 +369,10 @@
                       </a>
                     </li>
                   </ul>
-                </div>
+                </div> -->
                 <!-- notification end -->
                 <!-- message start -->
-                <div class="header-message-box ml-15 d-none d-md-flex">
+                <!-- <div class="header-message-box ml-15 d-none d-md-flex">
                   <button class="dropdown-toggle" type="button" id="message" data-bs-toggle="dropdown"
                     aria-expanded="false">
                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -420,7 +423,7 @@
                       </a>
                     </li>
                   </ul>
-                </div>
+                </div> -->
                 <!-- message end -->
                 <!-- profile start -->
                 <div class="profile-box ml-15">
@@ -432,14 +435,14 @@
                           <img src="../php/images/<?php echo $row['img']; ?>" alt="" />
                         </div>
                         <div>
-                          <h6 class="fw-500">Adam Joe</h6>
-                          <p>Admin</p>
+                          <h6 class="fw-500"><?php echo $row['fname']. " " . $row['lname'] ?></h6>
+                          <p><?php echo $row['usertype']; ?></p>
                         </div>
                       </div>
                     </div>
                   </button>
                   <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile">
-                    <li>
+                    <!-- <li>
                       <div class="author-info flex items-center !p-1">
                         <div class="image">
                           <img src="assets/images/profile/profile-image.png" alt="image">
@@ -449,18 +452,18 @@
                           <a class="text-black/40 dark:text-white/40 hover:text-black dark:hover:text-white text-xs" href="#">Email@gmail.com</a>
                         </div>
                       </div>
-                    </li>
+                    </li> -->
                     <li class="divider"></li>
                     <li>
                       <a href="#0">
                         <i class="lni lni-user"></i> View Profile
                       </a>
                     </li>
-                    <li>
+                    <!-- <li>
                       <a href="#0">
                         <i class="lni lni-alarm"></i> Notifications
                       </a>
-                    </li>
+                    </li> -->
                     <li>
                       <a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
                     </li>
@@ -469,7 +472,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                      <a href="#0"> <i class="lni lni-exit"></i> Sign Out </a>
+                      <a href="../php/logout.php?logout_id=<?php echo $row['unique_id']; ?>"> <i class="lni lni-exit"></i> Sign Out </a>
                     </li>
                   </ul>
                 </div>
