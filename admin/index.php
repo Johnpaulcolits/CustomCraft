@@ -20,8 +20,8 @@ if($_SESSION['usertype'] !== "admin"){
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/images/favicon.svg" type="image/x-icon" />
-    <title>PlainAdmin Demo | Bootstrap 5 Admin Template</title>
+    <link rel="shortcut icon" href="assets/images/logo/icon-logo.png" type="image/x-icon" />
+    <title>CustomCraft - Admin</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
@@ -42,7 +42,8 @@ if($_SESSION['usertype'] !== "admin"){
     <aside class="sidebar-nav-wrapper">
       <div class="navbar-logo">
         <a href="index.php">
-          <img src="assets/images/logo/logo.svg" alt="logo" />
+          <!-- <img src="assets/images/logo/logo.svg" alt="logo" /> -->
+		  <img src="assets/images/logo/CustomCraft.png" alt="logo" width="180px"/>
         </a>
       </div>
       <nav class="sidebar-nav">
@@ -68,7 +69,7 @@ if($_SESSION['usertype'] !== "admin"){
             </a>
             <ul id="ddmenu_1" class="collapse show dropdown-nav">
               <li>
-                <a href="index.php" class="active"> eCommerce </a>
+                <a href="index.php" class="active"> Craft Dashboard </a>
               </li>
             </ul>
           </li>
@@ -276,7 +277,7 @@ if($_SESSION['usertype'] !== "admin"){
           </li>
         </ul>
       </nav>
-      <div class="promo-box">
+      <!-- <div class="promo-box">
         <div class="promo-icon">
           <img class="mx-auto" src="./assets/images/logo/logo-icon-big.svg" alt="Logo">
         </div>
@@ -285,7 +286,7 @@ if($_SESSION['usertype'] !== "admin"){
         <a href="https://plainadmin.com/pro" target="_blank" rel="nofollow" class="main-btn primary-btn btn-hover">
           Upgrade to PRO
         </a>
-      </div>
+      </div> -->
     </aside>
     <div class="overlay"></div>
     <!-- ======== sidebar-nav end =========== -->
