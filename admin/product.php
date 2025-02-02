@@ -32,6 +32,7 @@ if (mysqli_num_rows($sql) > 0) {
     <link rel="stylesheet" href="assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <!-- ======== Preloader =========== -->
@@ -541,29 +542,38 @@ $products = $stmt->get_result();
 
 
         
-          <style>
-  .table-light th,
-  .table-light td {
-    background-color: #fff !important; /* Lightest possible shade */
-    color: #333; /* Darker text for readability */
-  }
-  .table-light thead {
-    background-color: #fff !important; /* Pure white header */
-  }
-  /* Center the numbers */
+<style>
   .table-light th, 
   .table-light td {
-    text-align: center;
+      text-align: center;
+      vertical-align: middle; /* Ensures vertical centering */
   }
-  .delete-button{
-    width: 30px;
-    height: 30px;
+
+  .table-light img {
+      display: block;
+      margin: 0 auto; /* Centers images */
+  }
+
+  .table-light button {
+      display: block;
+      margin: 0 auto; /* Centers buttons */
+  }
+
+  .table-light th,
+  .table-light td {
+      background-color: #fff !important; /* Lightest possible shade */
+      color: #333; /* Darker text for readability */
+  }
+
+  .table-light thead {
+      background-color: #fff !important; /* Pure white header */
+  }
+
+  .delete-button {
+      width: 30px;
+      height: 30px;
   }
 </style>
-
-<?php while($row=$products->fetch_assoc()){
-
-?>
 
 <table class="table table-light">
   <thead>
@@ -578,22 +588,133 @@ $products = $stmt->get_result();
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <td><?php echo $row['product_name'] ?></td>
-      <td><?php echo $row['product_category'] ?></td>
-      <td><img src="./<?php echo $row['product_image']; ?>"  width="65px" ></td>
-      <td><?php echo $row['product_price'] ?></td>
-      <td><?php echo $row['product_special_offer'] ?></td>
-      <td><button class="btn btn-danger btn-sm">Delete</button></td>
-      <td><button class="btn btn-primary btn-sm">Update</button></td>
-
+  <?php while($row = $products->fetch_assoc()) { ?>
+    <tr id="product-<?php echo $row['product_id']; ?>">
+        <td><?php echo $row['product_name']; ?></td>
+        <td><?php echo $row['product_category']; ?></td>
+        <td><img src="./<?php echo $row['product_image']; ?>" width="65px" style="margin-bottom: 5px;" ></td>
+        <td><?php echo $row['product_price']; ?></td>
+        <td><?php echo $row['product_special_offer']; ?></td>
+        <td>
+            <button class="btn btn-danger btn-sm" onclick="deleteProduct(<?php echo $row['product_id']; ?>)">Delete</button>
+        </td>
+        <td><button class="btn btn-primary btn-sm">Update</button></td>
     </tr>
+<?php } ?>
   </tbody>
 </table>
 
-<?php } ?>
               
           
+<?php
+// Include your database connection file
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $product_id = $_POST['product_id'];
+
+    // Prepare and execute the delete query
+    $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
+    $stmt->bind_param("i", $product_id);
+
+    if ($stmt->execute()) {
+        // echo "Product deleted successfully.";
+    } else {
+        echo "Error deleting product.";
+    }
+
+    $stmt->close();
+    $conn->close();
+}
+?>
+<script>
+function deleteProduct(productId) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            // Create an XMLHttpRequest object
+            var xhr = new XMLHttpRequest();
+
+            // Define the request
+            xhr.open("POST", "product.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            // Define what happens on successful data submission
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Remove the row from the table
+                    var row = document.getElementById("product-" + productId);
+                    if (row) {
+                        row.remove();
+                    }
+                    // Success Toast
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 1000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "success",
+                        title: "Product deleted successfully"
+                    });
+                } else {
+                    // Error Toast
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: "top-end",
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                    });
+                    Toast.fire({
+                        icon: "error",
+                        title: "Error deleting product"
+                    });
+                }
+            };
+
+            // Define what happens in case of error
+            xhr.onerror = function() {
+                // Error Toast
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "error",
+                    title: "Request failed. Please try again."
+                });
+            };
+
+            // Send the request
+            xhr.send("product_id=" + productId);
+        }
+    });
+}
+</script>
+
        
 
       
