@@ -583,22 +583,22 @@ $products = $stmt->get_result();
   <thead>
     <tr>
       <th scope="col">Name</th>
-      <th scope="col">Img</th>
       <th scope="col">Price</th>
       <th scope="col">Delete</th>
       <th scope="col">Update</th>
+      <th scope="col">View</th>
     </tr>
   </thead>
   <tbody>
   <?php while($row = $products->fetch_assoc()) { ?>
     <tr id="product-<?php echo $row['product_id']; ?>">
         <td><?php echo $row['product_name']; ?></td>
-        <td><img src="./<?php echo $row['product_image']; ?>" width="65px" style="margin-bottom: 5px;" ></td>
         <td><?php echo $row['product_price']; ?></td>
         <td>
             <button class="button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image"></button>
         </td>
         <td><button class="button"><img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px"></button></td>
+        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=fhXWXkFdxrRk&format=png&color=1A1A1A" style="width: 50px"></button></td>
     </tr>
 <?php } ?>
   </tbody>
