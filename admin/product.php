@@ -569,9 +569,13 @@ $products = $stmt->get_result();
       background-color: #fff !important; /* Pure white header */
   }
 
-  .delete-button {
-      width: 30px;
-      height: 30px;
+  .button {
+    border: none;
+    background: none;
+  }
+  .delete-image{
+    width: 40px;
+  
   }
 </style>
 
@@ -592,9 +596,9 @@ $products = $stmt->get_result();
         <td><img src="./<?php echo $row['product_image']; ?>" width="65px" style="margin-bottom: 5px;" ></td>
         <td><?php echo $row['product_price']; ?></td>
         <td>
-            <button class="btn btn-danger btn-sm" onclick="deleteProduct(<?php echo $row['product_id']; ?>)">Delete</button>
+            <button class="button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image"></button>
         </td>
-        <td><button class="btn btn-primary btn-sm">Update</button></td>
+        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px"></button></td>
     </tr>
 <?php } ?>
   </tbody>
