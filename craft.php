@@ -1,27 +1,34 @@
+<?php 
+session_start();
 
+if (isset($_SESSION['usertype'])) {
+    if ($_SESSION['usertype'] == "admin") {
+        header("location: ./admin/index.php"); // Redirect admin
+        exit();
+    } elseif ($_SESSION['usertype'] == "moderator") {
+        header("Location: moderator_dashboard.php"); // Redirect moderator
+        exit();
+    } else {
+        header("location: users.php"); // Redirect regular user
+        exit();
+    }
+}
+?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CustomCraft - Admin</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
-</head>
+<?php include_once "header.php"; ?>
 <body>
   <div class="wrapper">
     <section class="form login">
-      <header>Admin - Login</header>
+      <header>Realtime Chat App</header>
       <form action="#" method="POST" enctype="multipart/form-data" autocomplete="off">
         <div class="error-text"></div>
         <div class="field input">
           <label>Email Address</label>
-          <input type="text" name="emails" placeholder="Enter your email" required>
+          <input type="text" name="email" placeholder="Enter your email" required>
         </div>
         <div class="field input">
           <label>Password</label>
-          <input type="password" name="passwords" placeholder="Enter your password" required>
+          <input type="password" name="password" placeholder="Enter your password" required>
           <i class="fas fa-eye"></i>
         </div>
         <div class="field button">
@@ -31,39 +38,8 @@
     </section>
   </div>
   
-
+  <script src="javascript/pass-show-hide.js"></script>
+  <script src="admin.login.js"></script>
 
 </body>
 </html>
-
-</html>
-
-<script>
-const form = document.querySelector(".login form"),
-continueBtn = form.querySelector(".button input"),
-errorText = form.querySelector(".error-text");
-
-form.onsubmit = (e)=>{
-    e.preventDefault();
-}
-
-continueBtn.onclick = ()=>{
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", "php/adminlogin.php", true);
-    xhr.onload = ()=>{
-      if(xhr.readyState === XMLHttpRequest.DONE){
-          if(xhr.status === 200){
-              let data = xhr.response;
-              if(data === "success"){
-                location.href = "./admin/index.php";
-              }else{
-                errorText.style.display = "block";
-                errorText.textContent = data;
-              }
-          }
-      }
-    }
-    let formData = new FormData(form);
-    xhr.send(formData);
-}
-</script>

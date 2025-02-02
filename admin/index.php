@@ -1,18 +1,20 @@
 
-<?php 
-  session_start();
-  include_once "../php/config.php";
-// Check if the user is an admin
-if($_SESSION['usertype'] !== "admin"){
-    header("Location: ../login.php"); // Redirect to login if not admin
-    exit();
+<?php
+session_start();
+include_once "../php/config.php";
+
+// session_start();
+
+if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "admin") {
+  header("Location: ../login.php"); // Redirect unauthorized users
+  exit();
 }
 
-
-  $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = {$_SESSION['unique_id']}");
-  if(mysqli_num_rows($sql) > 0){
-	$row = mysqli_fetch_assoc($sql);
-  }
+$sql = mysqli_query($conn, "SELECT * FROM users WHERE usertype = '{$_SESSION['usertype']}'");
+if (mysqli_num_rows($sql) > 0) {
+    $row = mysqli_fetch_assoc($sql);
+    // You can now use $row for admin-specific information
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

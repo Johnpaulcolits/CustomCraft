@@ -1,8 +1,18 @@
 <?php 
-  session_start();
-  if(isset($_SESSION['unique_id'])){
-    header("location: users.php");
-  }
+ session_start();
+
+ if (isset($_SESSION['usertype'])) {
+     if ($_SESSION['usertype'] == "admin") {
+         header("location: ./admin/index.php"); // Redirect admin
+         exit();
+     } elseif ($_SESSION['usertype'] == "moderator") {
+         header("Location: moderator_dashboard.php"); // Redirect moderator
+         exit();
+     } else {
+         header("location: users.php"); // Redirect regular user
+         exit();
+     }
+ }
 ?>
 
 <?php include_once "header.php"; ?>

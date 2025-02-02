@@ -13,22 +13,19 @@ if (!empty($email) && !empty($password)) {
         $enc_pass = $row['password'];
 
         if ($user_pass === $enc_pass) {
-            $status = "Active now";
-            $sql2 = mysqli_query($conn, "UPDATE users SET status = '{$status}' WHERE unique_id = {$row['unique_id']}");
-            
-            if ($sql2) {
-                $_SESSION['unique_id'] = $row['unique_id'];
-                $_SESSION['usertype'] = $row['usertype']; // Store usertype in session
-                
-                if ($row['usertype'] == "admin") {
-                    echo "admin";  // Send response for admin login
-                } elseif ($row['usertype'] == "moderator") {
-                    echo "moderator";  // Send response for moderator login
+            if ($row['usertype'] == "admin") { // Only allow admins
+                $status = "Active now";
+                $sql2 = mysqli_query($conn, "UPDATE users SET status = '{$status}' WHERE unique_id = {$row['unique_id']}");
+
+                if ($sql2) {
+                    $_SESSION['unique_id'] = $row['unique_id'];
+                    $_SESSION['usertype'] = $row['usertype']; // Store usertype in session
+                    echo "admin"; // Send response for admin login
                 } else {
-                    echo "user";  // Default user login
+                    echo "Something went wrong. Please try again!";
                 }
             } else {
-                echo "Something went wrong. Please try again!";
+                echo "Access Denied! Only Admins can log in."; // Restrict users & moderators
             }
         } else {
             echo "Email or Password is Incorrect!";

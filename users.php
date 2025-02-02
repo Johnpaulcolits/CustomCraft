@@ -1,9 +1,20 @@
 <?php 
-  session_start();
-  include_once "php/config.php";
-  if(!isset($_SESSION['unique_id'])){
-    header("location: login.php");
-  }
+// session_start();
+
+// if (isset($_SESSION['usertype'])) {
+//     if ($_SESSION['usertype'] == "admin") {
+//         header("Location: login.php"); // Redirect admin
+//         exit();
+//     } elseif ($_SESSION['usertype'] == "moderator") {
+//         header("Location: moderator_dashboard.php"); // Redirect moderator
+//         exit();
+//     } else {
+//         header("Location: login.php"); // Redirect regular user
+//         exit();
+//     }
+// }
+session_start();
+include_once "./php/config.php";
 ?>
 <?php include_once "header.php"; ?>
 <body>
