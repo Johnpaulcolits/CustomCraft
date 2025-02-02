@@ -13,15 +13,11 @@ continueBtn.onclick = () => {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 let data = xhr.response;
-                if (data === "admin") {
-                    location.href = "./admin/index.php";  // Redirect to admin page
-                } else if (data === "moderator") {
-                    location.href = "moderator_dashboard.php";  // Redirect to moderator page
-                } else if (data === "user") {
-                    location.href = "users.php";  // Redirect to normal user page
+                if (data === "user") {
+                    location.href = "../users.php";  // Redirect to normal user page
                 } else {
                     errorText.style.display = "block";
-                    errorText.textContent = data;
+                    errorText.textContent = data; // Show error for non-user logins
                 }
             }
         }

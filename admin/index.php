@@ -475,7 +475,7 @@ if (mysqli_num_rows($sql) > 0) {
                     </li>
                     <li class="divider"></li>
                     <li>
-                      <a href="../php/logout.php?logout_id=<?php echo $row['unique_id']; ?>"> <i class="lni lni-exit"></i> Sign Out </a>
+                      <a href="../php/admin.logout.php?logout_id=<?php echo $row['unique_id']; ?>"> <i class="lni lni-exit"></i> Sign Out </a>
                     </li>
                   </ul>
                 </div>

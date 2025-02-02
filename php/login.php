@@ -2,41 +2,46 @@
 session_start();
 include_once "config.php";
 
-$email = mysqli_real_escape_string($conn, $_POST['email']);
-$password = mysqli_real_escape_string($conn, $_POST['password']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") { // Ensure it's a POST request
+    if (isset($_POST['email']) && isset($_POST['password'])) { // Check if values exist
+        $email = mysqli_real_escape_string($conn, $_POST['email']);
+        $password = mysqli_real_escape_string($conn, $_POST['password']);
 
-if (!empty($email) && !empty($password)) {
-    $sql = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}'");
-    if (mysqli_num_rows($sql) > 0) {
-        $row = mysqli_fetch_assoc($sql);
-        $user_pass = md5($password);
-        $enc_pass = $row['password'];
+        if (!empty($email) && !empty($password)) {
+            $sql = mysqli_query($conn, "SELECT * FROM users WHERE email = '{$email}'");
+            if (mysqli_num_rows($sql) > 0) {
+                $row = mysqli_fetch_assoc($sql);
+                $user_pass = md5($password);
+                $enc_pass = $row['password'];
 
-        if ($user_pass === $enc_pass) {
-            $status = "Active now";
-            $sql2 = mysqli_query($conn, "UPDATE users SET status = '{$status}' WHERE unique_id = {$row['unique_id']}");
-            
-            if ($sql2) {
-                $_SESSION['unique_id'] = $row['unique_id'];
-                $_SESSION['usertype'] = $row['usertype']; // Store usertype in session
-                
-                if ($row['usertype'] == "admin") {
-                    echo "admin";  // Send response for admin login
-                } elseif ($row['usertype'] == "moderator") {
-                    echo "moderator";  // Send response for moderator login
+                if ($user_pass === $enc_pass) {
+                    if ($row['usertype'] == "user") { // Allow only normal users
+                        $status = "Active now";
+                        $sql2 = mysqli_query($conn, "UPDATE users SET status = '{$status}' WHERE unique_id = {$row['unique_id']}");
+
+                        if ($sql2) {
+                            $_SESSION['unique_id'] = $row['unique_id'];
+                            $_SESSION['usertype'] = $row['usertype']; // Store usertype in session
+                            echo "user"; // Send response for normal user login
+                        } else {
+                            echo "Something went wrong. Please try again!";
+                        }
+                    } else {
+                        echo "Access Denied! Only regular users can log in."; // Restrict admins & moderators
+                    }
                 } else {
-                    echo "user";  // Default user login
+                    echo "Email or Password is Incorrect!";
                 }
             } else {
-                echo "Something went wrong. Please try again!";
+                echo "$email - This email does not exist!";
             }
         } else {
-            echo "Email or Password is Incorrect!";
+            echo "All input fields are required!";
         }
     } else {
-        echo "$email - This email does not exist!";
+        echo "All input fields are required!"; // Handle missing fields
     }
 } else {
-    echo "All input fields are required!";
+    echo "Invalid request!"; // Handle direct access without POST
 }
 ?>
