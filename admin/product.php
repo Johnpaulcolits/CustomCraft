@@ -579,10 +579,8 @@ $products = $stmt->get_result();
   <thead>
     <tr>
       <th scope="col">Name</th>
-      <th scope="col">Category</th>
       <th scope="col">Img</th>
       <th scope="col">Price</th>
-      <th scope="col">Special Offer</th>
       <th scope="col">Delete</th>
       <th scope="col">Update</th>
     </tr>
@@ -591,10 +589,8 @@ $products = $stmt->get_result();
   <?php while($row = $products->fetch_assoc()) { ?>
     <tr id="product-<?php echo $row['product_id']; ?>">
         <td><?php echo $row['product_name']; ?></td>
-        <td><?php echo $row['product_category']; ?></td>
         <td><img src="./<?php echo $row['product_image']; ?>" width="65px" style="margin-bottom: 5px;" ></td>
         <td><?php echo $row['product_price']; ?></td>
-        <td><?php echo $row['product_special_offer']; ?></td>
         <td>
             <button class="btn btn-danger btn-sm" onclick="deleteProduct(<?php echo $row['product_id']; ?>)">Delete</button>
         </td>
