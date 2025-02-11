@@ -6,10 +6,9 @@ include_once "../php/config.php";
 // session_start();
 
 if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "admin") {
-  header("Location: ../craft.php"); // Redirect unauthorized users
+  header("Location: ../login.php"); // Redirect unauthorized users
   exit();
 }
-
 
 $sql = mysqli_query($conn, "SELECT * FROM users WHERE usertype = '{$_SESSION['usertype']}'");
 if (mysqli_num_rows($sql) > 0) {
@@ -24,7 +23,7 @@ if (mysqli_num_rows($sql) > 0) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/images/logo/icon-logo.png" type="image/x-icon" />
-    <title>Admin Products</title>
+    <title>Add Category</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
@@ -33,7 +32,6 @@ if (mysqli_num_rows($sql) > 0) {
     <link rel="stylesheet" href="assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="assets/css/fullcalendar.css" />
     <link rel="stylesheet" href="assets/css/main.css" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <body>
     <!-- ======== Preloader =========== -->
@@ -119,6 +117,7 @@ if (mysqli_num_rows($sql) > 0) {
                   <path
                     d="M3.33334 3.35442C3.33334 2.4223 4.07954 1.66666 5.00001 1.66666H15C15.9205 1.66666 16.6667 2.4223 16.6667 3.35442V16.8565C16.6667 17.5519 15.8827 17.9489 15.3333 17.5317L13.8333 16.3924C13.537 16.1673 13.1297 16.1673 12.8333 16.3924L10.5 18.1646C10.2037 18.3896 9.79634 18.3896 9.50001 18.1646L7.16668 16.3924C6.87038 16.1673 6.46298 16.1673 6.16668 16.3924L4.66668 17.5317C4.11731 17.9489 3.33334 17.5519 3.33334 16.8565V3.35442ZM4.79168 5.04218C4.79168 5.39173 5.0715 5.6751 5.41668 5.6751H10C10.3452 5.6751 10.625 5.39173 10.625 5.04218C10.625 4.69264 10.3452 4.40927 10 4.40927H5.41668C5.0715 4.40927 4.79168 4.69264 4.79168 5.04218ZM5.41668 7.7848C5.0715 7.7848 4.79168 8.06817 4.79168 8.41774C4.79168 8.76724 5.0715 9.05066 5.41668 9.05066H10C10.3452 9.05066 10.625 8.76724 10.625 8.41774C10.625 8.06817 10.3452 7.7848 10 7.7848H5.41668ZM4.79168 11.7932C4.79168 12.1428 5.0715 12.4262 5.41668 12.4262H10C10.3452 12.4262 10.625 12.1428 10.625 11.7932C10.625 11.4437 10.3452 11.1603 10 11.1603H5.41668C5.0715 11.1603 4.79168 11.4437 4.79168 11.7932ZM13.3333 4.40927C12.9882 4.40927 12.7083 4.69264 12.7083 5.04218C12.7083 5.39173 12.9882 5.6751 13.3333 5.6751H14.5833C14.9285 5.6751 15.2083 5.39173 15.2083 5.04218C15.2083 4.69264 14.9285 4.40927 14.5833 4.40927H13.3333ZM12.7083 8.41774C12.7083 8.76724 12.9882 9.05066 13.3333 9.05066H14.5833C14.9285 9.05066 15.2083 8.76724 15.2083 8.41774C15.2083 8.06817 14.9285 7.7848 14.5833 7.7848H13.3333C12.9882 7.7848 12.7083 8.06817 12.7083 8.41774ZM13.3333 11.1603C12.9882 11.1603 12.7083 11.4437 12.7083 11.7932C12.7083 12.1428 12.9882 12.4262 13.3333 12.4262H14.5833C14.9285 12.4262 15.2083 12.1428 15.2083 11.7932C15.2083 11.4437 14.9285 11.1603 14.5833 11.1603H13.3333Z" />
                 </svg>
+
               </span>
               <span class="text">Invoice</span>
             </a>
@@ -514,7 +513,7 @@ if (mysqli_num_rows($sql) > 0) {
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h2>Product Page</h2>
+                  <h2>Add Product</h2>
                 </div>
               </div>
               <!-- end col -->
@@ -522,8 +521,7 @@ if (mysqli_num_rows($sql) > 0) {
                 <div class="breadcrumb-wrapper">
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                    <a href="adds.product.php" class="main-btn primary-btn btn-hover btn-sm">
-                    <i class="lni lni-plus mr-5"></i> New Product</a>
+
                     </ol>
                   </nav>
                 </div>
@@ -534,194 +532,104 @@ if (mysqli_num_rows($sql) > 0) {
           </div>
           <!-- ========== title-wrapper end ========== -->
           
-         
-<?php
-
-$stmt = $conn->prepare("SELECT * FROM products ORDER BY product_id DESC");
-
-$stmt->execute();
-
-$products = $stmt->get_result();
-
-
-?>
-
-
-
-        
-<style>
-  .table-light th, 
-  .table-light td {
-      text-align: center;
-      vertical-align: middle; /* Ensures vertical centering */
-  }
-
-  .table-light img {
-      display: block;
-      margin: 0 auto; /* Centers images */
-  }
-
-  .table-light button {
-      display: block;
-      margin: 0 auto; /* Centers buttons */
-  }
-
-  .table-light th,
-  .table-light td {
-      background-color: #fff !important; /* Lightest possible shade */
-      color: #333; /* Darker text for readability */
-  }
-
-  .table-light thead {
-      background-color: #fff !important; /* Pure white header */
-  }
-
-  .button {
-    border: none;
-    background: none;
-  }
-  .delete-image{
-    width: 40px;
-  
-  }
+           
+          <style>
+    .custom-form {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f8f9fa;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 </style>
 
-<table class="table table-light">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Delete</th>
-      <th scope="col">Update</th>
-      <th scope="col">View</th>
-    </tr>
-  </thead>
-  <tbody>
-  <?php while($row = $products->fetch_assoc()) { ?>
-    <tr id="product-<?php echo $row['product_id']; ?>">
-        <td><?php echo $row['product_name']; ?></td>
-        <td><?php echo $row['product_price']; ?></td>
-        <td>
-            <button class="button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image"></button>
-        </td>
-        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px"></button></td>
-        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=fhXWXkFdxrRk&format=png&color=1A1A1A" style="width: 50px"></button></td>
-    </tr>
-<?php } ?>
-  </tbody>
-</table>
+<form class="custom-form" action="adds.category.php" method="POST" enctype="multipart/form-data">
+    <h2 class="mb-3 text-center">Add New Category</h2>
 
-              
-          
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label class="form-label fw-bold">Category Name</label>
+            <input type="text" class="form-control" name="category_name" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label class="form-label fw-bold">Category Image (Optional)</label>
+            <input type="file" class="form-control" name="category_image">
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" name="addcategory">Add Category</button>
+</form>
+
+
 <?php
-// Include your database connection file
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $product_id = $_POST['product_id'];
 
-    // Prepare and execute the delete query
-    $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
-    $stmt->bind_param("i", $product_id);
 
-    if ($stmt->execute()) {
-        // echo "Product deleted successfully.";
-    } else {
-        echo "Error deleting product.";
+if (isset($_POST['addcategory'])) {
+    $category_name = trim($_POST['category_name']); // Trim to avoid unwanted spaces
+
+    // Check if the category already exists
+    $check_query = "SELECT * FROM categories WHERE category_name = ?";
+    $stmt = $conn->prepare($check_query);
+    $stmt->bind_param("s", $category_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Category already exists!'); window.location.href='adds.category.php';</script>";
+        exit();
     }
 
+    // Upload category image if provided
+    $category_image = "";
+    if (!empty($_FILES['category_image']['name'])) {
+        $target_dir = "imgproducts/"; // Upload to imgproducts folder
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
+        $file_ext = pathinfo($_FILES["category_image"]["name"], PATHINFO_EXTENSION);
+        $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (!in_array(strtolower($file_ext), $allowed_types)) {
+            echo "<script>alert('Invalid image format! Only JPG, JPEG, PNG & GIF allowed.'); window.location.href='adds.category.php';</script>";
+            exit();
+        }
+
+        $unique_name = uniqid() . "." . $file_ext;
+        $target_file = $target_dir . $unique_name;
+
+        if (move_uploaded_file($_FILES["category_image"]["tmp_name"], $target_file)) {
+            $category_image = $target_file;
+        } else {
+            echo "<script>alert('Error uploading image.'); window.location.href='adds.category.php';</script>";
+            exit();
+        }
+    }
+
+    // Insert category into database
+    $insert_query = "INSERT INTO categories (category_name, category_image) VALUES (?, ?)";
+    $stmt = $conn->prepare($insert_query);
+    $stmt->bind_param("ss", $category_name, $category_image);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Category added successfully!'); window.location.href='adds.category.php';</script>";
+    } else {
+        echo "<script>alert('Error adding category.'); window.location.href='adds.category.php';</script>";
+    }
+
+    // Close connection
     $stmt->close();
     $conn->close();
 }
 ?>
-<script>
-function deleteProduct(productId) {
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Create an XMLHttpRequest object
-            var xhr = new XMLHttpRequest();
 
-            // Define the request
-            xhr.open("POST", "product.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            // Define what happens on successful data submission
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    // Remove the row from the table
-                    var row = document.getElementById("product-" + productId);
-                    if (row) {
-                        row.remove();
-                    }
-                    // Success Toast
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 1000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "success",
-                        title: "Product deleted successfully"
-                    });
-                } else {
-                    // Error Toast
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
-                    Toast.fire({
-                        icon: "error",
-                        title: "Error deleting product"
-                    });
-                }
-            };
-
-            // Define what happens in case of error
-            xhr.onerror = function() {
-                // Error Toast
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
-                Toast.fire({
-                    icon: "error",
-                    title: "Request failed. Please try again."
-                });
-            };
-
-            // Send the request
-            xhr.send("product_id=" + productId);
-        }
-    });
-}
-</script>
-
+              
+          
        
 
       
@@ -1307,3 +1215,91 @@ function deleteProduct(productId) {
     </script>
   </body>
 </html>
+
+<?php
+
+
+// Handle form submission
+if (isset($_POST['addproduct'])) {
+    $product_name = trim($_POST['product_name']);
+    $product_category = trim($_POST['product_category']);
+    $product_description = trim($_POST['product_description']);
+    $product_price = $_POST['product_price'];
+    $product_special_offer = $_POST['product_special_offer'] ?? 0;
+    $product_color = trim($_POST['product_color']);
+
+    // Check if product already exists in the database
+    $check_query = "SELECT * FROM products WHERE product_name = ?";
+    $stmt_check = $conn->prepare($check_query);
+    $stmt_check->bind_param("s", $product_name);
+    $stmt_check->execute();
+    $result = $stmt_check->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Product with the same name already exists!'); window.location.href='adds.product.php';</script>";
+        exit();
+    }
+    $stmt_check->close(); // Close the check statement
+
+    // Image Upload Directory
+    $target_dir = "imgproducts/";
+
+    // Ensure directory exists
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
+
+    // Function to upload images
+    function uploadImage($file, $target_dir) {
+        if (!empty($file['name'])) {
+            $file_ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+            // Validate file type
+            if (!in_array(strtolower($file_ext), $allowed_types)) {
+                die("Error: Only JPG, JPEG, PNG & GIF files are allowed.");
+            }
+
+            // Generate unique filename
+            $unique_name = uniqid() . "." . $file_ext;
+            $target_file = $target_dir . $unique_name;
+
+            if (move_uploaded_file($file["tmp_name"], $target_file)) {
+                return $target_file; // Return the stored path
+            } else {
+                die("Error uploading image.");
+            }
+        }
+        return "";
+    }
+
+    // Upload product images
+    $product_image = uploadImage($_FILES['product_image'], $target_dir);
+    $product_image2 = uploadImage($_FILES['product_image2'], $target_dir);
+    $product_image3 = uploadImage($_FILES['product_image3'], $target_dir);
+    $product_image4 = uploadImage($_FILES['product_image4'], $target_dir);
+
+    // SQL Insert Query
+    $sql = "INSERT INTO products (product_name, product_category, product_description, product_image, product_image2, product_image3, product_image4, product_price, product_special_offer, product_color)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    // Prepare and bind
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssdis", $product_name, $product_category, $product_description, $product_image, $product_image2, $product_image3, $product_image4, $product_price, $product_special_offer, $product_color);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Product added successfully!'); window.location.href='adds.product.php';</script>";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close connections
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+
+
+
+

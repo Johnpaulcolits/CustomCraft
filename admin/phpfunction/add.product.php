@@ -62,7 +62,7 @@ if (isset($_POST['addproduct'])) {
     $stmt->bind_param("sssssssdis", $product_name, $product_category, $product_description, $product_image, $product_image2, $product_image3, $product_image4, $product_price, $product_special_offer, $product_color);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Product added successfully!'); window.location.href='your_form_page.php';</script>";
+        echo "<script>alert('Product added successfully!'); window.location.href='';</script>";
     } else {
         echo "Error: " . $stmt->error;
     }

@@ -6,7 +6,7 @@ include_once "../php/config.php";
 // session_start();
 
 if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "admin") {
-  header("Location: ../login.php"); // Redirect unauthorized users
+  header("Location: ../craft.php"); // Redirect unauthorized users
   exit();
 }
 
@@ -93,11 +93,17 @@ if (mysqli_num_rows($sql) > 0) {
                     d="M13.125 2.29167L16.0417 5.20834H14.1667C13.5913 5.20834 13.125 4.74197 13.125 4.16667V2.29167Z" />
                 </svg>
               </span>
-              <span class="text">Pages</span>
+              <span class="text">Products</span>
             </a>
             <ul id="ddmenu_2" class="collapse dropdown-nav">
               <li>
                 <a href="settings.html"> Settings </a>
+              </li>
+              <li>
+                <a href="product.php"> List of Products </a>
+              </li>
+              <li>
+                <a href="category.php"> Category </a>
               </li>
               <li>
                 <a href="blank-page.html"> Blank Page </a> 

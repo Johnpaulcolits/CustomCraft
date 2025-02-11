@@ -93,11 +93,17 @@ if (mysqli_num_rows($sql) > 0) {
                     d="M13.125 2.29167L16.0417 5.20834H14.1667C13.5913 5.20834 13.125 4.74197 13.125 4.16667V2.29167Z" />
                 </svg>
               </span>
-              <span class="text">Pages</span>
+              <span class="text">Products</span>
             </a>
             <ul id="ddmenu_2" class="collapse dropdown-nav">
               <li>
                 <a href="settings.html"> Settings </a>
+              </li>
+              <li>
+                <a href="product.php"> List of Products </a>
+              </li>
+              <li>
+                <a href="category.php"> Category </a>
               </li>
               <li>
                 <a href="blank-page.html"> Blank Page </a> 
@@ -111,6 +117,7 @@ if (mysqli_num_rows($sql) > 0) {
                   <path
                     d="M3.33334 3.35442C3.33334 2.4223 4.07954 1.66666 5.00001 1.66666H15C15.9205 1.66666 16.6667 2.4223 16.6667 3.35442V16.8565C16.6667 17.5519 15.8827 17.9489 15.3333 17.5317L13.8333 16.3924C13.537 16.1673 13.1297 16.1673 12.8333 16.3924L10.5 18.1646C10.2037 18.3896 9.79634 18.3896 9.50001 18.1646L7.16668 16.3924C6.87038 16.1673 6.46298 16.1673 6.16668 16.3924L4.66668 17.5317C4.11731 17.9489 3.33334 17.5519 3.33334 16.8565V3.35442ZM4.79168 5.04218C4.79168 5.39173 5.0715 5.6751 5.41668 5.6751H10C10.3452 5.6751 10.625 5.39173 10.625 5.04218C10.625 4.69264 10.3452 4.40927 10 4.40927H5.41668C5.0715 4.40927 4.79168 4.69264 4.79168 5.04218ZM5.41668 7.7848C5.0715 7.7848 4.79168 8.06817 4.79168 8.41774C4.79168 8.76724 5.0715 9.05066 5.41668 9.05066H10C10.3452 9.05066 10.625 8.76724 10.625 8.41774C10.625 8.06817 10.3452 7.7848 10 7.7848H5.41668ZM4.79168 11.7932C4.79168 12.1428 5.0715 12.4262 5.41668 12.4262H10C10.3452 12.4262 10.625 12.1428 10.625 11.7932C10.625 11.4437 10.3452 11.1603 10 11.1603H5.41668C5.0715 11.1603 4.79168 11.4437 4.79168 11.7932ZM13.3333 4.40927C12.9882 4.40927 12.7083 4.69264 12.7083 5.04218C12.7083 5.39173 12.9882 5.6751 13.3333 5.6751H14.5833C14.9285 5.6751 15.2083 5.39173 15.2083 5.04218C15.2083 4.69264 14.9285 4.40927 14.5833 4.40927H13.3333ZM12.7083 8.41774C12.7083 8.76724 12.9882 9.05066 13.3333 9.05066H14.5833C14.9285 9.05066 15.2083 8.76724 15.2083 8.41774C15.2083 8.06817 14.9285 7.7848 14.5833 7.7848H13.3333C12.9882 7.7848 12.7083 8.06817 12.7083 8.41774ZM13.3333 11.1603C12.9882 11.1603 12.7083 11.4437 12.7083 11.7932C12.7083 12.1428 12.9882 12.4262 13.3333 12.4262H14.5833C14.9285 12.4262 15.2083 12.1428 15.2083 11.7932C15.2083 11.4437 14.9285 11.1603 14.5833 11.1603H13.3333Z" />
                 </svg>
+
               </span>
               <span class="text">Invoice</span>
             </a>
@@ -1192,14 +1199,28 @@ if (mysqli_num_rows($sql) > 0) {
 
 <?php
 
+
 // Handle form submission
 if (isset($_POST['addproduct'])) {
-    $product_name = $_POST['product_name'];
-    $product_category = $_POST['product_category'];
-    $product_description = $_POST['product_description'];
+    $product_name = trim($_POST['product_name']);
+    $product_category = trim($_POST['product_category']);
+    $product_description = trim($_POST['product_description']);
     $product_price = $_POST['product_price'];
     $product_special_offer = $_POST['product_special_offer'] ?? 0;
-    $product_color = $_POST['product_color'];
+    $product_color = trim($_POST['product_color']);
+
+    // Check if product already exists in the database
+    $check_query = "SELECT * FROM products WHERE product_name = ?";
+    $stmt_check = $conn->prepare($check_query);
+    $stmt_check->bind_param("s", $product_name);
+    $stmt_check->execute();
+    $result = $stmt_check->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Product with the same name already exists!'); window.location.href='adds.product.php';</script>";
+        exit();
+    }
+    $stmt_check->close(); // Close the check statement
 
     // Image Upload Directory
     $target_dir = "imgproducts/";
@@ -1248,7 +1269,7 @@ if (isset($_POST['addproduct'])) {
     $stmt->bind_param("sssssssdis", $product_name, $product_category, $product_description, $product_image, $product_image2, $product_image3, $product_image4, $product_price, $product_special_offer, $product_color);
 
     if ($stmt->execute()) {
-        echo "<script>alert('Product added successfully!'); window.location.href='your_form_page.php';</script>";
+        echo "<script>alert('Product added successfully!'); window.location.href='adds.product.php';</script>";
     } else {
         echo "Error: " . $stmt->error;
     }
@@ -1257,14 +1278,6 @@ if (isset($_POST['addproduct'])) {
     $stmt->close();
     $conn->close();
 }
-
-
-
-
-
-
-
-
 ?>
 
 

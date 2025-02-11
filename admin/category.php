@@ -10,7 +10,6 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "admin") {
   exit();
 }
 
-
 $sql = mysqli_query($conn, "SELECT * FROM users WHERE usertype = '{$_SESSION['usertype']}'");
 if (mysqli_num_rows($sql) > 0) {
     $row = mysqli_fetch_assoc($sql);
@@ -24,7 +23,7 @@ if (mysqli_num_rows($sql) > 0) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/images/logo/icon-logo.png" type="image/x-icon" />
-    <title>Admin Products</title>
+    <title>Products Category</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
@@ -514,7 +513,7 @@ if (mysqli_num_rows($sql) > 0) {
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h2>Product Page</h2>
+                  <h2>Category Page</h2>
                 </div>
               </div>
               <!-- end col -->
@@ -522,9 +521,9 @@ if (mysqli_num_rows($sql) > 0) {
                 <div class="breadcrumb-wrapper">
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                    <a href="adds.product.php" class="main-btn primary-btn btn-hover btn-sm">
-                    <i class="lni lni-plus mr-5"></i> New Product</a>
-                    </ol>
+                    <a href="adds.category.php" class="main-btn primary-btn btn-hover btn-sm">
+                    <i class="lni lni-plus mr-5"></i> New Category</a>
+                    </ol>   
                   </nav>
                 </div>
               </div>
@@ -537,7 +536,7 @@ if (mysqli_num_rows($sql) > 0) {
          
 <?php
 
-$stmt = $conn->prepare("SELECT * FROM products ORDER BY product_id DESC");
+$stmt = $conn->prepare("SELECT * FROM categories ORDER BY category_id DESC");
 
 $stmt->execute();
 
@@ -587,53 +586,49 @@ $products = $stmt->get_result();
 </style>
 
 <table class="table table-light">
-  <thead>
-    <tr>
-      <th scope="col">Name</th>
-      <th scope="col">Price</th>
-      <th scope="col">Delete</th>
-      <th scope="col">Update</th>
-      <th scope="col">View</th>
-    </tr>
-  </thead>
-  <tbody>
-  <?php while($row = $products->fetch_assoc()) { ?>
-    <tr id="product-<?php echo $row['product_id']; ?>">
-        <td><?php echo $row['product_name']; ?></td>
-        <td><?php echo $row['product_price']; ?></td>
-        <td>
-            <button class="button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image"></button>
-        </td>
-        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px"></button></td>
-        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=fhXWXkFdxrRk&format=png&color=1A1A1A" style="width: 50px"></button></td>
-    </tr>
-<?php } ?>
-  </tbody>
+    <thead>
+        <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Name</th>
+            <th scope="col">Delete</th>
+            <th scope="col">Update</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php while($row = $products->fetch_assoc()) { ?>
+            <tr id="category-<?php echo $row['category_id']; ?>">
+                <td><img src="<?php echo $row['category_image']; ?>" width="100px"></td>
+                <td><?php echo $row['category_name']; ?></td>
+                <td>
+                    <button class="button" onclick="deleteProduct(<?php echo $row['category_id']; ?>, '<?php echo $row['category_image']; ?>')">
+                        <img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image">
+                    </button>
+                </td>
+                <td>
+                    <button class="button">
+                        <img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px">
+                    </button>
+                </td>
+            </tr>   
+        <?php } ?>
+    </tbody>
 </table>
 
-              
-          
-<?php
-// Include your database connection file
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $product_id = $_POST['product_id'];
 
-    // Prepare and execute the delete query
-    $stmt = $conn->prepare("DELETE FROM products WHERE product_id = ?");
-    $stmt->bind_param("i", $product_id);
-
-    if ($stmt->execute()) {
-        // echo "Product deleted successfully.";
-    } else {
-        echo "Error deleting product.";
-    }
-
-    $stmt->close();
-    $conn->close();
-}
-?>
 <script>
-function deleteProduct(productId) {
+const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+    }
+});
+
+function deleteProduct(categoryId, categoryImage) {
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -644,85 +639,71 @@ function deleteProduct(productId) {
         confirmButtonText: "Yes, delete it!"
     }).then((result) => {
         if (result.isConfirmed) {
-            // Create an XMLHttpRequest object
-            var xhr = new XMLHttpRequest();
-
-            // Define the request
-            xhr.open("POST", "product.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-            // Define what happens on successful data submission
-            xhr.onload = function() {
-                if (xhr.status === 200) {
-                    // Remove the row from the table
-                    var row = document.getElementById("product-" + productId);
-                    if (row) {
-                        row.remove();
-                    }
-                    // Success Toast
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 1000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
+            fetch('category.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `id=${categoryId}&image=${categoryImage}`
+            })
+            .then(response => response.text())
+            .then(data => {
+                if (data.includes("success")) {
+                    document.getElementById(`category-${categoryId}`).remove();
                     Toast.fire({
                         icon: "success",
-                        title: "Product deleted successfully"
+                        title: "Deleted successfully"
                     });
                 } else {
-                    // Error Toast
-                    const Toast = Swal.mixin({
-                        toast: true,
-                        position: "top-end",
-                        showConfirmButton: false,
-                        timer: 3000,
-                        timerProgressBar: true,
-                        didOpen: (toast) => {
-                            toast.onmouseenter = Swal.stopTimer;
-                            toast.onmouseleave = Swal.resumeTimer;
-                        }
-                    });
                     Toast.fire({
                         icon: "error",
-                        title: "Error deleting product"
+                        title: "Failed to delete category"
                     });
                 }
-            };
-
-            // Define what happens in case of error
-            xhr.onerror = function() {
-                // Error Toast
-                const Toast = Swal.mixin({
-                    toast: true,
-                    position: "top-end",
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                    didOpen: (toast) => {
-                        toast.onmouseenter = Swal.stopTimer;
-                        toast.onmouseleave = Swal.resumeTimer;
-                    }
-                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
                 Toast.fire({
                     icon: "error",
-                    title: "Request failed. Please try again."
+                    title: "An error occurred. Please try again."
                 });
-            };
-
-            // Send the request
-            xhr.send("product_id=" + productId);
+            });
         }
     });
 }
 </script>
 
-       
+
+<?php
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $id = $_POST['id'];
+    $image = $_POST['image'];
+    $imagePath =  $image;
+
+    // Delete the product from the database
+    $deleteQuery = "DELETE FROM categories WHERE category_id = ?";
+    $deleteStmt = $conn->prepare($deleteQuery);
+    $deleteStmt->bind_param("i", $id);
+
+    if ($deleteStmt->execute()) {
+        // Remove the image file from the folder if it exists
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+        
+    } else {
+     
+    }
+
+    $deleteStmt->close();
+    $conn->close();
+}
+?>
+
+
+                
+            
+    
 
       
         <!-- end container -->
