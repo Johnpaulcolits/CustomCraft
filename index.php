@@ -28,6 +28,7 @@
   <link rel="shortcut icon" href="./admin/assets/images/logo/icon-logo.png" type="image/x-icon" />
 </head>
 <body>
+  <h1>Tang ina nyung lahat</h1>
   <div class="wrapper">
     <section class="form signup">
       <header>Realtime Chat App</header>
