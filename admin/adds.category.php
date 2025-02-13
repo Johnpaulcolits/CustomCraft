@@ -476,7 +476,7 @@ if (mysqli_num_rows($sql) > 0) {
                     </li> -->
                     <li class="divider"></li>
                     <li>
-                      <a href="#0">
+                      <a href="view.profile.php">
                         <i class="lni lni-user"></i> View Profile
                       </a>
                     </li>

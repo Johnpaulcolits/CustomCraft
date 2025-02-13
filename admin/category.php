@@ -476,7 +476,7 @@ if (mysqli_num_rows($sql) > 0) {
                     </li> -->
                     <li class="divider"></li>
                     <li>
-                      <a href="#0">
+                      <a href="view.profile.php">
                         <i class="lni lni-user"></i> View Profile
                       </a>
                     </li>
@@ -620,7 +620,7 @@ const Toast = Swal.mixin({
     toast: true,
     position: "top-end",
     showConfirmButton: false,
-    timer: 1500,
+    timer: 1000,
     timerProgressBar: true,
     didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
