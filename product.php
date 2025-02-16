@@ -52,7 +52,7 @@ if (mysqli_num_rows($sql) > 0) {
                   <a class="nav-link" href="#">Contact Us</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Create Your's</a>
+                  <a class="nav-link" href="customize.php">Create Your's</a>
                 </li>
 
                 <li class="nav-item">
