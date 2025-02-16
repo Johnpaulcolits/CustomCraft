@@ -9,7 +9,7 @@
          header("Location: moderator_dashboard.php"); // Redirect moderator
          exit();
      } else {
-         header("location: users.php"); // Redirect regular user
+         header("location: product.php"); // Redirect regular user
          exit();
      }
  }

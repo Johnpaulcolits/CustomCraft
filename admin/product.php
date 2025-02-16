@@ -98,21 +98,21 @@ if (mysqli_num_rows($sql) > 0) {
               <span class="text">Products</span>
             </a>
             <ul id="ddmenu_2" class="collapse dropdown-nav">
-              <li>
+              <!-- <li>
                 <a href="settings.html"> Settings </a>
-              </li>
+              </li> -->
               <li>
                 <a href="product.php"> List of Products </a>
               </li>
               <li>
                 <a href="category.php"> Category </a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="blank-page.html"> Blank Page </a> 
-              </li>
+              </li> -->
             </ul>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="invoice.html">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -122,7 +122,7 @@ if (mysqli_num_rows($sql) > 0) {
               </span>
               <span class="text">Invoice</span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="product.php">
               <span class="icon">
@@ -134,7 +134,7 @@ if (mysqli_num_rows($sql) > 0) {
               <span class="text">Orders</span>
             </a>
           </li>
-          <li class="nav-item nav-item-has-children">
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -162,9 +162,9 @@ if (mysqli_num_rows($sql) > 0) {
                 <a href="signup.html"> Sign Up </a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <span class="divider"><hr /></span>
-          <li class="nav-item nav-item-has-children">
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -202,8 +202,8 @@ if (mysqli_num_rows($sql) > 0) {
                 <a href="typography.html"> Typography </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item nav-item-has-children">
+          </li> -->
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -237,8 +237,8 @@ if (mysqli_num_rows($sql) > 0) {
                 <a href="mdi-icons.html"> MDI Icons </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item nav-item-has-children">
+          </li> -->
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -261,9 +261,9 @@ if (mysqli_num_rows($sql) > 0) {
                 <a href="form-elements.html"> From Elements </a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <li class="nav-item">
-            <a href="tables.html">
+            <a href="customer.php">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -274,11 +274,11 @@ if (mysqli_num_rows($sql) > 0) {
                     d="M2.5 16.875C2.15483 16.875 1.875 17.1548 1.875 17.5C1.875 17.8452 2.15483 18.125 2.5 18.125H17.5C17.8452 18.125 18.125 17.8452 18.125 17.5C18.125 17.1548 17.8452 16.875 17.5 16.875H2.5Z" />
                 </svg>
               </span>
-              <span class="text">Tables</span>
+              <span class="text">Customer</span>
             </a>
           </li>
           <span class="divider"><hr /></span>
-
+<!-- 
           <li class="nav-item">
             <a href="notification.html">
               <span class="icon">
@@ -295,7 +295,7 @@ if (mysqli_num_rows($sql) > 0) {
               </span>
               <span class="text">Notifications</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <!-- <div class="promo-box">
@@ -487,10 +487,10 @@ if (mysqli_num_rows($sql) > 0) {
                       </a>
                     </li> -->
                     <li>
-                      <a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
+                      <a href="./adminchat/users.php"> <i class="lni lni-facebook-messenger"></i> Messages </a>
                     </li>
                     <li>
-                      <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
+                      <a href="settings.php"> <i class="lni lni-cog"></i> Settings </a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -602,17 +602,23 @@ $products = $stmt->get_result();
         <td><?php echo $row['product_name']; ?></td>
         <td><?php echo $row['product_price']; ?></td>
         <td>
-            <button class="button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image"></button>
+            <button class="button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image" style="width: 30px;"></button>
         </td>
-        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px"></button></td>
-        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=fhXWXkFdxrRk&format=png&color=1A1A1A" style="width: 50px"></button></td>
+        <!-- Button to trigger modal -->
+        <td>
+  <button class="button" data-bs-toggle="modal" data-bs-target="#addProductModal" data-product-id="<?php echo $row['product_id']; ?>">
+    <img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 25px">
+  </button>
+</td>
+        <!-- <td><button class="button"><img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px"></button></td> -->
+        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=fhXWXkFdxrRk&format=png&color=1A1A1A" style="width: 30px"></button></td>
     </tr>
 <?php } ?>
   </tbody>
 </table>
 
-              
-          
+
+            
 <?php
 // Include your database connection file
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -722,7 +728,82 @@ function deleteProduct(productId) {
 }
 </script>
 
-       
+  <!-- Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="addProductModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Product</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="custom-form" action="./update/update.product.php" method="POST" enctype="multipart/form-data">
+          <!-- Hidden input for product_id -->
+          <input type="text" name="product_id" id="modalProductId">
+          <div class="mb-3">
+            <label class="form-label fw-bold">Product Name</label>
+            <input type="text" class="form-control" name="product_name" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Category</label>
+            <input type="text" class="form-control" name="product_category" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Description</label>
+            <textarea class="form-control" name="product_description" rows="3" required></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Product Image 1</label>
+            <input type="file" class="form-control" name="product_image">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Product Image 2</label>
+            <input type="file" class="form-control" name="product_image2">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Product Image 3</label>
+            <input type="file" class="form-control" name="product_image3">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Product Image 4</label>
+            <input type="file" class="form-control" name="product_image4">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Price ($)</label>
+            <input type="number" class="form-control" name="product_price" step="0.01" min="0" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Special Offer (%)</label>
+            <input type="number" class="form-control" name="product_special_offer" min="0" max="99">
+          </div>
+          <div class="mb-3">
+            <label class="form-label fw-bold">Color</label>
+            <input type="text" class="form-control" name="product_color" required>
+          </div>
+          <button type="submit" class="btn btn-primary w-100" name="updateproduct">Update Product</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var addProductModal = document.getElementById('addProductModal');
+    addProductModal.addEventListener('show.bs.modal', function (event) {
+        // Button that triggered the modal
+        var button = event.relatedTarget;
+        // Extract info from data-product-id attribute
+        var productId = button.getAttribute('data-product-id');
+        // Update the modal's content.
+        var modalProductIdInput = addProductModal.querySelector('#modalProductId');
+        modalProductIdInput.value = productId;
+    });
+});
+</script>
+
+
+
 
       
         <!-- end container -->

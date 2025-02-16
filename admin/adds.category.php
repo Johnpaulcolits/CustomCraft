@@ -6,7 +6,7 @@ include_once "../php/config.php";
 // session_start();
 
 if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "admin") {
-  header("Location: ../login.php"); // Redirect unauthorized users
+  header("Location: ../craft.php"); // Redirect unauthorized users
   exit();
 }
 
@@ -96,21 +96,21 @@ if (mysqli_num_rows($sql) > 0) {
               <span class="text">Products</span>
             </a>
             <ul id="ddmenu_2" class="collapse dropdown-nav">
-              <li>
+              <!-- <li>
                 <a href="settings.html"> Settings </a>
-              </li>
+              </li> -->
               <li>
                 <a href="product.php"> List of Products </a>
               </li>
               <li>
                 <a href="category.php"> Category </a>
               </li>
-              <li>
+              <!-- <li>
                 <a href="blank-page.html"> Blank Page </a> 
-              </li>
+              </li> -->
             </ul>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="invoice.html">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -121,7 +121,7 @@ if (mysqli_num_rows($sql) > 0) {
               </span>
               <span class="text">Invoice</span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="product.php">
               <span class="icon">
@@ -130,10 +130,10 @@ if (mysqli_num_rows($sql) > 0) {
                     d="M3.33334 3.35442C3.33334 2.4223 4.07954 1.66666 5.00001 1.66666H15C15.9205 1.66666 16.6667 2.4223 16.6667 3.35442V16.8565C16.6667 17.5519 15.8827 17.9489 15.3333 17.5317L13.8333 16.3924C13.537 16.1673 13.1297 16.1673 12.8333 16.3924L10.5 18.1646C10.2037 18.3896 9.79634 18.3896 9.50001 18.1646L7.16668 16.3924C6.87038 16.1673 6.46298 16.1673 6.16668 16.3924L4.66668 17.5317C4.11731 17.9489 3.33334 17.5519 3.33334 16.8565V3.35442ZM4.79168 5.04218C4.79168 5.39173 5.0715 5.6751 5.41668 5.6751H10C10.3452 5.6751 10.625 5.39173 10.625 5.04218C10.625 4.69264 10.3452 4.40927 10 4.40927H5.41668C5.0715 4.40927 4.79168 4.69264 4.79168 5.04218ZM5.41668 7.7848C5.0715 7.7848 4.79168 8.06817 4.79168 8.41774C4.79168 8.76724 5.0715 9.05066 5.41668 9.05066H10C10.3452 9.05066 10.625 8.76724 10.625 8.41774C10.625 8.06817 10.3452 7.7848 10 7.7848H5.41668ZM4.79168 11.7932C4.79168 12.1428 5.0715 12.4262 5.41668 12.4262H10C10.3452 12.4262 10.625 12.1428 10.625 11.7932C10.625 11.4437 10.3452 11.1603 10 11.1603H5.41668C5.0715 11.1603 4.79168 11.4437 4.79168 11.7932ZM13.3333 4.40927C12.9882 4.40927 12.7083 4.69264 12.7083 5.04218C12.7083 5.39173 12.9882 5.6751 13.3333 5.6751H14.5833C14.9285 5.6751 15.2083 5.39173 15.2083 5.04218C15.2083 4.69264 14.9285 4.40927 14.5833 4.40927H13.3333ZM12.7083 8.41774C12.7083 8.76724 12.9882 9.05066 13.3333 9.05066H14.5833C14.9285 9.05066 15.2083 8.76724 15.2083 8.41774C15.2083 8.06817 14.9285 7.7848 14.5833 7.7848H13.3333C12.9882 7.7848 12.7083 8.06817 12.7083 8.41774ZM13.3333 11.1603C12.9882 11.1603 12.7083 11.4437 12.7083 11.7932C12.7083 12.1428 12.9882 12.4262 13.3333 12.4262H14.5833C14.9285 12.4262 15.2083 12.1428 15.2083 11.7932C15.2083 11.4437 14.9285 11.1603 14.5833 11.1603H13.3333Z" />
                 </svg>
               </span>
-              <span class="text">Products</span>
+              <span class="text">Ordes</span>
             </a>
           </li>
-          <li class="nav-item nav-item-has-children">
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -161,9 +161,9 @@ if (mysqli_num_rows($sql) > 0) {
                 <a href="signup.html"> Sign Up </a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <span class="divider"><hr /></span>
-          <li class="nav-item nav-item-has-children">
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -201,8 +201,8 @@ if (mysqli_num_rows($sql) > 0) {
                 <a href="typography.html"> Typography </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item nav-item-has-children">
+          </li> -->
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -236,8 +236,8 @@ if (mysqli_num_rows($sql) > 0) {
                 <a href="mdi-icons.html"> MDI Icons </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item nav-item-has-children">
+          </li> -->
+          <!-- <li class="nav-item nav-item-has-children">
             <a
               href="#0"
               class="collapsed"
@@ -260,9 +260,9 @@ if (mysqli_num_rows($sql) > 0) {
                 <a href="form-elements.html"> From Elements </a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <li class="nav-item">
-            <a href="tables.html">
+            <a href="customer.php">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -273,12 +273,12 @@ if (mysqli_num_rows($sql) > 0) {
                     d="M2.5 16.875C2.15483 16.875 1.875 17.1548 1.875 17.5C1.875 17.8452 2.15483 18.125 2.5 18.125H17.5C17.8452 18.125 18.125 17.8452 18.125 17.5C18.125 17.1548 17.8452 16.875 17.5 16.875H2.5Z" />
                 </svg>
               </span>
-              <span class="text">Tables</span>
+              <span class="text">Customer</span>
             </a>
           </li>
           <span class="divider"><hr /></span>
 
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="notification.html">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -294,7 +294,7 @@ if (mysqli_num_rows($sql) > 0) {
               </span>
               <span class="text">Notifications</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </nav>
       <!-- <div class="promo-box">
@@ -486,10 +486,10 @@ if (mysqli_num_rows($sql) > 0) {
                       </a>
                     </li> -->
                     <li>
-                      <a href="#0"> <i class="lni lni-inbox"></i> Messages </a>
+                      <a href="./adminchat/users.php">  <i class="lni lni-facebook-messenger"></i> Messages </a>
                     </li>
                     <li>
-                      <a href="#0"> <i class="lni lni-cog"></i> Settings </a>
+                      <a href="settings.php"> <i class="lni lni-cog"></i> Settings </a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -513,7 +513,7 @@ if (mysqli_num_rows($sql) > 0) {
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h2>Add Product</h2>
+                  <h2>Add Category</h2>
                 </div>
               </div>
               <!-- end col -->
@@ -558,7 +558,7 @@ if (mysqli_num_rows($sql) > 0) {
     <div class="row mb-3">
         <div class="col-md-12">
             <label class="form-label fw-bold">Category Image (Optional)</label>
-            <input type="file" class="form-control" name="category_image">
+            <input type="file" class="form-control" name="category_image" required>
         </div>
     </div>
 
@@ -620,6 +620,73 @@ if (isset($_POST['addcategory'])) {
         echo "<script>alert('Category added successfully!'); window.location.href='adds.category.php';</script>";
     } else {
         echo "<script>alert('Error adding category.'); window.location.href='adds.category.php';</script>";
+    }
+
+    // Close connection
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+<?php
+if (isset($_POST['updatecategory'])) {
+    $category_id = $_POST['category_id']; // Assume category_id is provided
+    $category_name = trim($_POST['category_name']); // Trim to avoid unwanted spaces
+
+    // Check if the category already exists (excluding the current category)
+    $check_query = "SELECT * FROM categories WHERE category_name = ? AND category_id != ?";
+    $stmt = $conn->prepare($check_query);
+    $stmt->bind_param("si", $category_name, $category_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Category name already exists!'); window.location.href='edit.category.php?id=$category_id';</script>";
+        exit();
+    }
+
+    // Handle category image upload if provided
+    $category_image = "";
+    if (!empty($_FILES['category_image']['name'])) {
+        $target_dir = "imgproducts/";
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
+        $file_ext = pathinfo($_FILES["category_image"]["name"], PATHINFO_EXTENSION);
+        $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (!in_array(strtolower($file_ext), $allowed_types)) {
+            echo "<script>alert('Invalid image format! Only JPG, JPEG, PNG & GIF allowed.'); window.location.href='edit.category.php?id=$category_id';</script>";
+            exit();
+        }
+
+        $unique_name = uniqid() . "." . $file_ext;
+        $target_file = $target_dir . $unique_name;
+
+        if (move_uploaded_file($_FILES["category_image"]["tmp_name"], $target_file)) {
+            $category_image = $target_file;
+        } else {
+            echo "<script>alert('Error uploading image.'); window.location.href='edit.category.php?id=$category_id';</script>";
+            exit();
+        }
+    }
+
+    // Update category in the database
+    if ($category_image) {
+        $update_query = "UPDATE categories SET category_name = ?, category_image = ? WHERE category_id = ?";
+        $stmt = $conn->prepare($update_query);
+        $stmt->bind_param("ssi", $category_name, $category_image, $category_id);
+    } else {
+        $update_query = "UPDATE categories SET category_name = ? WHERE category_id = ?";
+        $stmt = $conn->prepare($update_query);
+        $stmt->bind_param("si", $category_name, $category_id);
+    }
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Category updated successfully!'); window.location.href='categories.php';</script>";
+    } else {
+        echo "<script>alert('Error updating category.'); window.location.href='edit.category.php?id=$category_id';</script>";
     }
 
     // Close connection

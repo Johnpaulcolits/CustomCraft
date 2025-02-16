@@ -1,27 +1,18 @@
+<style>
+  .back-icon{
+    margin-left: 180px;
+    color: black;
+  }
+</style>
 <?php 
-// session_start();
-
-// if (isset($_SESSION['usertype'])) {
-//     if ($_SESSION['usertype'] == "admin") {
-//         header("Location: login.php"); // Redirect admin
-//         exit();
-//     } elseif ($_SESSION['usertype'] == "moderator") {
-//         header("Location: moderator_dashboard.php"); // Redirect moderator
-//         exit();
-//     } else {
-//         header("Location: login.php"); // Redirect regular user
-//         exit();
-//     }
-// }
-session_start();  
+  session_start();
+  include_once "../../php/config.php";
+  if(!isset($_SESSION['unique_id'])){
+    header("location: ../../../craft.php");
+  }
 ?>
-
-<?php
-include_once "php/config.php";
-include_once "header.php";
-?>
+<?php include_once "header.php"; ?>
 <body>
-
   <div class="wrapper">
     <section class="users">
       <header>
@@ -32,13 +23,14 @@ include_once "header.php";
               $row = mysqli_fetch_assoc($sql);
             }
           ?>
-          <img src="php/images/<?php echo $row['img']; ?>" alt="">
+          <img src="../../php/images/<?php echo $row['img']; ?>" alt="">
           <div class="details">
             <span><?php echo $row['fname']. " " . $row['lname'] ?></span>
             <p><?php echo $row['status']; ?></p>
           </div>
+          <a href="../../index.php" class="back-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
-        <a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout">Logout</a>
+        
       </header>
       <div class="search">
         <span class="text">Select an user to start chat</span>
@@ -52,7 +44,6 @@ include_once "header.php";
   </div>
 
   <script src="javascript/users.js"></script>
-  
+
 </body>
 </html>
-

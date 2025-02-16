@@ -6,7 +6,7 @@ include_once "../php/config.php";
 // session_start();
 
 if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "admin") {
-  header("Location: ../craft.php"); // Redirect unauthorized users
+  header("Location: ../login.php"); // Redirect unauthorized users
   exit();
 }
 
@@ -23,7 +23,7 @@ if (mysqli_num_rows($sql) > 0) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="assets/images/logo/icon-logo.png" type="image/x-icon" />
-    <title>CustomCraft - Admin</title>
+    <title>Add Category</title>
 
     <!-- ========== All CSS files linkup ========= -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
@@ -117,6 +117,7 @@ if (mysqli_num_rows($sql) > 0) {
                   <path
                     d="M3.33334 3.35442C3.33334 2.4223 4.07954 1.66666 5.00001 1.66666H15C15.9205 1.66666 16.6667 2.4223 16.6667 3.35442V16.8565C16.6667 17.5519 15.8827 17.9489 15.3333 17.5317L13.8333 16.3924C13.537 16.1673 13.1297 16.1673 12.8333 16.3924L10.5 18.1646C10.2037 18.3896 9.79634 18.3896 9.50001 18.1646L7.16668 16.3924C6.87038 16.1673 6.46298 16.1673 6.16668 16.3924L4.66668 17.5317C4.11731 17.9489 3.33334 17.5519 3.33334 16.8565V3.35442ZM4.79168 5.04218C4.79168 5.39173 5.0715 5.6751 5.41668 5.6751H10C10.3452 5.6751 10.625 5.39173 10.625 5.04218C10.625 4.69264 10.3452 4.40927 10 4.40927H5.41668C5.0715 4.40927 4.79168 4.69264 4.79168 5.04218ZM5.41668 7.7848C5.0715 7.7848 4.79168 8.06817 4.79168 8.41774C4.79168 8.76724 5.0715 9.05066 5.41668 9.05066H10C10.3452 9.05066 10.625 8.76724 10.625 8.41774C10.625 8.06817 10.3452 7.7848 10 7.7848H5.41668ZM4.79168 11.7932C4.79168 12.1428 5.0715 12.4262 5.41668 12.4262H10C10.3452 12.4262 10.625 12.1428 10.625 11.7932C10.625 11.4437 10.3452 11.1603 10 11.1603H5.41668C5.0715 11.1603 4.79168 11.4437 4.79168 11.7932ZM13.3333 4.40927C12.9882 4.40927 12.7083 4.69264 12.7083 5.04218C12.7083 5.39173 12.9882 5.6751 13.3333 5.6751H14.5833C14.9285 5.6751 15.2083 5.39173 15.2083 5.04218C15.2083 4.69264 14.9285 4.40927 14.5833 4.40927H13.3333ZM12.7083 8.41774C12.7083 8.76724 12.9882 9.05066 13.3333 9.05066H14.5833C14.9285 9.05066 15.2083 8.76724 15.2083 8.41774C15.2083 8.06817 14.9285 7.7848 14.5833 7.7848H13.3333C12.9882 7.7848 12.7083 8.06817 12.7083 8.41774ZM13.3333 11.1603C12.9882 11.1603 12.7083 11.4437 12.7083 11.7932C12.7083 12.1428 12.9882 12.4262 13.3333 12.4262H14.5833C14.9285 12.4262 15.2083 12.1428 15.2083 11.7932C15.2083 11.4437 14.9285 11.1603 14.5833 11.1603H13.3333Z" />
                 </svg>
+
               </span>
               <span class="text">Invoice</span>
             </a>
@@ -129,7 +130,7 @@ if (mysqli_num_rows($sql) > 0) {
                     d="M3.33334 3.35442C3.33334 2.4223 4.07954 1.66666 5.00001 1.66666H15C15.9205 1.66666 16.6667 2.4223 16.6667 3.35442V16.8565C16.6667 17.5519 15.8827 17.9489 15.3333 17.5317L13.8333 16.3924C13.537 16.1673 13.1297 16.1673 12.8333 16.3924L10.5 18.1646C10.2037 18.3896 9.79634 18.3896 9.50001 18.1646L7.16668 16.3924C6.87038 16.1673 6.46298 16.1673 6.16668 16.3924L4.66668 17.5317C4.11731 17.9489 3.33334 17.5519 3.33334 16.8565V3.35442ZM4.79168 5.04218C4.79168 5.39173 5.0715 5.6751 5.41668 5.6751H10C10.3452 5.6751 10.625 5.39173 10.625 5.04218C10.625 4.69264 10.3452 4.40927 10 4.40927H5.41668C5.0715 4.40927 4.79168 4.69264 4.79168 5.04218ZM5.41668 7.7848C5.0715 7.7848 4.79168 8.06817 4.79168 8.41774C4.79168 8.76724 5.0715 9.05066 5.41668 9.05066H10C10.3452 9.05066 10.625 8.76724 10.625 8.41774C10.625 8.06817 10.3452 7.7848 10 7.7848H5.41668ZM4.79168 11.7932C4.79168 12.1428 5.0715 12.4262 5.41668 12.4262H10C10.3452 12.4262 10.625 12.1428 10.625 11.7932C10.625 11.4437 10.3452 11.1603 10 11.1603H5.41668C5.0715 11.1603 4.79168 11.4437 4.79168 11.7932ZM13.3333 4.40927C12.9882 4.40927 12.7083 4.69264 12.7083 5.04218C12.7083 5.39173 12.9882 5.6751 13.3333 5.6751H14.5833C14.9285 5.6751 15.2083 5.39173 15.2083 5.04218C15.2083 4.69264 14.9285 4.40927 14.5833 4.40927H13.3333ZM12.7083 8.41774C12.7083 8.76724 12.9882 9.05066 13.3333 9.05066H14.5833C14.9285 9.05066 15.2083 8.76724 15.2083 8.41774C15.2083 8.06817 14.9285 7.7848 14.5833 7.7848H13.3333C12.9882 7.7848 12.7083 8.06817 12.7083 8.41774ZM13.3333 11.1603C12.9882 11.1603 12.7083 11.4437 12.7083 11.7932C12.7083 12.1428 12.9882 12.4262 13.3333 12.4262H14.5833C14.9285 12.4262 15.2083 12.1428 15.2083 11.7932C15.2083 11.4437 14.9285 11.1603 14.5833 11.1603H13.3333Z" />
                 </svg>
               </span>
-              <span class="text">Orders</span>
+              <span class="text">Ordes</span>
             </a>
           </li>
           <!-- <li class="nav-item nav-item-has-children">
@@ -260,21 +261,6 @@ if (mysqli_num_rows($sql) > 0) {
               </li>
             </ul>
           </li> -->
-          <!-- <li class="nav-item">
-            <a href="tables.html">
-              <span class="icon">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M1.66666 4.16667C1.66666 3.24619 2.41285 2.5 3.33332 2.5H16.6667C17.5872 2.5 18.3333 3.24619 18.3333 4.16667V9.16667C18.3333 10.0872 17.5872 10.8333 16.6667 10.8333H3.33332C2.41285 10.8333 1.66666 10.0872 1.66666 9.16667V4.16667Z" />
-                  <path
-                    d="M1.875 13.75C1.875 13.4048 2.15483 13.125 2.5 13.125H17.5C17.8452 13.125 18.125 13.4048 18.125 13.75C18.125 14.0952 17.8452 14.375 17.5 14.375H2.5C2.15483 14.375 1.875 14.0952 1.875 13.75Z" />
-                  <path
-                    d="M2.5 16.875C2.15483 16.875 1.875 17.1548 1.875 17.5C1.875 17.8452 2.15483 18.125 2.5 18.125H17.5C17.8452 18.125 18.125 17.8452 18.125 17.5C18.125 17.1548 17.8452 16.875 17.5 16.875H2.5Z" />
-                </svg>
-              </span>
-              <span class="text">Tables</span>
-            </a>
-          </li> -->
           <li class="nav-item">
             <a href="customer.php">
               <span class="icon">
@@ -290,21 +276,6 @@ if (mysqli_num_rows($sql) > 0) {
               <span class="text">Customer</span>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a href="tables.html">
-              <span class="icon">
-                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M1.66666 4.16667C1.66666 3.24619 2.41285 2.5 3.33332 2.5H16.6667C17.5872 2.5 18.3333 3.24619 18.3333 4.16667V9.16667C18.3333 10.0872 17.5872 10.8333 16.6667 10.8333H3.33332C2.41285 10.8333 1.66666 10.0872 1.66666 9.16667V4.16667Z" />
-                  <path
-                    d="M1.875 13.75C1.875 13.4048 2.15483 13.125 2.5 13.125H17.5C17.8452 13.125 18.125 13.4048 18.125 13.75C18.125 14.0952 17.8452 14.375 17.5 14.375H2.5C2.15483 14.375 1.875 14.0952 1.875 13.75Z" />
-                  <path
-                    d="M2.5 16.875C2.15483 16.875 1.875 17.1548 1.875 17.5C1.875 17.8452 2.15483 18.125 2.5 18.125H17.5C17.8452 18.125 18.125 17.8452 18.125 17.5C18.125 17.1548 17.8452 16.875 17.5 16.875H2.5Z" />
-                </svg>
-              </span>
-              <span class="text">Sale</span>
-            </a>
-          </li> -->
           <span class="divider"><hr /></span>
 
           <!-- <li class="nav-item">
@@ -515,8 +486,8 @@ if (mysqli_num_rows($sql) > 0) {
                       </a>
                     </li> -->
                     <li>
-                      <a href="./adminchat/users.php"> <i class="lni lni-facebook-messenger"></i> Messages </a>
-                    </li> 
+                      <a href="./adminchat/users.php">  <i class="lni lni-facebook-messenger"></i> Messages </a>
+                    </li>
                     <li>
                       <a href="settings.php"> <i class="lni lni-cog"></i> Settings </a>
                     </li>
@@ -542,748 +513,126 @@ if (mysqli_num_rows($sql) > 0) {
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h2>Admin Dashboard</h2>
+                  <h2>Add Product</h2>
                 </div>
               </div>
               <!-- end col -->
-              <!-- <div class="col-md-6">
+              <div class="col-md-6">
                 <div class="breadcrumb-wrapper">
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                      <li class="breadcrumb-item">
-                        <a href="#0">Dashboard</a>
-                      </li>
-                      <li class="breadcrumb-item active" aria-current="page">
-                        eCommerce
-                      </li>
+
                     </ol>
                   </nav>
                 </div>
-              </div> -->
+              </div>
               <!-- end col -->
             </div>
             <!-- end row -->
           </div>
           <!-- ========== title-wrapper end ========== -->
-          <div class="row">
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-              <div class="icon-card mb-30">
-                <div class="icon purple">
-                  <i class="lni lni-cart-full"></i>
-                </div>
-                <div class="content">
-                  <h6 class="mb-10">New Orders</h6>
-                  <h3 class="text-bold mb-10">34567</h3>
-                  <p class="text-sm text-success">
-                    <i class="lni lni-arrow-up"></i> +2.00%
-                    <span class="text-gray">(30 days)</span>
-                  </p>
-                </div>
-              </div>
-              <!-- End Icon Cart -->
-            </div>
-            <!-- End Col -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-              <div class="icon-card mb-30">
-                <div class="icon success">
-                  <i class="lni lni-dollar"></i>
-                </div>
-                <div class="content">
-                  <h6 class="mb-10">Total Income</h6>
-                  <h3 class="text-bold mb-10">$74,567</h3>
-                  <p class="text-sm text-success">
-                    <i class="lni lni-arrow-up"></i> +5.45%
-                    <span class="text-gray">Increased</span>
-                  </p>
-                </div>
-              </div>
-              <!-- End Icon Cart -->
-            </div>
-            <!-- End Col -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-              <div class="icon-card mb-30">
-                <div class="icon primary">
-                  <i class="lni lni-credit-cards"></i>
-                </div>
-                <div class="content">
-                  <h6 class="mb-10">Total Expense</h6>
-                  <h3 class="text-bold mb-10">$24,567</h3>
-                  <p class="text-sm text-danger">
-                    <i class="lni lni-arrow-down"></i> -2.00%
-                    <span class="text-gray">Expense</span>
-                  </p>
-                </div>
-              </div>
-              <!-- End Icon Cart -->
-            </div>
-            <!-- End Col -->
-            <div class="col-xl-3 col-lg-4 col-sm-6">
-              <div class="icon-card mb-30">
-                <div class="icon orange">
-                  <i class="lni lni-cart"></i>
-                </div>
-                <?php
+          
+           
+          <style>
+    .custom-form {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f8f9fa;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+</style>
 
+<form class="custom-form" action="adds.category.php" method="POST" enctype="multipart/form-data">
+    <h2 class="mb-3 text-center">Add New Category</h2>
 
-              $stmt = $conn->prepare("SELECT COUNT(*) AS total_products FROM products"); 
-              $stmt->execute();
-              $result = $stmt->get_result();
-              $row = $result->fetch_assoc();
-              $total_products = $row['total_products']; 
-                ?>
-
-<div class="content">
-  <h6 class="mb-10">Total Products</h6>
-  <h3 class="text-bold mb-10"><?php echo $total_products; ?></h3>
-  <p class="text-sm text-danger"> 
-    <i class="lni lni-arrow-down"></i> -25.00%
-    <span class="text-gray"> Earning</span>
-  </p>
-</div>
-
-              </div>
-              <!-- End Icon Cart -->
-            </div>
-            <!-- End Col -->
-          </div>
-          <!-- End Row -->
-          <div class="row">
-            <div class="col-lg-7">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap justify-content-between">
-                  <div class="left">
-                    <h6 class="text-medium mb-10">Yearly Stats</h6>
-                    <h3 class="text-bold">$245,479</h3>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1">
-                      <div class="select-position select-sm">
-                        <select class="light-bg">
-                          <option value="">Yearly</option>
-                          <option value="">Monthly</option>
-                          <option value="">Weekly</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                  <canvas id="Chart1" style="width: 100%; height: 400px; margin-left: -35px;"></canvas>
-                </div>
-                <!-- End Chart -->
-              </div>
-            </div>
-            <!-- End Col -->
-            <div class="col-lg-5">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                  <div class="left">
-                    <h6 class="text-medium mb-30">Sales/Revenue</h6>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1">
-                      <div class="select-position select-sm">
-                        <select class="light-bg">
-                          <option value="">Yearly</option>
-                          <option value="">Monthly</option>
-                          <option value="">Weekly</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                  <canvas id="Chart2" style="width: 100%; height: 400px; margin-left: -45px;"></canvas>
-                </div>
-                <!-- End Chart -->
-              </div>
-            </div>
-            <!-- End Col -->
-          </div>
-          <!-- End Row -->
-          <div class="row">
-            <div class="col-lg-5">
-              <div class="card-style mb-30">
-                <div class="title d-flex justify-content-between align-items-center">
-                  <div class="left">
-                    <h6 class="text-medium mb-30">Sells by State</h6>
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div id="map" style="width: 100%; height: 400px; overflow: hidden;"></div>
-                <p>Last updated: 7 days ago</p>
-              </div>
-            </div>
-            <!-- End Col -->
-            <div class="col-lg-7">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap justify-content-between align-items-center">
-                  <div class="left">
-                    <h6 class="text-medium mb-30">Top Selling Products</h6>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1">
-                      <div class="select-position select-sm">
-                        <select class="light-bg">
-                          <option value="">Yearly</option>
-                          <option value="">Monthly</option>
-                          <option value="">Weekly</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="table-responsive">
-                  <table class="table top-selling-table">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>
-                          <h6 class="text-sm text-medium">Products</h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">Category</h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">Price</h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">Sold</h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">Profit</h6>
-                        </th>
-                        <th></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="check-input-primary">
-                            <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                          </div>
-                        </td>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="assets/images/products/product-mini-1.jpg" alt="" />
-                            </div>
-                            <p class="text-sm">Arm Chair</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">43</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$45</p>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="check-input-primary">
-                            <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                          </div>
-                        </td>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="assets/images/products/product-mini-2.jpg" alt="" />
-                            </div>
-                            <p class="text-sm">SOfa</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$145</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">13</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$15</p>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="check-input-primary">
-                            <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                          </div>
-                        </td>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="assets/images/products/product-mini-3.jpg" alt="" />
-                            </div>
-                            <p class="text-sm">Dining Table</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$95</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">32</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$215</p>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="check-input-primary">
-                            <input class="form-check-input" type="checkbox" id="checkbox-1" />
-                          </div>
-                        </td>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="assets/images/products/product-mini-4.jpg" alt="" />
-                            </div>
-                            <p class="text-sm">Office Chair</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$105</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">23</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!-- End Table -->
-                </div>
-              </div>
-            </div>
-            <!-- End Col -->
-          </div>
-          <!-- End Row -->
-          <div class="row">
-            <div class="col-lg-7">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                  <div class="left">
-                    <h6 class="text-medium mb-2">Sales Forecast</h6>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1 mb-2">
-                      <div class="select-position select-sm">
-                        <select class="light-bg">
-                          <option value="">Last Month</option>
-                          <option value="">Last 3 Months</option>
-                          <option value="">Last Year</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                  <div id="legend3">
-                    <ul class="legend3 d-flex flex-wrap align-items-center mb-30">
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color primary-bg"> </span>
-                          <div class="text">
-                            <p class="text-sm text-success">
-                              <span class="text-dark">Revenue</span> +25.55%
-                              <i class="lni lni-arrow-up"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color purple-bg"></span>
-                          <div class="text">
-                            <p class="text-sm text-success">
-                              <span class="text-dark">Net Profit</span> +45.55%
-                              <i class="lni lni-arrow-up"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color orange-bg"></span>
-                          <div class="text">
-                            <p class="text-sm text-danger">
-                              <span class="text-dark">Order</span> -4.2%
-                              <i class="lni lni-arrow-down"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <canvas id="Chart3" style="width: 100%; height: 450px; margin-left: -35px;"></canvas>
-                </div>
-              </div>
-            </div>
-            <!-- End Col -->
-            <div class="col-lg-5">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                  <div class="left">
-                    <h6 class="text-medium mb-2">Traffic</h6>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1 mb-2">
-                      <div class="select-position select-sm">
-                        <select class="bg-ligh">
-                          <option value="">Last 6 Months</option>
-                          <option value="">Last 3 Months</option>
-                          <option value="">Last Year</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="chart">
-                  <div id="legend4">
-                    <ul class="legend3 d-flex flex-wrap gap-3 gap-sm-0 align-items-center mb-30">
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color primary-bg"> </span>
-                          <div class="text">
-                            <p class="text-sm text-success">
-                              <span class="text-dark">Store Visits</span>
-                              +25.55%
-                              <i class="lni lni-arrow-up"></i>
-                            </p>
-                            <h2>3456</h2>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color danger-bg"></span>
-                          <div class="text">
-                            <p class="text-sm text-danger">
-                              <span class="text-dark">Visitors</span> -2.05%
-                              <i class="lni lni-arrow-down"></i>
-                            </p>
-                            <h2>3456</h2>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                  <canvas id="Chart4" style="width: 100%; height: 420px; margin-left: -35px;"></canvas>
-                </div>
-                <!-- End Chart -->
-              </div>
-            </div>
-            <!-- End Col -->
-          </div>
-          <!-- End Row -->
-          <div class="row">
-            <div class="col-lg-5">
-              <div class="card-style calendar-card mb-30">
-                <div id="calendar-mini"></div>
-              </div>
-            </div>
-            <!-- End Col -->
-            <div class="col-lg-7">
-              <div class="card-style mb-30">
-                <div class="title d-flex flex-wrap align-items-center justify-content-between">
-                  <div class="left">
-                    <h6 class="text-medium mb-30">Sales History</h6>
-                  </div>
-                  <div class="right">
-                    <div class="select-style-1">
-                      <div class="select-position select-sm">
-                        <select class="light-bg">
-                          <option value="">Today</option>
-                          <option value="">Yesterday</option>
-                        </select>
-                      </div>
-                    </div>
-                    <!-- end select -->
-                  </div>
-                </div>
-                <!-- End Title -->
-                <div class="table-responsive">
-                  <table class="table top-selling-table">
-                    <thead>
-                      <tr>
-                        <th>
-                          <h6 class="text-sm text-medium">Products</h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">
-                            Category <i class="lni lni-arrows-vertical"></i>
-                          </h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">
-                            Revenue <i class="lni lni-arrows-vertical"></i>
-                          </h6>
-                        </th>
-                        <th class="min-width">
-                          <h6 class="text-sm text-medium">
-                            Status <i class="lni lni-arrows-vertical"></i>
-                          </h6>
-                        </th>
-                        <th>
-                          <h6 class="text-sm text-medium text-end">
-                            Actions <i class="lni lni-arrows-vertical"></i>
-                          </h6>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="assets/images/products/product-mini-1.jpg" alt="" />
-                            </div>
-                            <p class="text-sm">Bedroom</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <span class="status-btn close-btn">Pending</span>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="edit">
-                              <i class="lni lni-pencil"></i>
-                            </button>
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="assets/images/products/product-mini-2.jpg" alt="" />
-                            </div>
-                            <p class="text-sm">Arm Chair</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <span class="status-btn warning-btn">Refund</span>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="edit">
-                              <i class="lni lni-pencil"></i>
-                            </button>
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="assets/images/products/product-mini-3.jpg" alt="" />
-                            </div>
-                            <p class="text-sm">Sofa</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <span class="status-btn success-btn">Completed</span>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="edit">
-                              <i class="lni lni-pencil"></i>
-                            </button>
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div class="product">
-                            <div class="image">
-                              <img src="assets/images/products/product-mini-4.jpg" alt="" />
-                            </div>
-                            <p class="text-sm">Kitchen</p>
-                          </div>
-                        </td>
-                        <td>
-                          <p class="text-sm">Interior</p>
-                        </td>
-                        <td>
-                          <p class="text-sm">$345</p>
-                        </td>
-                        <td>
-                          <span class="status-btn close-btn">Canceled</span>
-                        </td>
-                        <td>
-                          <div class="action justify-content-end">
-                            <button class="edit">
-                              <i class="lni lni-pencil"></i>
-                            </button>
-                            <button class="more-btn ml-10 dropdown-toggle" id="moreAction1" data-bs-toggle="dropdown"
-                              aria-expanded="false">
-                              <i class="lni lni-more-alt"></i>
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="moreAction1">
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Remove</a>
-                              </li>
-                              <li class="dropdown-item">
-                                <a href="#0" class="text-gray">Edit</a>
-                              </li>
-                            </ul>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <!-- End Table -->
-                </div>
-              </div>
-            </div>
-            <!-- End Col -->
-          </div>
-          <!-- End Row -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label class="form-label fw-bold">Category Name</label>
+            <input type="text" class="form-control" name="category_name" required>
         </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <label class="form-label fw-bold">Category Image (Optional)</label>
+            <input type="file" class="form-control" name="category_image" required>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100" name="addcategory">Add Category</button>
+</form>
+
+
+<?php
+
+
+if (isset($_POST['addcategory'])) {
+    $category_name = trim($_POST['category_name']); // Trim to avoid unwanted spaces
+
+    // Check if the category already exists
+    $check_query = "SELECT * FROM categories WHERE category_name = ?";
+    $stmt = $conn->prepare($check_query);
+    $stmt->bind_param("s", $category_name);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Category already exists!'); window.location.href='adds.category.php';</script>";
+        exit();
+    }
+
+    // Upload category image if provided
+    $category_image = "";
+    if (!empty($_FILES['category_image']['name'])) {
+        $target_dir = "imgproducts/"; // Upload to imgproducts folder
+        if (!is_dir($target_dir)) {
+            mkdir($target_dir, 0777, true);
+        }
+
+        $file_ext = pathinfo($_FILES["category_image"]["name"], PATHINFO_EXTENSION);
+        $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+        if (!in_array(strtolower($file_ext), $allowed_types)) {
+            echo "<script>alert('Invalid image format! Only JPG, JPEG, PNG & GIF allowed.'); window.location.href='adds.category.php';</script>";
+            exit();
+        }
+
+        $unique_name = uniqid() . "." . $file_ext;
+        $target_file = $target_dir . $unique_name;
+
+        if (move_uploaded_file($_FILES["category_image"]["tmp_name"], $target_file)) {
+            $category_image = $target_file;
+        } else {
+            echo "<script>alert('Error uploading image.'); window.location.href='adds.category.php';</script>";
+            exit();
+        }
+    }
+
+    // Insert category into database
+    $insert_query = "INSERT INTO categories (category_name, category_image) VALUES (?, ?)";
+    $stmt = $conn->prepare($insert_query);
+    $stmt->bind_param("ss", $category_name, $category_image);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Category added successfully!'); window.location.href='adds.category.php';</script>";
+    } else {
+        echo "<script>alert('Error adding category.'); window.location.href='adds.category.php';</script>";
+    }
+
+    // Close connection
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+              
+          
+       
+
+      
         <!-- end container -->
       </section>
       <!-- ========== section end ========== -->
@@ -1866,3 +1215,91 @@ if (mysqli_num_rows($sql) > 0) {
     </script>
   </body>
 </html>
+
+<?php
+
+
+// Handle form submission
+if (isset($_POST['addproduct'])) {
+    $product_name = trim($_POST['product_name']);
+    $product_category = trim($_POST['product_category']);
+    $product_description = trim($_POST['product_description']);
+    $product_price = $_POST['product_price'];
+    $product_special_offer = $_POST['product_special_offer'] ?? 0;
+    $product_color = trim($_POST['product_color']);
+
+    // Check if product already exists in the database
+    $check_query = "SELECT * FROM products WHERE product_name = ?";
+    $stmt_check = $conn->prepare($check_query);
+    $stmt_check->bind_param("s", $product_name);
+    $stmt_check->execute();
+    $result = $stmt_check->get_result();
+
+    if ($result->num_rows > 0) {
+        echo "<script>alert('Product with the same name already exists!'); window.location.href='adds.product.php';</script>";
+        exit();
+    }
+    $stmt_check->close(); // Close the check statement
+
+    // Image Upload Directory
+    $target_dir = "imgproducts/";
+
+    // Ensure directory exists
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0777, true);
+    }
+
+    // Function to upload images
+    function uploadImage($file, $target_dir) {
+        if (!empty($file['name'])) {
+            $file_ext = pathinfo($file["name"], PATHINFO_EXTENSION);
+            $allowed_types = ['jpg', 'jpeg', 'png', 'gif'];
+
+            // Validate file type
+            if (!in_array(strtolower($file_ext), $allowed_types)) {
+                die("Error: Only JPG, JPEG, PNG & GIF files are allowed.");
+            }
+
+            // Generate unique filename
+            $unique_name = uniqid() . "." . $file_ext;
+            $target_file = $target_dir . $unique_name;
+
+            if (move_uploaded_file($file["tmp_name"], $target_file)) {
+                return $target_file; // Return the stored path
+            } else {
+                die("Error uploading image.");
+            }
+        }
+        return "";
+    }
+
+    // Upload product images
+    $product_image = uploadImage($_FILES['product_image'], $target_dir);
+    $product_image2 = uploadImage($_FILES['product_image2'], $target_dir);
+    $product_image3 = uploadImage($_FILES['product_image3'], $target_dir);
+    $product_image4 = uploadImage($_FILES['product_image4'], $target_dir);
+
+    // SQL Insert Query
+    $sql = "INSERT INTO products (product_name, product_category, product_description, product_image, product_image2, product_image3, product_image4, product_price, product_special_offer, product_color)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    // Prepare and bind
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssssdis", $product_name, $product_category, $product_description, $product_image, $product_image2, $product_image3, $product_image4, $product_price, $product_special_offer, $product_color);
+
+    if ($stmt->execute()) {
+        echo "<script>alert('Product added successfully!'); window.location.href='adds.product.php';</script>";
+    } else {
+        echo "Error: " . $stmt->error;
+    }
+
+    // Close connections
+    $stmt->close();
+    $conn->close();
+}
+?>
+
+
+
+
+
