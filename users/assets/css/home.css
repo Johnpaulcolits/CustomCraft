@@ -1,0 +1,88 @@
+.profile-image{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+.sub-menu-wrap{
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    width: 320px;
+    z-index: 100;
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height 0.5s;
+}
+.sub-menu-wrap.open-menu{
+    max-height: 400px;
+}
+.sub-menu{
+    background: #fff;
+    padding: 20px;
+    margin: 10px;
+}
+/* .user-name{
+    font-size: 15px;
+} */
+.user-info{
+    display: flex;
+    align-items: center;
+}
+.user-info .user-name{
+    font-weight: 600;
+    font-size: 20px;
+}
+.user-info img{
+margin-right: 15px;
+}
+
+.sub-menu hr{
+    border: 0;
+    height: 1px;
+    width: 100%;
+    background: #ccc;
+    margin: 15px 0 10px;
+}
+    .letter-p{
+        font-size: 15px;
+        margin-right: 50px;
+    }
+    .letter-p-1{
+        font-size: 15px;
+        margin-right: 105px;
+    }
+    .letter-p-2{
+        font-size: 15px;
+        margin-right: 120px;
+    }
+    .letter-p-3{
+        font-size: 15px;
+        margin-right: 130px;
+    }
+.sub-menu-link{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #525252;
+    margin: 12px 0;
+}
+.sub-menu-link p{
+    width: 100%;
+}
+.sub-menu-link img{
+    width: 17%;
+    background: #e5e5e5;
+    border-radius: 50%;
+    padding: 8px;
+    margin-right: 15px;
+}
+.sub-menu-link span{
+   font-size: 22px;
+   transition: transform 0.5s;
+}
+.sub-menu-link :hover span{
+    transform: translateX(5px);
+}
+.sub-menu-link p:hover{
+    font-weight: 600;
+}

@@ -14,7 +14,7 @@ continueBtn.onclick = () => {
             if (xhr.status === 200) {
                 let data = xhr.response;
                 if (data === "user") {
-                    location.href = "../product.php";  // Redirect to normal user page
+                    location.href = "../../users/index.php";  // Redirect to normal user page
                 } else {
                     errorText.style.display = "block";
                     errorText.textContent = data; // Show error for non-user logins

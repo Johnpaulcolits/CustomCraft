@@ -150,7 +150,7 @@ window.onclick = function (event) {
         </section>
 
                 <!--Featured-->
-               <section id="featured" class="my-5 pb-5">
+               <section id="featured" class="my-5 py-5">
                 <div class="container text-center mt-5 py-5">
                   <h3>Our Featured</h3>
                   <hr class="mx-auto hr-here">
