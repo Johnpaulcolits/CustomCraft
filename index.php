@@ -1,4 +1,5 @@
 <?php 
+
  session_start();
 
  if (isset($_SESSION['usertype'])) {
@@ -63,6 +64,8 @@
       <div class="link">Already signedup? <a href="login.php">Login now</a></div>
     </section>
   </div>    
+
+  
 
   <script src="javascript/pass-show-hide.js"></script>
   <script src="javascript/signup.js"></script>

@@ -8,11 +8,13 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "user") {
   header("Location: ../login.php"); // Redirect unauthorized users
   exit();
 }
-$sql = mysqli_query($conn, "SELECT * FROM users WHERE usertype = '{$_SESSION['usertype']}'");
-if (mysqli_num_rows($sql) > 0) {
-    $row = mysqli_fetch_assoc($sql);
-    // You can now use $row for admin-specific information
-}
+
+
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,12 +23,13 @@ if (mysqli_num_rows($sql) > 0) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anon - eCommerce Website</title>
+  <title>CustomCraft</title>
+  <link rel="shortcut icon" href="../admin/assets/images/logo/icon-logo.png" type="image/x-icon" />
 
   <!--
     - favicon
   -->
-  <link rel="shortcut icon" href="./assets/images/logo/favicon.ico" type="image/x-icon">
+  <!-- <link rel="shortcut icon" href="./assets/images/logo/favicon.ico" type="image/x-icon"> -->
 
   <!--
     - custom css link
@@ -173,12 +176,11 @@ if (mysqli_num_rows($sql) > 0) {
 
         <div class="header-alert-news">
           <p>
-            <b>Free Shipping</b>
-            This Week Order Over - $55
+            <b>WE SERVE HEE</b>
           </p>
         </div>
 
-        <div class="header-top-actions">
+        <!-- <div class="header-top-actions">
 
           <select name="currency">
 
@@ -195,7 +197,7 @@ if (mysqli_num_rows($sql) > 0) {
 
           </select>
 
-        </div>
+        </div> -->
 
       </div>
 
@@ -219,7 +221,13 @@ if (mysqli_num_rows($sql) > 0) {
           </button>
 
         </div>
-
+        <?php
+$sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = '{$_SESSION['unique_id']}'");
+if (mysqli_num_rows($sql) > 0) {
+    $row = mysqli_fetch_assoc($sql);
+    // You can now use $row for admin-specific information
+}
+        ?>
         <div class="header-user-actions">
 
           <button class="action-btn ">
@@ -257,15 +265,27 @@ if (mysqli_num_rows($sql) > 0) {
            </div>
           </button>
 
-          <button class="action-btn">
+          <!-- <button class="action-btn">
             <ion-icon name="heart-outline"></ion-icon>
             <span class="count">0</span>
-          </button>
+          </button> -->
+       <?php 
+       $user_id = $_SESSION['unique_id']; // Assuming user is logged in
 
-          <button class="action-btn">
+       // Query to check if the cart has items
+       $sql = "SELECT COUNT(*) as count FROM cart WHERE unique_id = ?";
+       $stmt = $conn->prepare($sql);
+       $stmt->bind_param("s", $user_id); // Change "i" to "s" if unique_id is a string
+       $stmt->execute();
+       $result = $stmt->get_result();
+       $row = $result->fetch_assoc();
+       ?>
+        <a href="cart.php">
+        <button class="action-btn">
             <ion-icon name="bag-handle-outline"></ion-icon>
-            <span class="count">0</span>
+            <span class="count"><?php echo $row['count']; ?></span>
           </button>
+        </a>         
 
         </div>
 
@@ -280,7 +300,7 @@ if (mysqli_num_rows($sql) > 0) {
         <ul class="desktop-menu-category-list">
 
           <li class="menu-category">
-            <a href="#" class="menu-title">Home</a>
+            <a href="index.php" class="menu-title">Home</a>
           </li>
 
           <li class="menu-category">
@@ -428,7 +448,7 @@ if (mysqli_num_rows($sql) > 0) {
             </div>
           </li>
 
-          <li class="menu-category">
+          <!-- <li class="menu-category">
             <a href="#" class="menu-title">Men's</a>
 
             <ul class="dropdown-list">
@@ -450,9 +470,9 @@ if (mysqli_num_rows($sql) > 0) {
               </li>
 
             </ul>
-          </li>
+          </li> -->
 
-          <li class="menu-category">
+          <!-- <li class="menu-category">
             <a href="#" class="menu-title">Women's</a>
 
             <ul class="dropdown-list">
@@ -474,9 +494,9 @@ if (mysqli_num_rows($sql) > 0) {
               </li>
 
             </ul>
-          </li>
+          </li> -->
 
-          <li class="menu-category">
+          <!-- <li class="menu-category">
             <a href="#" class="menu-title">Jewelry</a>
 
             <ul class="dropdown-list">
@@ -498,9 +518,9 @@ if (mysqli_num_rows($sql) > 0) {
               </li>
 
             </ul>
-          </li>
+          </li> -->
 
-          <li class="menu-category">
+          <!-- <li class="menu-category">
             <a href="#" class="menu-title">Perfume</a>
 
             <ul class="dropdown-list">
@@ -522,14 +542,14 @@ if (mysqli_num_rows($sql) > 0) {
               </li>
 
             </ul>
-          </li>
+          </li> -->
 
-          <li class="menu-category">
+          <!-- <li class="menu-category">
             <a href="#" class="menu-title">Blog</a>
-          </li>
+          </li> -->
 
           <li class="menu-category">
-            <a href="#" class="menu-title">Hot Offers</a>
+            <a href="customize.php" class="menu-title">CREATE YOUR'S</a>
           </li>
 
         </ul>
@@ -543,22 +563,37 @@ if (mysqli_num_rows($sql) > 0) {
       <button class="action-btn" data-mobile-menu-open-btn>
         <ion-icon name="menu-outline"></ion-icon>
       </button>
+      <?php 
+       $user_id = $_SESSION['unique_id']; // Assuming user is logged in
 
+       // Query to check if the cart has items
+       $sql = "SELECT COUNT(*) as count FROM cart WHERE unique_id = ?";
+       $stmt = $conn->prepare($sql);
+       $stmt->bind_param("s", $user_id); // Change "i" to "s" if unique_id is a string
+       $stmt->execute();
+       $result = $stmt->get_result();
+       $row = $result->fetch_assoc();
+       ?>
+
+      <a href="cart.php">
       <button class="action-btn">
         <ion-icon name="bag-handle-outline"></ion-icon>
 
-        <span class="count">0</span>
+        <span class="count"><?php echo $row['count'] ?></span>
       </button>
+      </a>
 
-      <button class="action-btn">
+   <a href="index.php">
+   <button class="action-btn">
         <ion-icon name="home-outline"></ion-icon>
       </button>
+   </a>
 
-      <button class="action-btn">
+      <!-- <button class="action-btn">
         <ion-icon name="heart-outline"></ion-icon>
 
         <span class="count">0</span>
-      </button>
+      </button> -->
 
       <button class="action-btn" data-mobile-menu-open-btn>
         <ion-icon name="grid-outline"></ion-icon>
@@ -566,6 +601,13 @@ if (mysqli_num_rows($sql) > 0) {
 
     </div>
 
+    <?php
+    $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = '{$_SESSION['unique_id']}'");
+    if (mysqli_num_rows($sql) > 0) {
+        $row = mysqli_fetch_assoc($sql);
+        // You can now use $row for admin-specific information
+    }
+    ?>
     <nav class="mobile-navigation-menu  has-scrollbar" data-mobile-menu>
 
       <div class="menu-top">
@@ -610,7 +652,7 @@ if (mysqli_num_rows($sql) > 0) {
       <ul class="mobile-menu-category-list">
 
         <li class="menu-category">
-          <a href="#" class="menu-title">Home</a>
+          <a href="index.php" class="menu-title">Home</a>
         </li>
 
         <li class="menu-category">
@@ -807,7 +849,7 @@ if (mysqli_num_rows($sql) > 0) {
         <ul class="menu-social-container">
 
           <li>
-            <a href="#" class="social-link">
+            <a href="" class="social-link">
               <ion-icon name="logo-facebook"></ion-icon>
             </a>
           </li>
@@ -2353,6 +2395,9 @@ if (mysqli_num_rows($sql) > 0) {
 
               </div>
 
+          
+
+
               <div class="showcase-container">
               
                 <div class="showcase">
@@ -2441,69 +2486,67 @@ if (mysqli_num_rows($sql) > 0) {
             - PRODUCT GRID
           -->
 
+          <?php
+
+          $stmt = $conn->prepare("SELECT * FROM products");
+
+          $stmt->execute();
+
+          $products = $stmt->get_result();
+
+
+?>
+
+
+
           <div class="product-main">
 
-            <h2 class="title">New Products</h2>
+            <h2 class="title">Products</h2>
 
             <div class="product-grid">
+              <?php while($row = $products->fetch_assoc()){ ?>
+      
+    <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
+  <div class="showcase">
+    <div class="showcase-banner">
+     
 
-              <div class="showcase">
+      <img src="../admin/<?php echo $row['product_image']; ?>" alt="Product Image" width="300" class="product-img default">
+      <img src="../admin/<?php echo $row['product_image2']; ?>" alt="Product Image Hover" width="300" class="product-img hover">
 
-                <div class="showcase-banner">
+      <div class="showcase-actions">
+        <button type="button" class="btn-action">
+          <ion-icon name="heart-outline"></ion-icon>
+        </button>
 
-                  <img src="./assets/images/products/jacket-3.jpg" alt="Mens Winter Leathers Jackets" width="300" class="product-img default">
-                  <img src="./assets/images/products/jacket-4.jpg" alt="Mens Winter Leathers Jackets" width="300" class="product-img hover">
+        <button type="submit" class="btn-action" name="addtocart">
+          <ion-icon name="bag-add-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
 
-                  <p class="showcase-badge">15%</p>
+    <div class="showcase-content">
+      <p class="showcase-category"><?php echo $row['product_name']; ?></p>
+      <h3 class="showcase-title"><?php echo $row['product_description']; ?></h3>
 
-                  <div class="showcase-actions">
+      <div class="showcase-rating">
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+        <ion-icon name="star-outline"></ion-icon>
+      </div>
 
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
+      <div class="price-box">
+        <p class="price">₱<?php echo $row['product_price']; ?></p>
+      </div>
+    </div>
+  </div>
+  </a>
 
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
+              <?php } ?>
 
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-
-                  </div>
-
-                </div>
-
-                <div class="showcase-content">
-
-                  <a href="#" class="showcase-category">jacket</a>
-
-                  <a href="#">
-                    <h3 class="showcase-title">Mens Winter Leathers Jackets</h3>
-                  </a>
-
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-
-                  <div class="price-box">
-                    <p class="price">$48.00</p>
-                    <del>$75.00</del>
-                  </div>
-
-                </div>
-
-              </div>
-
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/shirt-1.jpg" alt="Pure Garment Dyed Cotton Shirt" class="product-img default"
@@ -2554,9 +2597,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/jacket-5.jpg" alt="MEN Yarn Fleece Full-Zip Jacket" class="product-img default"
@@ -2605,9 +2648,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/clothes-3.jpg" alt="Black Floral Wrap Midi Skirt" class="product-img default"
@@ -2658,9 +2701,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/shoe-2.jpg" alt="Casual Men's Brown shoes" class="product-img default"
@@ -2709,9 +2752,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/watch-3.jpg" alt="Pocket Watch Leather Pouch" class="product-img default"
@@ -2762,9 +2805,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/watch-1.jpg" alt="Smart watche Vital Plus" class="product-img default"
@@ -2812,9 +2855,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/party-wear-1.jpg" alt="Womens Party Wear Shoes" class="product-img default"
@@ -2865,9 +2908,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/jacket-1.jpg" alt="Mens Winter Leathers Jackets" class="product-img default"
@@ -2916,9 +2959,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/sports-2.jpg" alt="Trekking & Running Shoes - black" class="product-img default"
@@ -2969,9 +3012,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/shoe-1.jpg" alt="Men's Leather Formal Wear shoes" class="product-img default"
@@ -3020,9 +3063,9 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
-              <div class="showcase">
+              <!-- <div class="showcase">
               
                 <div class="showcase-banner">
                   <img src="./assets/images/products/shorts-1.jpg" alt="Better Basics French Terry Sweatshorts"
@@ -3073,7 +3116,7 @@ if (mysqli_num_rows($sql) > 0) {
               
                 </div>
               
-              </div>
+              </div> -->
 
             </div>
 
@@ -3714,3 +3757,9 @@ subMenus.addEventListener("click", function(event) {
 </body>
 
 </html>
+
+
+
+
+
+
