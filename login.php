@@ -48,6 +48,7 @@ if (isset($_SESSION['usertype'])) {
         </div>
       </form>
       <div class="link">Not yet signed up? <a href="index.php">Signup now</a></div>
+      <div class="link">Forgot Password? <a href="otpsent.php">Reset it now</a></div>
     </section>
   </div>
   

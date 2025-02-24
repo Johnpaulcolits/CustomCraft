@@ -149,7 +149,7 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "user") {
         <ul class="header-social-container">
 
           <li>
-            <a href="#" class="social-link">
+            <a href="https://www.facebook.com/justine.francisco.1481" class="social-link">
               <ion-icon name="logo-facebook"></ion-icon>
             </a>
           </li>
