@@ -154,29 +154,29 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "user") {
             </a>
           </li>
 
-          <li>
+          <!-- <li>
             <a href="#" class="social-link">
               <ion-icon name="logo-twitter"></ion-icon>
             </a>
-          </li>
+          </li> -->
 
-          <li>
+          <!-- <li>
             <a href="#" class="social-link">
               <ion-icon name="logo-instagram"></ion-icon>
             </a>
-          </li>
-
+          </li> -->
+<!-- 
           <li>
             <a href="#" class="social-link">
               <ion-icon name="logo-linkedin"></ion-icon>
             </a>
-          </li>
+          </li> -->
 
         </ul>
 
         <div class="header-alert-news">
           <p>
-            <b>WE SERVE HEE</b>
+            <b>WE SERVE HERE</b>
           </p>
         </div>
 
@@ -654,6 +654,11 @@ if (mysqli_num_rows($sql) > 0) {
         <li class="menu-category">
           <a href="index.php" class="menu-title">Home</a>
         </li>
+        
+        <li class="menu-category">
+          <a href="customize.php" class="menu-title">Create Your's</a>
+        </li>
+
 
         <li class="menu-category">
 
@@ -676,13 +681,13 @@ if (mysqli_num_rows($sql) > 0) {
               <a href="#" class="submenu-title">Shorts & Jeans</a>
             </li>
 
-            <li class="submenu-category">
+            <!-- <li class="submenu-category">
               <a href="#" class="submenu-title">Safety Shoes</a>
-            </li>
+            </li> -->
 
-            <li class="submenu-category">
+            <!-- <li class="submenu-category">
               <a href="#" class="submenu-title">Wallet</a>
-            </li>
+            </li> -->
 
           </ul>
 
@@ -702,26 +707,26 @@ if (mysqli_num_rows($sql) > 0) {
           <ul class="submenu-category-list" data-accordion>
 
             <li class="submenu-category">
-              <a href="#" class="submenu-title">Dress & Frock</a>
+              <a href="#" class="submenu-title">Shirt</a>
             </li>
 
             <li class="submenu-category">
-              <a href="#" class="submenu-title">Earrings</a>
+              <a href="#" class="submenu-title">Shorts & Jeans</a>
             </li>
 
-            <li class="submenu-category">
+            <!-- <li class="submenu-category">
               <a href="#" class="submenu-title">Necklace</a>
-            </li>
+            </li> -->
 
-            <li class="submenu-category">
+            <!-- <li class="submenu-category">
               <a href="#" class="submenu-title">Makeup Kit</a>
-            </li>
+            </li> -->
 
           </ul>
 
         </li>
 
-        <li class="menu-category">
+        <!-- <li class="menu-category">
 
           <button class="accordion-menu" data-accordion-btn>
             <p class="menu-title">Jewelry</p>
@@ -752,9 +757,9 @@ if (mysqli_num_rows($sql) > 0) {
 
           </ul>
 
-        </li>
+        </li> -->
 
-        <li class="menu-category">
+        <!-- <li class="menu-category">
 
           <button class="accordion-menu" data-accordion-btn>
             <p class="menu-title">Perfume</p>
@@ -785,21 +790,17 @@ if (mysqli_num_rows($sql) > 0) {
 
           </ul>
 
-        </li>
+        </li> -->
 
-        <li class="menu-category">
-          <a href="#" class="menu-title">Blog</a>
-        </li>
-
-        <li class="menu-category">
+        <!-- <li class="menu-category">
           <a href="#" class="menu-title">Hot Offers</a>
-        </li>
+        </li> -->
 
       </ul>
 
       <div class="menu-bottom">
 
-        <ul class="menu-category-list">
+        <!-- <ul class="menu-category-list">
 
           <li class="menu-category">
 
@@ -844,33 +845,33 @@ if (mysqli_num_rows($sql) > 0) {
             </ul>
           </li>
 
-        </ul>
+        </ul> -->
 
         <ul class="menu-social-container">
 
           <li>
-            <a href="" class="social-link">
+            <a href="https://www.facebook.com/justine.francisco.1481" class="social-link">
               <ion-icon name="logo-facebook"></ion-icon>
             </a>
           </li>
 
-          <li>
+          <!-- <li>
             <a href="#" class="social-link">
               <ion-icon name="logo-twitter"></ion-icon>
             </a>
-          </li>
+          </li> -->
 
-          <li>
+          <!-- <li>
             <a href="#" class="social-link">
               <ion-icon name="logo-instagram"></ion-icon>
             </a>
-          </li>
+          </li> -->
 
-          <li>
+          <!-- <li>
             <a href="#" class="social-link">
               <ion-icon name="logo-linkedin"></ion-icon>
             </a>
-          </li>
+          </li> -->
 
         </ul>
 
