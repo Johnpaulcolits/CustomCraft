@@ -9,6 +9,10 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "user") {
   exit();
 }
 
+if(!isset($_SESSION['unique_id'])){
+    header("location: ../login.php");
+  }
+  
 
 // Redirect to index.php if no search term is provided
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -183,12 +187,12 @@ if (mysqli_num_rows($sql) > 0) {
                 </div>
                 <hr>
 
-                <a href="#" class="sub-menu-link">
+                <a href="profile.php" class="sub-menu-link">
                   <img src="./assets/images/profile/profile.png">
                   <p class="letter-p-1">Edit Profile</p>
                   <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <a href="settings.php" class="sub-menu-link">
                   <img src="./assets/images/profile/setting.png">
                   <p class="letter-p-2">Settings</p>
                   <span>></span>
@@ -324,12 +328,12 @@ if (mysqli_num_rows($sql) > 0) {
                 </div>
                 <hr>
 
-                <a href="#" class="sub-menu-link">
+                <a href="profile.php" class="sub-menu-link">
                   <img src="./assets/images/profile/profile.png">
                   <p class="letter-p-1">Edit Profile</p>
                   <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <a href="settings.php" class="sub-menu-link">
                   <img src="./assets/images/profile/setting.png">
                   <p class="letter-p-2">Settings</p>
                   <span>></span>

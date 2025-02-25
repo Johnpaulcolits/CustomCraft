@@ -8,6 +8,11 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "user") {
   header("Location: ../login.php"); // Redirect unauthorized users
   exit();
 }
+
+if(!isset($_SESSION['unique_id'])){
+    header("location: ../login.php");
+  }
+  
 $sql = mysqli_query($conn, "SELECT * FROM users WHERE unique_id = '{$_SESSION['unique_id']}'");
 if (mysqli_num_rows($sql) > 0) {
     $row = mysqli_fetch_assoc($sql);
@@ -51,6 +56,16 @@ if (mysqli_num_rows($sql) > 0) {
         .display-container{
             margin-top: 220px;
         }
+        .custom-checkbox {
+  width: 20px; /* Fixed width */
+  height: 20px; /* Fixed height */
+  min-width: 20px; /* Ensures it won’t shrink */
+  min-height: 20px;
+  margin-right: 7px;
+}
+
+      
+       
     </style>
 </head>
 <body>
@@ -99,7 +114,7 @@ if ($row['count'] == 0) {
                 <div class="card p-3">
                     <?php while ($row = $cart->fetch_assoc()) { ?>
                         <div class="cart-item d-flex align-items-center border-bottom pb-2 mb-2">
-    <input class="form-check-input me-3" type="checkbox">
+    <input class="form-check-input custom-checkbox" type="checkbox" >
     <img src="../admin/<?php echo $row['product_image']; ?>" class="me-3">
     <div class="flex-grow-1">
         <h6><?php echo $row['product_name']; ?></h6>
@@ -201,6 +216,42 @@ function updateTotal() {
 }
 
 
+
+
+
+document.querySelector('.btn-primary.w-100').addEventListener('click', function () {
+    let checkedItems = [];
+
+    document.querySelectorAll('.cart-item').forEach(item => {
+        let checkbox = item.querySelector('input[type=checkbox]');
+        if (checkbox.checked) {
+            let product = item.querySelector('h6').textContent;
+            let price = parseFloat(item.querySelector('p.text-muted').textContent.replace('₱', ''));
+            let quantity = parseInt(item.querySelector('.quantity').value);
+
+            checkedItems.push({ product, price, quantity });
+        }
+    });
+
+    if (checkedItems.length === 0) {
+        alert('Please select at least one item to checkout.');
+        return;
+    }
+
+    // Create a form to POST checked items
+    let form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'checkout.php';
+
+    let input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'checkedItems';
+    input.value = JSON.stringify(checkedItems);
+    form.appendChild(input);
+
+    document.body.appendChild(form);
+    form.submit();
+});
 
 
 

@@ -17,6 +17,9 @@ if(isset($_GET['product_id'])){
     header("Location: index.php");
 }
 
+if(!isset($_SESSION['unique_id'])){
+  header("location: ../login.php");
+}
 
 
 
@@ -157,12 +160,12 @@ if (mysqli_num_rows($sql) > 0) {
                 </div>
                 <hr>
 
-                <a href="#" class="sub-menu-link">
+                <a href="profile.php" class="sub-menu-link">
                   <img src="./assets/images/profile/profile.png">
                   <p class="letter-p-1">Edit Profile</p>
                   <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <a href="settings.php" class="sub-menu-link">
                   <img src="./assets/images/profile/setting.png">
                   <p class="letter-p-2">Settings</p>
                   <span>></span>

@@ -9,7 +9,9 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "user") {
   exit();
 }
 
-
+if(!isset($_SESSION['unique_id'])){
+  header("location: ../login.php");
+}
 
 
 
@@ -245,21 +247,21 @@ if (mysqli_num_rows($sql) > 0) {
                 </div>
                 <hr>
 
-                <a href="#" class="sub-menu-link">
+                <a href="profile.php" class="sub-menu-link">
                   <img src="./assets/images/profile/profile.png">
-                  <p class="letter-p-1">Edit Profile</p>
+                  <p class="letter-p-1">See Profile</p>
                   <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <a href="settings.php" class="sub-menu-link">
                   <img src="./assets/images/profile/setting.png">
                   <p class="letter-p-2">Settings</p>
                   <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <!-- <a href="#" class="sub-menu-link">
                   <img src="./assets/images/profile/help.png">
                   <p class="letter-p">Help and Support</p> 
                   <span>></span>
-                </a>
+                </a> -->
                 <a href="../php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="sub-menu-link">
                   <img src="./assets/images/profile/logout.png">
                   <p class="letter-p-3">Logout</p>
@@ -489,21 +491,21 @@ if (mysqli_num_rows($sql) > 0) {
                 </div>
                 <hr>
 
-                <a href="#" class="sub-menu-link">
+                <a href="profile.php" class="sub-menu-link">
                   <img src="./assets/images/profile/profile.png">
-                  <p class="letter-p-1">Edit Profile</p>
+                  <p class="letter-p-1">See Profile</p>
                   <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <a href="settings.php" class="sub-menu-link">
                   <img src="./assets/images/profile/setting.png">
                   <p class="letter-p-2">Settings</p>
                   <span>></span>
                 </a>
-                <a href="#" class="sub-menu-link">
+                <!-- <a href="#" class="sub-menu-link">
                   <img src="./assets/images/profile/help.png">
                   <p class="letter-p">Help and Support</p> 
                   <span>></span>
-                </a>
+                </a> -->
                 <a href="../php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="sub-menu-link">
                   <img src="./assets/images/profile/logout.png">
                   <p class="letter-p-3">Logout</p>
