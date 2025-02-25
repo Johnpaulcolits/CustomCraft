@@ -48,6 +48,9 @@ if (mysqli_num_rows($sql) > 0) {
             height: 80px;
             object-fit: cover;
         }
+        .display-container{
+            margin-top: 220px;
+        }
     </style>
 </head>
 <body>

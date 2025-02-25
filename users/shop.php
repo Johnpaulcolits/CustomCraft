@@ -74,14 +74,14 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "user") {
 
       <div class="newsletter">
 
-        <form >
+        <form action="#">
 
           <div class="newsletter-header">
 
             <h3 class="newsletter-title">This is a adds</h3>
 
             <p class="newsletter-desc">
-              This is an adds of <b>CustomCraft</b> to.
+            This is an adds of <b>CustomCraft</b> to.
             </p>
 
           </div>
@@ -105,18 +105,19 @@ if (!isset($_SESSION['usertype']) || $_SESSION['usertype'] !== "user") {
   <!--
     - NOTIFICATION TOAST
   -->
+    
 
   <!-- <div class="notification-toast" data-toast> -->
 
     <button class="toast-close-btn" data-toast-close>
-      <ion-icon name="close-outline"></ion-icon>
+     
     </button>
 
     <!-- <div class="toast-banner">
       <img src="./assets/images/products/jewellery-1.jpg" alt="Rose Gold Earrings" width="80" height="70">
     </div> -->
-
-    <!-- <div class="toast-detail">
+<!-- 
+    <div class="toast-detail">
 
       <p class="toast-message">
         Someone in new just bought
@@ -269,11 +270,13 @@ if (mysqli_num_rows($sql) > 0) {
            </div>
           </button>
 
-       <a href="../users.php">   <button class="action-btn">
-       <i class="fab fa-facebook-messenger" style="font-size: 30x; color: #0084ff;"></i>
-            <!-- <span class="count">0</span> -->
-          </button></a>
-          
+          <a href="../users.php">
+    <button class="action-btn">
+      <i class="fab fa-facebook-messenger" style="font-size: 30x; color: #0084ff;"></i>
+
+        <!-- <span class="count">0</span> -->
+      </button>
+    </a>
        <?php 
        $user_id = $_SESSION['unique_id']; // Assuming user is logged in
 
@@ -311,7 +314,6 @@ if (mysqli_num_rows($sql) > 0) {
             <a href="shop.php" class="menu-title">Shop</a>
           </li>
 
-         
 
           <!-- <li class="menu-category">
             <a href="#" class="menu-title">Men's</a>
@@ -455,17 +457,14 @@ if (mysqli_num_rows($sql) > 0) {
       </button>
    </a>
 
-    <a href="../users.php">
-    <button class="action-btn">
-      <i class="fab fa-facebook-messenger" style="font-size: 30x; color: #0084ff;"></i>
+   <a href="../users.php">   <button class="action-btn">
+       <i class="fab fa-facebook-messenger" style="font-size: 30x; color: #0084ff;"></i>
+            <!-- <span class="count">0</span> -->
+          </button></a>
 
-        <!-- <span class="count">0</span> -->
-      </button>
-    </a>
-
-      <button class="action-btn" data-mobile-menu-open-btn>
+      <!-- <button class="action-btn" data-mobile-menu-open-btn>
         <ion-icon name="grid-outline"></ion-icon>
-      </button>
+      </button> -->
 
     </div>
 
@@ -832,7 +831,13 @@ if (mysqli_num_rows($sql) > 0) {
 
         <div class="category-item-container has-scrollbar">
 
-          <!-- <div class="category-item">
+        <?php $stmt = $conn->prepare("SELECT product_category, COUNT(*) AS product_count FROM products GROUP BY product_category ORDER BY product_category ASC");
+                $stmt->execute();
+                $result = $stmt->get_result();
+              ?>
+
+        <?php while($row = $result->fetch_assoc()) {?>
+          <div class="category-item">
 
             <div class="category-img-box">
               <img src="./assets/images/icons/tee.svg" alt="dress & frock" width="30">
@@ -841,16 +846,17 @@ if (mysqli_num_rows($sql) > 0) {
             <div class="category-content-box">
 
               <div class="category-content-flex">
-                <h3 class="category-item-title">Shirts</h3>
+                <h3 class="category-item-title"><?php echo $row['product_category']; ?></h3>
 
-                <p class="category-item-amount">(53)</p>
+                <p class="category-item-amount">(<?php echo $row['product_count']; ?>)</p>
               </div>
 
-              <a href="#" class="category-btn">Show all</a>
+              <a href="single.category.php?product_category=<?php echo $row['product_category']; ?>" class="category-btn">Show all</a>
 
             </div>
 
-          </div> -->
+          </div>
+          <?php } ?>
 
           <!-- <div class="category-item">
 
@@ -871,8 +877,8 @@ if (mysqli_num_rows($sql) > 0) {
             </div>
 
           </div> -->
-<!-- 
-          <div class="category-item">
+
+          <!-- <div class="category-item">
 
             <div class="category-img-box">
               <img src="./assets/images/icons/glasses.svg" alt="glasses & lens" width="30">
@@ -1017,372 +1023,7 @@ if (mysqli_num_rows($sql) > 0) {
 
         <div class="sidebar  has-scrollbar" data-mobile-menu>
 
-          <div class="sidebar-category">
 
-            <div class="sidebar-top">
-              <h2 class="sidebar-title">Category</h2>
-
-              <button class="sidebar-close-btn" data-mobile-menu-close-btn>
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-            </div>
-
-            <ul class="sidebar-menu-category-list">
-
-              <li class="sidebar-menu-category">
-
-                <button class="sidebar-accordion-menu" data-accordion-btn>
-
-                  <div class="menu-title-flex">
-                    <img src="./assets/images/icons/tee.svg" alt="clothes" width="20" height="20"
-                      class="menu-title-img">
-
-                    <p class="menu-title">Clothes</p>
-                  </div>
-
-                  <div>
-                    <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                    <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                  </div>
-
-                </button>
-
-              <?php $stmt = $conn->prepare("SELECT product_category, COUNT(*) AS product_count FROM products GROUP BY product_category ORDER BY product_category ASC");
-                $stmt->execute();
-                $result = $stmt->get_result();
-              ?>
-
-
-                <ul class="sidebar-submenu-category-list" data-accordion>
-                  
-                  <?php while($row =$result->fetch_assoc()){ ?>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="single.category.php?product_category=<?php echo $row['product_category']; ?>" class="sidebar-submenu-title">
-                      <p class="product-name"><?php echo $row['product_category']; ?></p>
-                      <data value="300" class="stock" title="Available Stock"><?php echo $row['product_count']; ?></data>
-                    </a>
-                  </li>
-                  <?php } ?>
-
-                  <!-- <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">shorts & jeans</p>
-                      <data value="60" class="stock" title="Available Stock">60</data>
-                    </a>
-                  </li> -->
-
-                  <!-- <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">jacket</p>
-                      <data value="50" class="stock" title="Available Stock">50</data>
-                    </a>
-                  </li> -->
-<!-- 
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">dress & frock</p>
-                      <data value="87" class="stock" title="Available Stock">87</data>
-                    </a>
-                  </li> -->
-
-                </ul>
-
-              </li>
-
-              <!-- <li class="sidebar-menu-category">
-
-                <button class="sidebar-accordion-menu" data-accordion-btn>
-
-                  <div class="menu-title-flex">
-                    <img src="./assets/images/icons/shoes.svg" alt="footwear" class="menu-title-img" width="20"
-                      height="20">
-
-                    <p class="menu-title">Footwear</p>
-                  </div>
-
-                  <div>
-                    <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                    <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                  </div>
-
-                </button>
-
-                <ul class="sidebar-submenu-category-list" data-accordion>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Sports</p>
-                      <data value="45" class="stock" title="Available Stock">45</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Formal</p>
-                      <data value="75" class="stock" title="Available Stock">75</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Casual</p>
-                      <data value="35" class="stock" title="Available Stock">35</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Safety Shoes</p>
-                      <data value="26" class="stock" title="Available Stock">26</data>
-                    </a>
-                  </li>
-
-                </ul>
-
-              </li> -->
-
-              <!-- <li class="sidebar-menu-category">
-
-                <button class="sidebar-accordion-menu" data-accordion-btn>
-
-                  <div class="menu-title-flex">
-                    <img src="./assets/images/icons/jewelry.svg" alt="clothes" class="menu-title-img" width="20"
-                      height="20">
-
-                    <p class="menu-title">Jewelry</p>
-                  </div>
-
-                  <div>
-                    <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                    <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                  </div>
-
-                </button>
-
-                <ul class="sidebar-submenu-category-list" data-accordion>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Earrings</p>
-                      <data value="46" class="stock" title="Available Stock">46</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Couple Rings</p>
-                      <data value="73" class="stock" title="Available Stock">73</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Necklace</p>
-                      <data value="61" class="stock" title="Available Stock">61</data>
-                    </a>
-                  </li>
-
-                </ul>
-
-              </li> -->
-
-              <!-- <li class="sidebar-menu-category">
-
-                <button class="sidebar-accordion-menu" data-accordion-btn>
-
-                  <div class="menu-title-flex">
-                    <img src="./assets/images/icons/perfume.svg" alt="perfume" class="menu-title-img" width="20"
-                      height="20">
-
-                    <p class="menu-title">Perfume</p>
-                  </div>
-
-                  <div>
-                    <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                    <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                  </div>
-
-                </button>
-
-                <ul class="sidebar-submenu-category-list" data-accordion>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Clothes Perfume</p>
-                      <data value="12" class="stock" title="Available Stock">12 pcs</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Deodorant</p>
-                      <data value="60" class="stock" title="Available Stock">60 pcs</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">jacket</p>
-                      <data value="50" class="stock" title="Available Stock">50 pcs</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">dress & frock</p>
-                      <data value="87" class="stock" title="Available Stock">87 pcs</data>
-                    </a>
-                  </li>
-
-                </ul>
-
-              </li> -->
-
-              <!-- <li class="sidebar-menu-category">
-
-                <button class="sidebar-accordion-menu" data-accordion-btn>
-
-                  <div class="menu-title-flex">
-                    <img src="./assets/images/icons/cosmetics.svg" alt="cosmetics" class="menu-title-img" width="20"
-                      height="20">
-
-                    <p class="menu-title">Cosmetics</p>
-                  </div>
-
-                  <div>
-                    <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                    <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                  </div>
-
-                </button>
-
-                <ul class="sidebar-submenu-category-list" data-accordion>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Shampoo</p>
-                      <data value="68" class="stock" title="Available Stock">68</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Sunscreen</p>
-                      <data value="46" class="stock" title="Available Stock">46</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Body Wash</p>
-                      <data value="79" class="stock" title="Available Stock">79</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Makeup Kit</p>
-                      <data value="23" class="stock" title="Available Stock">23</data>
-                    </a>
-                  </li>
-
-                </ul>
-
-              </li> -->
-
-              <!-- <li class="sidebar-menu-category">
-
-                <button class="sidebar-accordion-menu" data-accordion-btn>
-
-                  <div class="menu-title-flex">
-                    <img src="./assets/images/icons/glasses.svg" alt="glasses" class="menu-title-img" width="20"
-                      height="20">
-
-                    <p class="menu-title">Glasses</p>
-                  </div>
-
-                  <div>
-                    <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                    <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                  </div>
-
-                </button>
-
-                <ul class="sidebar-submenu-category-list" data-accordion>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Sunglasses</p>
-                      <data value="50" class="stock" title="Available Stock">50</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Lenses</p>
-                      <data value="48" class="stock" title="Available Stock">48</data>
-                    </a>
-                  </li>
-
-                </ul>
-
-              </li> -->
-
-              <!-- <li class="sidebar-menu-category">
-
-                <button class="sidebar-accordion-menu" data-accordion-btn>
-
-                  <div class="menu-title-flex">
-                    <img src="./assets/images/icons/bag.svg" alt="bags" class="menu-title-img" width="20" height="20">
-
-                    <p class="menu-title">Bags</p>
-                  </div>
-
-                  <div>
-                    <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                    <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                  </div>
-
-                </button>
-
-                <ul class="sidebar-submenu-category-list" data-accordion>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Shopping Bag</p>
-                      <data value="62" class="stock" title="Available Stock">62</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Gym Backpack</p>
-                      <data value="35" class="stock" title="Available Stock">35</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Purse</p>
-                      <data value="80" class="stock" title="Available Stock">80</data>
-                    </a>
-                  </li>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">Wallet</p>
-                      <data value="75" class="stock" title="Available Stock">75</data>
-                    </a>
-                  </li> -->
-
-                </ul>
-
-              </li>
-
-            </ul>
-
-          </div>
 
           <div class="product-showcase">
 
@@ -1527,320 +1168,9 @@ if (mysqli_num_rows($sql) > 0) {
 
           <div class="product-minimal">
 
-            <div class="product-showcase">
 
-              <h2 class="title">New Arrivals</h2>
 
-              <div class="showcase-wrapper has-scrollbar">
 
-              <?php 
-              $stmt = $conn->prepare("SELECT * FROM products ORDER BY created_at DESC LIMIT 4");
-              $stmt->execute();
-              $result = $stmt->get_result();
-              ?>
-
-               
-                <!-- Here -->
-                 
-                <div class="showcase-container">
-                <?php while($row = $result->fetch_assoc()){ ?>
-                  
-                  <div class="showcase">
-                
-                  <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-                    
-                      <img src="../admin/<?php echo $row['product_image']; ?>" alt="men yarn fleece full-zip jacket" class="showcase-img"
-                        width="70">
-                  </a>
-               
-                  
-                    <div class="showcase-content">
-                
-                    <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-                        <h4 class="showcase-title"><?php echo $row['product_name']; ?></h4>
-                    </a>
-                 
-                    <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-                      <p class="showcase-category"><?php echo $row['product_category']; ?></p>
-                    </a>
-                
-                    <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-                      <div class="price-box">
-                        <p class="price">₱<?php echo $row['product_price']; ?></p>
-                        <!-- <del>$11.00</del> -->
-                      </div>
-                    </a>
-                
-                    </div>
-            
-                
-                  </div>
-                  <?php } ?>
-                
-                  
-                
-                  <!-- <div class="showcase">
-                
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/jacket-3.jpg" alt="mens winter leathers jackets" class="showcase-img"
-                        width="70">
-                    </a>
-                
-                    <div class="showcase-content">
-                
-                      <a href="#">
-                        <h4 class="showcase-title">Mens Winter Leathers Jackets</h4>
-                      </a>
-                
-                      <a href="#" class="showcase-category">Jackets</a>
-                
-                      <div class="price-box">
-                        <p class="price">$50.00</p>
-                        <del>$25.00</del>
-                      </div>
-                
-                    </div>
-                
-                  </div> -->
-                
-                  <!-- <div class="showcase">
-                
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shorts-1.jpg" alt="better basics french terry sweatshorts" class="showcase-img"
-                        width="70">
-                    </a>
-                
-                    <div class="showcase-content">
-                
-                      <a href="#">
-                        <h4 class="showcase-title">Better Basics French Terry Sweatshorts</h4>
-                      </a>
-                
-                      <a href="#" class="showcase-category">Shorts</a>
-                
-                      <div class="price-box">
-                        <p class="price">$20.00</p>
-                        <del>$10.00</del>
-                      </div>
-                
-                    </div>
-                
-                  </div> -->
-             
-                
-                </div>
-
-              </div>
-
-            </div>
-
-            <div class="product-showcase">
-            
-              <h2 class="title">Trending</h2>
-            
-              <div class="showcase-wrapper  has-scrollbar">
-            
-                <div class="showcase-container">
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/sports-1.jpg" alt="running & trekking shoes - white" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Running & Trekking Shoes - White</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Sports</a>
-            
-                      <div class="price-box">
-                        <p class="price">$49.00</p>
-                        <del>$15.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/sports-2.jpg" alt="trekking & running shoes - black" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Trekking & Running Shoes - black</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Sports</a>
-            
-                      <div class="price-box">
-                        <p class="price">$78.00</p>
-                        <del>$36.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/party-wear-1.jpg" alt="womens party wear shoes" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Womens Party Wear Shoes</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Party wear</a>
-            
-                      <div class="price-box">
-                        <p class="price">$94.00</p>
-                        <del>$42.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/sports-3.jpg" alt="sports claw women's shoes" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Sports Claw Women's Shoes</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Sports</a>
-            
-                      <div class="price-box">
-                        <p class="price">$54.00</p>
-                        <del>$65.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                </div>
-            
-                <!-- <div class="showcase-container">
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/sports-6.jpg" alt="air tekking shoes - white" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Air Trekking Shoes - white</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Sports</a>
-            
-                      <div class="price-box">
-                        <p class="price">$52.00</p>
-                        <del>$55.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shoe-3.jpg" alt="Boot With Suede Detail" class="showcase-img" width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Boot With Suede Detail</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">boots</a>
-            
-                      <div class="price-box">
-                        <p class="price">$20.00</p>
-                        <del>$30.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shoe-1.jpg" alt="men's leather formal wear shoes" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Men's Leather Formal Wear shoes</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">formal</a>
-            
-                      <div class="price-box">
-                        <p class="price">$56.00</p>
-                        <del>$78.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shoe-2.jpg" alt="casual men's brown shoes" class="showcase-img" width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Casual Men's Brown shoes</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Casual</a>
-            
-                      <div class="price-box">
-                        <p class="price">$50.00</p>
-                        <del>$55.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                </div> -->
-            
-              </div>
-            
-            </div>
 
             <!-- <div class="product-showcase">
             
@@ -2055,190 +1385,7 @@ if (mysqli_num_rows($sql) > 0) {
 
 
 
-          <!--
-            - PRODUCT FEATURED
-          -->
 
-          <div class="product-featured">
-
-            <h2 class="title">Deal of the day</h2>
-
-            <div class="showcase-wrapper has-scrollbar">
-
-              <div class="showcase-container">
-
-                <div class="showcase">
-                  
-                  <div class="showcase-banner">
-                    <img src="./assets/images/products/shampoo.jpg" alt="shampoo, conditioner & facewash packs" class="showcase-img">
-                  </div>
-
-                  <div class="showcase-content">
-                    
-                    <div class="showcase-rating">
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                    </div>
-
-                    <a href="#">
-                      <h3 class="showcase-title">shampoo, conditioner & facewash packs</h3>
-                    </a>
-
-                    <p class="showcase-desc">
-                      Lorem ipsum dolor sit amet consectetur Lorem ipsum
-                      dolor dolor sit amet consectetur Lorem ipsum dolor
-                    </p>
-
-                    <div class="price-box">
-                      <p class="price">$150.00</p>
-
-                      <del>$200.00</del>
-                    </div>
-
-                    <button class="add-cart-btn">add to cart</button>
-
-                    <div class="showcase-status">
-                      <div class="wrapper">
-                        <p>
-                          already sold: <b>20</b>
-                        </p>
-
-                        <p>
-                          available: <b>40</b>
-                        </p>
-                      </div>
-
-                      <div class="showcase-status-bar"></div>
-                    </div>
-
-                    <div class="countdown-box">
-
-                      <p class="countdown-desc">
-                        Hurry Up! Offer ends in:
-                      </p>
-
-                      <div class="countdown">
-
-                        <div class="countdown-content">
-
-                          <p class="display-number">360</p>
-
-                          <p class="display-text">Days</p>
-
-                        </div>
-
-                        <div class="countdown-content">
-                          <p class="display-number">24</p>
-                          <p class="display-text">Hours</p>
-                        </div>
-
-                        <div class="countdown-content">
-                          <p class="display-number">59</p>
-                          <p class="display-text">Min</p>
-                        </div>
-
-                        <div class="countdown-content">
-                          <p class="display-number">00</p>
-                          <p class="display-text">Sec</p>
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-          
-
-
-              <div class="showcase-container">
-              
-                <div class="showcase">
-              
-                  <div class="showcase-banner">
-                    <img src="./assets/images/products/jewellery-1.jpg" alt="Rose Gold diamonds Earring" class="showcase-img">
-                  </div>
-              
-                  <div class="showcase-content">
-              
-                    <div class="showcase-rating">
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                    </div>
-              
-                    <h3 class="showcase-title">
-                      <a href="#" class="showcase-title">Rose Gold diamonds Earring</a>
-                    </h3>
-              
-                    <p class="showcase-desc">
-                      Lorem ipsum dolor sit amet consectetur Lorem ipsum
-                      dolor dolor sit amet consectetur Lorem ipsum dolor
-                    </p>
-              
-                    <div class="price-box">
-                      <p class="price">$1990.00</p>
-                      <del>$2000.00</del>
-                    </div>
-              
-                    <button class="add-cart-btn">add to cart</button>
-              
-                    <div class="showcase-status">
-                      <div class="wrapper">
-                        <p> already sold: <b>15</b> </p>
-              
-                        <p> available: <b>40</b> </p>
-                      </div>
-              
-                      <div class="showcase-status-bar"></div>
-                    </div>
-              
-                    <div class="countdown-box">
-              
-                      <p class="countdown-desc">Hurry Up! Offer ends in:</p>
-              
-                      <div class="countdown">
-                        <div class="countdown-content">
-                          <p class="display-number">360</p>
-                          <p class="display-text">Days</p>
-                        </div>
-              
-                        <div class="countdown-content">
-                          <p class="display-number">24</p>
-                          <p class="display-text">Hours</p>
-                        </div>
-              
-                        <div class="countdown-content">
-                          <p class="display-number">59</p>
-                          <p class="display-text">Min</p>
-                        </div>
-              
-                        <div class="countdown-content">
-                          <p class="display-number">00</p>
-                          <p class="display-text">Sec</p>
-                        </div>
-                      </div>
-              
-                    </div>
-              
-                  </div>
-              
-                </div>
-              
-              </div>
-
-            </div>
-
-          </div>
 
 
 
@@ -2248,7 +1395,7 @@ if (mysqli_num_rows($sql) > 0) {
 
           <?php
 
-          $stmt = $conn->prepare("SELECT * FROM products");
+          $stmt = $conn->prepare("SELECT * FROM products LIMIT 32");
 
           $stmt->execute();
 
@@ -2289,13 +1436,13 @@ if (mysqli_num_rows($sql) > 0) {
       <p class="showcase-category"><?php echo $row['product_name']; ?></p>
       <h3 class="showcase-title"><?php echo $row['product_description']; ?></h3>
 
-      <div class="showcase-rating">
+      <!-- <div class="showcase-rating">
         <ion-icon name="star"></ion-icon>
         <ion-icon name="star"></ion-icon>
         <ion-icon name="star"></ion-icon>
         <ion-icon name="star-outline"></ion-icon>
         <ion-icon name="star-outline"></ion-icon>
-      </div>
+      </div> -->
 
       <div class="price-box">
         <p class="price">₱<?php echo $row['product_price']; ?></p>
@@ -2896,270 +2043,14 @@ if (mysqli_num_rows($sql) > 0) {
       - TESTIMONIALS, CTA & SERVICE
     -->
 
-    <div>
 
-      <div class="container">
 
-        <div class="testimonials-box">
 
-          <!--
-            - TESTIMONIALS
-          -->
 
-          <div class="testimonial">
-<!-- 
-            <h2 class="title">testimonial</h2>
 
-            <div class="testimonial-card">
 
-              <img src="./assets/images/testimonial-1.jpg" alt="alan doe" class="testimonial-banner" width="80" height="80">
 
-              <p class="testimonial-name">Alan Doe</p>
 
-              <p class="testimonial-title">CEO & Founder Invision</p>
-
-              <img src="./assets/images/icons/quotes.svg" alt="quotation" class="quotation-img" width="26">
-
-              <p class="testimonial-desc">
-                Lorem ipsum dolor sit amet consectetur Lorem ipsum
-                dolor dolor sit amet.
-              </p>
-
-            </div>
-
-          </div> -->
-
-
-
-          <!--
-            - CTA
-          -->
-
-          <!-- <div class="cta-container">
-
-            <img src="./assets/images/cta-banner.jpg" alt="summer collection" class="cta-banner">
-
-            <a href="#" class="cta-content">
-
-              <p class="discount">25% Discount</p>
-
-              <h2 class="cta-title">Summer collection</h2>
-
-              <p class="cta-text">Starting @ $10</p>
-
-              <button class="cta-btn">Shop now</button>
-
-            </a>
-
-          </div> -->
-
-
-
-          <!--
-            - SERVICE
-          -->
-
-          <!-- <div class="service">
-
-            <h2 class="title">Our Services</h2>
-
-            <div class="service-container">
-
-              <a href="#" class="service-item">
-
-                <div class="service-icon">
-                  <ion-icon name="boat-outline"></ion-icon>
-                </div>
-
-                <div class="service-content">
-
-                  <h3 class="service-title">Worldwide Delivery</h3>
-                  <p class="service-desc">For Order Over $100</p>
-
-                </div>
-
-              </a>
-
-              <a href="#" class="service-item">
-              
-                <div class="service-icon">
-                  <ion-icon name="rocket-outline"></ion-icon>
-                </div>
-              
-                <div class="service-content">
-              
-                  <h3 class="service-title">Next Day delivery</h3>
-                  <p class="service-desc">UK Orders Only</p>
-              
-                </div>
-              
-              </a>
-
-              <a href="#" class="service-item">
-              
-                <div class="service-icon">
-                  <ion-icon name="call-outline"></ion-icon>
-                </div>
-              
-                <div class="service-content">
-              
-                  <h3 class="service-title">Best Online Support</h3>
-                  <p class="service-desc">Hours: 8AM - 11PM</p>
-              
-                </div>
-              
-              </a>
-
-              <a href="#" class="service-item">
-              
-                <div class="service-icon">
-                  <ion-icon name="arrow-undo-outline"></ion-icon>
-                </div>
-              
-                <div class="service-content">
-              
-                  <h3 class="service-title">Return Policy</h3>
-                  <p class="service-desc">Easy & Free Return</p>
-              
-                </div>
-              
-              </a>
-
-              <a href="#" class="service-item">
-              
-                <div class="service-icon">
-                  <ion-icon name="ticket-outline"></ion-icon>
-                </div>
-              
-                <div class="service-content">
-              
-                  <h3 class="service-title">30% money back</h3>
-                  <p class="service-desc">For Order Over $100</p>
-              
-                </div>
-              
-              </a>
-
-            </div>
-
-          </div> -->
-
-        </div>
-
-      </div>
-
-    </div>
-
-
-
-
-
-    <!--
-      - BLOG
-    -->
-
-    <div class="blog">
-
-      <div class="container">
-
-        <div class="blog-container has-scrollbar">
-
-          <div class="blog-card">
-
-            <a href="#">
-              <img src="./assets/images/blog-1.jpg" alt="Clothes Retail KPIs 2021 Guide for Clothes Executives" width="300" class="blog-banner">
-            </a>
-
-            <div class="blog-content">
-
-              <a href="#" class="blog-category">Fashion</a>
-
-              <a href="#">
-                <h3 class="blog-title">Clothes Retail KPIs 2021 Guide for Clothes Executives.</h3>
-              </a>
-
-              <p class="blog-meta">
-                By <cite>Mr Admin</cite> / <time datetime="2022-04-06">Jan 06, 2025</time>
-              </p>
-
-            </div>
-
-          </div>
-
-          <div class="blog-card">
-          
-            <a href="#">
-              <img src="./assets/images/blog-2.jpg" alt="Curbside fashion Trends: How to Win the Pickup Battle."
-                class="blog-banner" width="300">
-            </a>
-          
-            <div class="blog-content">
-          
-              <a href="#" class="blog-category">Clothes</a>
-          
-              <h3>
-                <a href="#" class="blog-title">Curbside fashion Trends: How to Win the Pickup Battle.</a>
-              </h3>
-          
-              <p class="blog-meta">
-                By <cite>Mr Robin</cite> / <time datetime="2022-01-18">Jan 18, 2025</time>
-              </p>
-          
-            </div>
-          
-          </div>
-
-          <div class="blog-card">
-          
-            <a href="#">
-              <img src="./assets/images/blog-3.jpg" alt="EBT vendors: Claim Your Share of SNAP Online Revenue."
-                class="blog-banner" width="300">
-            </a>
-          
-            <div class="blog-content">
-          
-              <a href="#" class="blog-category">Shoes</a>
-          
-              <h3>
-                <a href="#" class="blog-title">EBT vendors: Claim Your Share of SNAP Online Revenue.</a>
-              </h3>
-          
-              <p class="blog-meta">
-                By <cite>Mr Selsa</cite> / <time datetime="2022-02-10">Feb 10, 2025</time>
-              </p>
-          
-            </div>
-          
-          </div>
-
-          <div class="blog-card">
-          
-            <a href="#">
-              <img src="./assets/images/blog-4.jpg" alt="Curbside fashion Trends: How to Win the Pickup Battle."
-                class="blog-banner" width="300">
-            </a>
-          
-            <div class="blog-content">
-          
-              <a href="#" class="blog-category">Electronics</a>
-          
-              <h3>
-                <a href="#" class="blog-title">Curbside fashion Trends: How to Win the Pickup Battle.</a>
-              </h3>
-          
-              <p class="blog-meta">
-                By <cite>Mr Pawar</cite> / <time datetime="2022-03-15">Mar 15, 2022</time>
-              </p>
-          
-            </div>
-          
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
 
   </main>
 

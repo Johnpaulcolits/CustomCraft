@@ -12,9 +12,9 @@
                 header("location: ../craft.php");
             }
         }else{
-            header("location: ../users.php");
+            header("location: ../craft.php");
         }
     }else{  
-        header("location: ../login.php");
+        header("location: ../craft.php");
     }
 ?>

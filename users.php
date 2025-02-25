@@ -13,7 +13,14 @@
 //         exit();
 //     }
 // }
-session_start();  
+
+  session_start();
+  include_once "php/config.php";
+  if(!isset($_SESSION['unique_id'])){
+    header("location: login.php");
+  }
+
+
 ?>
 
 <?php
@@ -38,7 +45,7 @@ include_once "header.php";
             <p><?php echo $row['status']; ?></p>
           </div>
         </div>
-        <a href="php/logout.php?logout_id=<?php echo $row['unique_id']; ?>" class="logout">Logout</a>
+        <a href="./users/index.php" class="logout">Back</a>
       </header>
       <div class="search">
         <span class="text">Select an user to start chat</span>
