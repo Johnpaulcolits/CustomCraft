@@ -62,9 +62,9 @@ if(!isset($_SESSION['unique_id'])){
     - MODAL
   -->
 
-  <div class="modal" data-modal>
+  <div class="modal" data-modal style="display: none;">
 
-    <div class="modal-close-overlay" data-modal-overlay></div>
+    <div class="modal-close-overlay" data-modal-overlay style="display: none;"></div>
 
     <div class="modal-content">
 
@@ -76,16 +76,16 @@ if(!isset($_SESSION['unique_id'])){
         <img src="./assets/images/newsletter.png" alt="subscribe newsletter" width="400" height="400">
       </div>
 
-      <div class="newsletter">
+      <div class="newsletter" style="display: none;">
 
-        <form action="#">
+        <form >
 
           <div class="newsletter-header">
 
             <h3 class="newsletter-title">This is a adds</h3>
 
             <p class="newsletter-desc">
-            This is an adds of <b>CustomCraft</b> to.
+              This is an adds of <b>CustomCraft</b> to.
             </p>
 
           </div>
@@ -106,6 +106,7 @@ if(!isset($_SESSION['unique_id'])){
 
 
 
+
   <!--
     - NOTIFICATION TOAST
   -->
@@ -113,7 +114,7 @@ if(!isset($_SESSION['unique_id'])){
 
   <!-- <div class="notification-toast" data-toast> -->
 
-    <button class="toast-close-btn" data-toast-close>
+    <button class="toast-close-btn" data-toast-close style="display: none;">
      
     </button>
 
@@ -2068,9 +2069,9 @@ if (mysqli_num_rows($sql) > 0) {
 
   <footer>
 
-    <div class="footer-category">
+    <!-- <div class="footer-category">
 
-      <div class="container">
+      <div class="container"> -->
 
         <!-- <h2 class="footer-category-title">Brand directory</h2> -->
 
@@ -2139,12 +2140,12 @@ if (mysqli_num_rows($sql) > 0) {
           <a href="#" class="footer-category-link">liner</a>
           <a href="#" class="footer-category-link">lipstick</a>
         </div> -->
-
+<!-- 
       </div>
 
-    </div>
+    </div> -->
 
-    <div class="footer-nav">
+    <!-- <div class="footer-nav">
 
       <div class="container">
 
@@ -2335,7 +2336,7 @@ if (mysqli_num_rows($sql) > 0) {
 
       </div>
 
-    </div>
+    </div> -->
 
     <div class="footer-bottom">
 

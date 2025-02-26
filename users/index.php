@@ -60,9 +60,9 @@ if(!isset($_SESSION['unique_id'])){
     - MODAL
   -->
 
-  <div class="modal" data-modal>
+  <div class="modal" data-modal style="display: none;">
 
-    <div class="modal-close-overlay" data-modal-overlay></div>
+    <div class="modal-close-overlay" data-modal-overlay style="display: none;"></div>
 
     <div class="modal-content">
 
@@ -74,7 +74,7 @@ if(!isset($_SESSION['unique_id'])){
         <img src="./assets/images/newsletter.png" alt="subscribe newsletter" width="400" height="400">
       </div>
 
-      <div class="newsletter">
+      <div class="newsletter" style="display: none;">
 
         <form >
 
@@ -110,8 +110,8 @@ if(!isset($_SESSION['unique_id'])){
 
   <!-- <div class="notification-toast" data-toast> -->
 
-    <button class="toast-close-btn" data-toast-close>
-      <ion-icon name="close-outline"></ion-icon>
+    <button class="toast-close-btn" data-toast-close  style="display: none;">
+      <ion-icon name="close-outline"></ion-icon >
     </button>
 
     <!-- <div class="toast-banner">
@@ -774,7 +774,7 @@ if (mysqli_num_rows($sql) > 0) {
 
           </div>
 
-          <div class="slider-item">
+          <!-- <div class="slider-item">
 
             <img src="./assets/images/banner-2.jpg" alt="modern sunglasses" class="banner-img">
 
@@ -782,19 +782,19 @@ if (mysqli_num_rows($sql) > 0) {
 
               <p class="banner-subtitle">Style Simplified</p>
 
-              <h2 class="banner-title">Bringing the best deals right to your doorstep.</h2>
+              <h2 class="banner-title">Bringing the best deals right to your doorstep.</h2> -->
 
               <!-- <p class="banner-text">
                 starting at &dollar; <b>15</b>.00
               </p> -->
 
-              <a href="shop.php" class="banner-btn">Shop now</a>
+              <!-- <a href="shop.php" class="banner-btn">Shop now</a>
 
             </div>
 
-          </div>
+          </div> -->
 
-          <div class="slider-item">
+          <!-- <div class="slider-item">
 
             <img src="./assets/images/banner-3.jpg" alt="new fashion summer sale" class="banner-img">
 
@@ -802,17 +802,17 @@ if (mysqli_num_rows($sql) > 0) {
 
               <p class="banner-subtitle">Shop Easy</p>
 
-              <h2 class="banner-title">Shop smart, live stylish.</h2>
+              <h2 class="banner-title">Shop smart, live stylish.</h2> -->
 
               <!-- <p class="banner-text">
                 starting at &dollar; <b>29</b>.99
               </p> -->
 
-              <a href="shop.php" class="banner-btn">Shop now</a>
+              <!-- <a href="shop.php" class="banner-btn">Shop now</a>
 
             </div>
 
-          </div>
+          </div> -->
 
         </div>
 
@@ -2057,190 +2057,6 @@ if (mysqli_num_rows($sql) > 0) {
 
 
 
-          <!--
-            - PRODUCT FEATURED
-          -->
-
-          <div class="product-featured">
-
-            <h2 class="title">Deal of the day</h2>
-
-            <div class="showcase-wrapper has-scrollbar">
-
-              <div class="showcase-container">
-
-                <div class="showcase">
-                  
-                  <div class="showcase-banner">
-                    <img src="./assets/images/products/shampoo.jpg" alt="shampoo, conditioner & facewash packs" class="showcase-img">
-                  </div>
-
-                  <div class="showcase-content">
-                    
-                    <div class="showcase-rating">
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                    </div>
-
-                    <a href="#">
-                      <h3 class="showcase-title">shampoo, conditioner & facewash packs</h3>
-                    </a>
-
-                    <p class="showcase-desc">
-                      Lorem ipsum dolor sit amet consectetur Lorem ipsum
-                      dolor dolor sit amet consectetur Lorem ipsum dolor
-                    </p>
-
-                    <div class="price-box">
-                      <p class="price">$150.00</p>
-
-                      <del>$200.00</del>
-                    </div>
-
-                    <button class="add-cart-btn">add to cart</button>
-
-                    <div class="showcase-status">
-                      <div class="wrapper">
-                        <p>
-                          already sold: <b>20</b>
-                        </p>
-
-                        <p>
-                          available: <b>40</b>
-                        </p>
-                      </div>
-
-                      <div class="showcase-status-bar"></div>
-                    </div>
-
-                    <div class="countdown-box">
-
-                      <p class="countdown-desc">
-                        Hurry Up! Offer ends in:
-                      </p>
-
-                      <div class="countdown">
-
-                        <div class="countdown-content">
-
-                          <p class="display-number">360</p>
-
-                          <p class="display-text">Days</p>
-
-                        </div>
-
-                        <div class="countdown-content">
-                          <p class="display-number">24</p>
-                          <p class="display-text">Hours</p>
-                        </div>
-
-                        <div class="countdown-content">
-                          <p class="display-number">59</p>
-                          <p class="display-text">Min</p>
-                        </div>
-
-                        <div class="countdown-content">
-                          <p class="display-number">00</p>
-                          <p class="display-text">Sec</p>
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div>
-
-          
-
-
-              <div class="showcase-container">
-              
-                <div class="showcase">
-              
-                  <div class="showcase-banner">
-                    <img src="./assets/images/products/jewellery-1.jpg" alt="Rose Gold diamonds Earring" class="showcase-img">
-                  </div>
-              
-                  <div class="showcase-content">
-              
-                    <div class="showcase-rating">
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                    </div>
-              
-                    <h3 class="showcase-title">
-                      <a href="#" class="showcase-title">Rose Gold diamonds Earring</a>
-                    </h3>
-              
-                    <p class="showcase-desc">
-                      Lorem ipsum dolor sit amet consectetur Lorem ipsum
-                      dolor dolor sit amet consectetur Lorem ipsum dolor
-                    </p>
-              
-                    <div class="price-box">
-                      <p class="price">$1990.00</p>
-                      <del>$2000.00</del>
-                    </div>
-              
-                    <button class="add-cart-btn">add to cart</button>
-              
-                    <div class="showcase-status">
-                      <div class="wrapper">
-                        <p> already sold: <b>15</b> </p>
-              
-                        <p> available: <b>40</b> </p>
-                      </div>
-              
-                      <div class="showcase-status-bar"></div>
-                    </div>
-              
-                    <div class="countdown-box">
-              
-                      <p class="countdown-desc">Hurry Up! Offer ends in:</p>
-              
-                      <div class="countdown">
-                        <div class="countdown-content">
-                          <p class="display-number">360</p>
-                          <p class="display-text">Days</p>
-                        </div>
-              
-                        <div class="countdown-content">
-                          <p class="display-number">24</p>
-                          <p class="display-text">Hours</p>
-                        </div>
-              
-                        <div class="countdown-content">
-                          <p class="display-number">59</p>
-                          <p class="display-text">Min</p>
-                        </div>
-              
-                        <div class="countdown-content">
-                          <p class="display-number">00</p>
-                          <p class="display-text">Sec</p>
-                        </div>
-                      </div>
-              
-                    </div>
-              
-                  </div>
-              
-                </div>
-              
-              </div>
-
-            </div>
-
-          </div>
 
 
 
@@ -3060,7 +2876,7 @@ if (mysqli_num_rows($sql) > 0) {
       - BLOG
     -->
 
-    <div class="blog">
+    <!-- <div class="blog">
 
       <div class="container">
 
@@ -3161,7 +2977,7 @@ if (mysqli_num_rows($sql) > 0) {
 
       </div>
 
-    </div>
+    </div> -->
 
   </main>
 
@@ -3175,9 +2991,9 @@ if (mysqli_num_rows($sql) > 0) {
 
   <footer>
 
-    <div class="footer-category">
+    <!-- <div class="footer-category">
 
-      <div class="container">
+      <div class="container"> -->
 
         <!-- <h2 class="footer-category-title">Brand directory</h2> -->
 
@@ -3247,11 +3063,11 @@ if (mysqli_num_rows($sql) > 0) {
           <a href="#" class="footer-category-link">lipstick</a>
         </div> -->
 
-      </div>
+      <!-- </div>
 
-    </div>
+    </div> -->
 
-    <div class="footer-nav">
+    <!-- <div class="footer-nav">
 
       <div class="container">
 
@@ -3442,7 +3258,7 @@ if (mysqli_num_rows($sql) > 0) {
 
       </div>
 
-    </div>
+    </div> -->
 
     <div class="footer-bottom">
 
