@@ -552,10 +552,21 @@ if (mysqli_num_rows($sql) > 0) {
         <label class="form-label fw-bold">Product Name</label>
         <input type="text" class="form-control" name="product_name" required>
       </div>
-      <div class="col-md-6">
+      <!-- <div class="col-md-6">
         <label class="form-label fw-bold">Category</label>
         <input type="text" class="form-control" name="product_category" required>
-      </div>
+      </div> -->
+
+      
+      <div class="col-md-6">
+  <label class="form-label fw-bold">Category</label>
+  <select class="form-control" name="product_category" required>
+    <option value="">Select a category</option>
+    <option value="Shirt">Shirt</option>
+    <option value="Short">Short</option>
+
+  </select>
+</div>
     </div>
 
     <div class="row mb-3">
