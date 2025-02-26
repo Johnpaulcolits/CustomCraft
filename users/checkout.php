@@ -55,6 +55,7 @@ if (empty($row['phone_number']) || empty($row['address'])): ?>
 <?php else: ?>
     <div class="container mt-5">
         <!-- User Information -->
+      
         <div class="card p-3 mb-4">
             <h5>User Information</h5>
             <p><strong>Full Name:</strong> <?php echo htmlspecialchars($row['fname'] . " " . $row['lname']); ?></p>
@@ -84,7 +85,7 @@ if (empty($row['phone_number']) || empty($row['address'])): ?>
             <form action="./phpController/placeOrder.php" method="POST">
                 <input type="hidden" name="payment_method" value="cod">
                 <input type="hidden" name="checked_items" value='<?php echo json_encode($checkedItems); ?>'>
-                <button type="submit" class="btn btn-success">Cash on Delivery</button>
+                <button type="submit" class="btn btn-success" name="order">Cash on Delivery</button>
             </form>
 
             <div id="paypal-button-container"></div>

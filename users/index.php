@@ -1386,7 +1386,7 @@ if (mysqli_num_rows($sql) > 0) {
 
           </div>
 
-          <div class="product-showcase">
+          <!-- <div class="product-showcase">
 
             <h3 class="showcase-heading">best sellers</h3>
 
@@ -1515,7 +1515,7 @@ if (mysqli_num_rows($sql) > 0) {
 
             </div>
 
-          </div>
+          </div> -->
 
         </div>
 
