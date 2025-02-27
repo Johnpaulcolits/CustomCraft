@@ -25,6 +25,7 @@ if (isset($_SESSION['usertype'])) {
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>CustomCraft Login</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
   <link rel="shortcut icon" href="./admin/assets/images/logo/icon-logo.png" type="image/x-icon" />
 </head>

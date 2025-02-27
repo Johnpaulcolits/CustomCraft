@@ -123,7 +123,7 @@ if (mysqli_num_rows($sql) > 0) {
               </a>
             </li> -->
           <li class="nav-item">
-            <a href="product.php">
+            <a href="orders.php">
               <span class="icon">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -630,31 +630,7 @@ if (mysqli_num_rows($sql) > 0) {
       <!-- ========== section end ========== -->
 
       <!-- ========== footer start =========== -->
-      <footer class="footer">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-6 order-last order-md-first">
-              <div class="copyright text-center text-md-start">
-                <p class="text-sm">
-                  Designed and Developed by
-                  <a href="https://plainadmin.com" rel="nofollow" target="_blank">
-                    PlainAdmin
-                  </a>
-                </p>
-              </div>
-            </div>
-            <!-- end col-->
-            <div class="col-md-6">
-              <div class="terms d-flex justify-content-center justify-content-md-end">
-                <a href="#0" class="text-sm">Term & Conditions</a>
-                <a href="#0" class="text-sm ml-15">Privacy & Policy</a>
-              </div>
-            </div>
-          </div>
-          <!-- end row -->
-        </div>
-        <!-- end container -->
-      </footer>
+    
       <!-- ========== footer end =========== -->
     </main>
     <!-- ======== main-wrapper end =========== -->

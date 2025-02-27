@@ -199,10 +199,12 @@ if (mysqli_num_rows($sql) > 0) {
        $result = $stmt->get_result();
        $row = $result->fetch_assoc();
        ?>
+          <a href="cart.php">
           <button class="action-btn">
             <ion-icon name="bag-handle-outline"></ion-icon>
             <span class="count"><?php echo $row['count']; ?></span>
           </button>         
+          </a>
 
         </div>
 

@@ -21,10 +21,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>CustomCraft - Signup </title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
   <link rel="shortcut icon" href="./admin/assets/images/logo/icon-logo.png" type="image/x-icon" />
 </head>
@@ -53,22 +54,25 @@
           <input type="password" name="password" placeholder="Enter new password" required>
           <i class="fas fa-eye"></i>
         </div>
-        <div class="field image">
-          <label>Select Image</label>
-          <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg" required>
+        <div class="field input">
+          <label>Confirm Password</label>
+          <input type="password" name="confirm_password" placeholder="Confirm your password" required>
+          <i class="fas fa-eye"></i>
         </div>
+        <!-- <div class="field image">
+          <label>Select Image</label>
+          <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg" required >
+        </div> -->
         <div class="field button">
           <input type="submit" name="submit" value="Sign up">
         </div>
       </form>
-      <div class="link">Already signedup? <a href="login.php">Login now</a></div>
+      <div class="link">Already signed up? <a href="login.php">Login now</a></div>
     </section>
   </div>    
 
-  
-
   <script src="javascript/pass-show-hide.js"></script>
   <script src="javascript/signup.js"></script>
-
 </body>
 </html>
+

@@ -326,10 +326,10 @@ if (mysqli_num_rows($sql) > 0) {
                   </button>
                 </div>
                 <div class="header-search d-none d-md-flex">
-                  <form action="#">
+                  <!-- <form action="#">
                     <input type="text" placeholder="Search..." />
                     <button><i class="lni lni-search-alt"></i></button>
-                  </form>
+                  </form> -->
                 </div>
               </div>
             </div>
@@ -514,11 +514,11 @@ if (mysqli_num_rows($sql) > 0) {
             <div class="row align-items-center">
               <div class="col-md-6">
                 <div class="title">
-                  <h2>Product Page</h2>
+                  <h2>Order Page</h2>
                 </div>
               </div>
               <!-- end col -->
-              <div class="col-md-6">
+              <!-- <div class="col-md-6">
                 <div class="breadcrumb-wrapper">
                   <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
@@ -527,7 +527,7 @@ if (mysqli_num_rows($sql) > 0) {
                     </ol>
                   </nav>
                 </div>
-              </div>
+              </div> -->
               <!-- end col -->
             </div>
             <!-- end row -->
@@ -535,16 +535,7 @@ if (mysqli_num_rows($sql) > 0) {
           <!-- ========== title-wrapper end ========== -->
           
          
-<?php
 
-$stmt = $conn->prepare("SELECT * FROM products ORDER BY product_id DESC");
-
-$stmt->execute();
-
-$products = $stmt->get_result();
-
-
-?>
 
 
 
@@ -586,36 +577,75 @@ $products = $stmt->get_result();
   }
 </style>
 
+
+<?php
+
+$stmt = $conn->prepare("SELECT * FROM orders ORDER BY order_id DESC");
+
+$stmt->execute();
+
+$products = $stmt->get_result();
+
+
+?>
+
+
 <table class="table table-light">
   <thead>
     <tr>
+    <th scope="col">Image</th>
       <th scope="col">Name</th>
       <th scope="col">Price</th>
-      <th scope="col">Delete</th>
-      <th scope="col">Update</th>
-      <th scope="col">View</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+      
     </tr>
   </thead>
   <tbody>
-  <?php while($row = $products->fetch_assoc()) { ?>
-    <tr id="product-<?php echo $row['product_id']; ?>">
-        <td><?php echo $row['product_name']; ?></td>
-        <td><?php echo $row['product_price']; ?></td>
+  <?php while($row = $products->fetch_assoc()) {
+        $product_id = $row['product_id'];
+        // Fetch product details
+    $stmt_product = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
+    $stmt_product->bind_param("i", $product_id);
+    $stmt_product->execute();
+    $product_result = $stmt_product->get_result();
+
+    if ($product = $product_result->fetch_assoc()) { ?>
+
+
+        
+    <tr id="product-<?php echo $product['product_id']; ?>">
+        <td><img src="<?php echo  $product['product_image']; ?>" width="60"></td>
+        <td><?php echo $product['product_name']; ?></td>
+        <td><?php echo $product['product_price']; ?></td>
+        <td><?php echo $row['status']; ?></td>
         <td>
-            <button class="button" onclick="deleteProduct(<?php echo $row['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image" style="width: 30px;"></button>
+            <!-- <button class="button" onclick="deleteProduct(<?php echo $product['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image" style="width: 30px;"></button> -->
+            <form action="update.status.php" method="POST" style="display: flex;">
+            <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>"> <!-- Example order ID -->
+    <button type="submit" class="btn btn-danger" name="status" value="on_hold">On Hold</button>
+    <button type="submit" class="btn btn-info" name="status" value="To Deliver">To Deliver</button>
+    <button type="submit" class="btn btn-secondary" name="status" value="Delivered">Delivered</button>
+</form>
+            </form>
+
         </td>
         <!-- Button to trigger modal -->
         <td>
-  <button class="button" data-bs-toggle="modal" data-bs-target="#addProductModal" data-product-id="<?php echo $row['product_id']; ?>">
-    <img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 25px">
-  </button>
+
 </td>
         <!-- <td><button class="button"><img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px"></button></td> -->
-        <td><button class="button"><img src="https://img.icons8.com/?size=100&id=fhXWXkFdxrRk&format=png&color=1A1A1A" style="width: 30px"></button></td>
+        <!-- <td><button class="button"><img src="https://img.icons8.com/?size=100&id=fhXWXkFdxrRk&format=png&color=1A1A1A" style="width: 30px"></button></td> -->
     </tr>
+    <?php } ?>
 <?php } ?>
   </tbody>
 </table>
+
+
+
+
+
 
 
             
@@ -811,7 +841,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <!-- ========== section end ========== -->
 
       <!-- ========== footer start =========== -->
-     
+      
       <!-- ========== footer end =========== -->
     </main>
     <!-- ======== main-wrapper end =========== -->

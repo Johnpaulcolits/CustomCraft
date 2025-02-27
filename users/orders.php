@@ -532,7 +532,7 @@ if (mysqli_num_rows($sql) > 0) {
         </li>
         
         <li class="menu-category">
-          <a href="customize.php" class="menu-title">Create Your's</a>
+          <a href="customize.php" class="menu-title">Create Yours</a>
         </li>
         <li class="menu-category">
           <a href="orders.php" class="menu-title">My Order</a>
@@ -542,14 +542,7 @@ if (mysqli_num_rows($sql) > 0) {
      
         <li class="menu-category">
 
-          <button class="accordion-menu" data-accordion-btn>
-            <p class="menu-title">Clothes</p>
-
-            <div>
-              <ion-icon name="add-outline" class="add-icon"></ion-icon>
-              <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-            </div>
-          </button>
+        
 
           <?php $stmt = $conn->prepare("SELECT product_category, COUNT(*) AS product_count FROM products GROUP BY product_category ORDER BY product_category ASC");
                 $stmt->execute();
@@ -760,7 +753,7 @@ if (mysqli_num_rows($sql) > 0) {
 
         <div class="slider-container has-scrollbar">
 
-          <div class="slider-item">
+          <!-- <div class="slider-item">
 
             <img src="./assets/images/banner-1.jpg" alt="women's latest fashion sale" class="banner-img">
 
@@ -768,17 +761,17 @@ if (mysqli_num_rows($sql) > 0) {
 
               <p class="banner-subtitle">Shop Smart</p>
 
-              <h2 class="banner-title">Your one-stop shop for everything you love.</h2>
+              <h2 class="banner-title">Your one-stop shop for everything you love.</h2> -->
 
               <!-- <p class="banner-text">
                 starting at &dollar; <b>20</b>.00
               </p> -->
 
-              <a href="shop.php" class="banner-btn">Shop now</a>
+              <!-- <a href="shop.php" class="banner-btn">Shop now</a>
 
             </div>
 
-          </div>
+          </div> -->
 
           <!-- <div class="slider-item">
 
@@ -1025,76 +1018,7 @@ if (mysqli_num_rows($sql) > 0) {
 
         <div class="sidebar  has-scrollbar" data-mobile-menu>
 
-          <div class="sidebar-category">
-
-            <div class="sidebar-top">
-              <h2 class="sidebar-title">Category</h2>
-
-              <button class="sidebar-close-btn" data-mobile-menu-close-btn>
-                <ion-icon name="close-outline"></ion-icon>
-              </button>
-            </div>
-
-            <ul class="sidebar-menu-category-list">
-
-              <li class="sidebar-menu-category">
-
-                <button class="sidebar-accordion-menu" data-accordion-btn>
-
-                  <div class="menu-title-flex">
-                    <img src="./assets/images/icons/tee.svg" alt="clothes" width="20" height="20"
-                      class="menu-title-img">
-
-                    <p class="menu-title">Clothes</p>
-                  </div>
-
-                  <div>
-                    <ion-icon name="add-outline" class="add-icon"></ion-icon>
-                    <ion-icon name="remove-outline" class="remove-icon"></ion-icon>
-                  </div>
-
-                </button>
-
-              <?php $stmt = $conn->prepare("SELECT product_category, COUNT(*) AS product_count FROM products GROUP BY product_category ORDER BY product_category ASC");
-                $stmt->execute();
-                $result = $stmt->get_result();
-              ?>
-
-
-                <ul class="sidebar-submenu-category-list" data-accordion>
-                  
-                  <?php while($row =$result->fetch_assoc()){ ?>
-
-                  <li class="sidebar-submenu-category">
-                    <a href="single.category.php?product_category=<?php echo $row['product_category']; ?>" class="sidebar-submenu-title">
-                      <p class="product-name"><?php echo $row['product_category']; ?></p>
-                      <data value="300" class="stock" title="Available Stock"><?php echo $row['product_count']; ?></data>
-                    </a>
-                  </li>
-                  <?php } ?>
-
-                  <!-- <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">shorts & jeans</p>
-                      <data value="60" class="stock" title="Available Stock">60</data>
-                    </a>
-                  </li> -->
-
-                  <!-- <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">jacket</p>
-                      <data value="50" class="stock" title="Available Stock">50</data>
-                    </a>
-                  </li> -->
-<!-- 
-                  <li class="sidebar-submenu-category">
-                    <a href="#" class="sidebar-submenu-title">
-                      <p class="product-name">dress & frock</p>
-                      <data value="87" class="stock" title="Available Stock">87</data>
-                    </a>
-                  </li> -->
-
-                </ul>
+         
 
               </li>
 
@@ -1537,128 +1461,20 @@ if (mysqli_num_rows($sql) > 0) {
 
             <div class="product-showcase">
 
-              <h2 class="title">New Arrivals</h2>
+              <h2 class="title" style="text-align: center;">My Orders</h2>
 
               <div class="showcase-wrapper has-scrollbar">
 
               <?php 
-              $stmt = $conn->prepare("SELECT * FROM products ORDER BY created_at DESC LIMIT 4");
-              $stmt->execute();
-              $result = $stmt->get_result();
-              ?>
-
-               
-                <!-- Here -->
-                 
-                <div class="showcase-container">
-                <?php while($row = $result->fetch_assoc()){ ?>
-                  
-                  <div class="showcase">
-                
-                  <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-                    
-                      <img src="../admin/<?php echo $row['product_image']; ?>" alt="men yarn fleece full-zip jacket" class="showcase-img"
-                        width="70">
-                  </a>
-               
-                  
-                    <div class="showcase-content">
-                
-                    <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-                        <h4 class="showcase-title"><?php echo $row['product_name']; ?></h4>
-                    </a>
-                 
-                    <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-                      <p class="showcase-category"><?php echo $row['product_category']; ?></p>
-                    </a>
-                
-                    <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-                      <div class="price-box">
-                        <p class="price">₱<?php echo $row['product_price']; ?></p>
-                        <!-- <del>$11.00</del> -->
-                      </div>
-                    </a>
-                
-                    </div>
-            
-                
-                  </div>
-                  <?php } ?>
-                
-                  
-                
-                  <!-- <div class="showcase">
-                
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/jacket-3.jpg" alt="mens winter leathers jackets" class="showcase-img"
-                        width="70">
-                    </a>
-                
-                    <div class="showcase-content">
-                
-                      <a href="#">
-                        <h4 class="showcase-title">Mens Winter Leathers Jackets</h4>
-                      </a>
-                
-                      <a href="#" class="showcase-category">Jackets</a>
-                
-                      <div class="price-box">
-                        <p class="price">$50.00</p>
-                        <del>$25.00</del>
-                      </div>
-                
-                    </div>
-                
-                  </div> -->
-                
-                  <!-- <div class="showcase">
-                
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shorts-1.jpg" alt="better basics french terry sweatshorts" class="showcase-img"
-                        width="70">
-                    </a>
-                
-                    <div class="showcase-content">
-                
-                      <a href="#">
-                        <h4 class="showcase-title">Better Basics French Terry Sweatshorts</h4>
-                      </a>
-                
-                      <a href="#" class="showcase-category">Shorts</a>
-                
-                      <div class="price-box">
-                        <p class="price">$20.00</p>
-                        <del>$10.00</del>
-                      </div>
-                
-                    </div>
-                
-                  </div> -->
-             
-                
-                </div>
-
-              </div>
-
-            </div>
-
-            <div class="product-showcase">
-            
-              <h2 class="title">Trending</h2>
-            
-              <div class="showcase-wrapper  has-scrollbar">
-            
-                <div class="showcase-container">
-            
-                <?php 
 // Fetch orders
-$stmt = $conn->prepare("SELECT * FROM orders ORDER BY unique_id DESC LIMIT 4");
+$stmt = $conn->prepare("SELECT * FROM orders ORDER BY unique_id DESC");
 $stmt->execute();
 $orders = $stmt->get_result();
 ?>
-                     <?php while ($order = $orders->fetch_assoc()) { 
+ 
+<div class="showcase-container">
+  <?php while ($order = $orders->fetch_assoc()) { 
     $product_id = $order['product_id'];
-
 
     // Fetch product details
     $stmt_product = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
@@ -1667,1006 +1483,60 @@ $orders = $stmt->get_result();
     $product_result = $stmt_product->get_result();
 
     if ($product = $product_result->fetch_assoc()) { ?>
+      <div class="showcase">
+       
+          <img src="../admin/<?php echo $product['product_image']; ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?>" class="showcase-img" width="70">
+        
 
+        <div class="showcase-content">
+         
+            <h4 class="showcase-title"><?php echo htmlspecialchars($product['product_name']); ?></h4>
+        
 
-                  <div class="showcase">
-            
-                   
-                      <img src="../admin/<?php echo $product['product_image'];  ?>" alt="running & trekking shoes - white" class="showcase-img"
-                        width="70">
-              
-            
-                    <div class="showcase-content">
-            
-                      
-                        <h4 class="showcase-title"><?php echo $product['product_name'];  ?></h4>
-             
-            
-                      <p  class="showcase-category"><?php echo $product['product_category'];  ?></p>
-            
-                      <div class="price-box">
-                        <p class="price"><?php echo $product['product_price'];  ?></p>
-                        <!-- <del>$15.00</del> -->
-                      </div>
-            
-                    </div>
-            
-                  </div>
-                  <?php } ?>
+        
+            <p class="showcase-category">Quantity: (<?php echo htmlspecialchars($order['quantity']); ?>)</p>
+        
 
-                  <?php } ?>
+         
+            <p class="showcase-category">Unit Price ₱(<?php echo htmlspecialchars($order['price']); ?>)</p>
             
-                
-            
-                
-            
-                 
-            
-                </div>
-            
-                <!-- <div class="showcase-container">
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/sports-6.jpg" alt="air tekking shoes - white" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Air Trekking Shoes - white</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Sports</a>
-            
-                      <div class="price-box">
-                        <p class="price">$52.00</p>
-                        <del>$55.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shoe-3.jpg" alt="Boot With Suede Detail" class="showcase-img" width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Boot With Suede Detail</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">boots</a>
-            
-                      <div class="price-box">
-                        <p class="price">$20.00</p>
-                        <del>$30.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shoe-1.jpg" alt="men's leather formal wear shoes" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Men's Leather Formal Wear shoes</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">formal</a>
-            
-                      <div class="price-box">
-                        <p class="price">$56.00</p>
-                        <del>$78.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shoe-2.jpg" alt="casual men's brown shoes" class="showcase-img" width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Casual Men's Brown shoes</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Casual</a>
-            
-                      <div class="price-box">
-                        <p class="price">$50.00</p>
-                        <del>$55.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                </div> -->
-            
-              </div>
-            
+          
+            <p class="showcase-category">Status : <?php echo htmlspecialchars($order['status']) ; ?>.00</p>
+            <p class="showcase-category">Payment Method : <?php echo htmlspecialchars($order['method']); ?>.00</p>
+            <div class="price-box">
+              <p class="price">Total Price ₱<?php echo htmlspecialchars($order['subtotal'] + $order['shipping_fee']); ?>.00</p>
             </div>
-
-            <!-- <div class="product-showcase">
-            
-              <h2 class="title">Top Rated</h2>
-            
-              <div class="showcase-wrapper  has-scrollbar">
-            
-                <div class="showcase-container">
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/watch-3.jpg" alt="pocket watch leather pouch" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Pocket Watch Leather Pouch</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Watches</a>
-            
-                      <div class="price-box">
-                        <p class="price">$50.00</p>
-                        <del>$34.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/jewellery-3.jpg" alt="silver deer heart necklace" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Silver Deer Heart Necklace</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Jewellery</a>
-            
-                      <div class="price-box">
-                        <p class="price">$84.00</p>
-                        <del>$30.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/perfume.jpg" alt="titan 100 ml womens perfume" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Titan 100 Ml Womens Perfume</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Perfume</a>
-            
-                      <div class="price-box">
-                        <p class="price">$42.00</p>
-                        <del>$10.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/belt.jpg" alt="men's leather reversible belt" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Men's Leather Reversible Belt</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Belt</a>
-            
-                      <div class="price-box">
-                        <p class="price">$24.00</p>
-                        <del>$10.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                </div>
-            
-                <div class="showcase-container">
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/jewellery-2.jpg" alt="platinum zircon classic ring" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">platinum Zircon Classic Ring</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">jewellery</a>
-            
-                      <div class="price-box">
-                        <p class="price">$62.00</p>
-                        <del>$65.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/watch-1.jpg" alt="smart watche vital plus" class="showcase-img" width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Smart watche Vital Plus</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">Watches</a>
-            
-                      <div class="price-box">
-                        <p class="price">$56.00</p>
-                        <del>$78.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/shampoo.jpg" alt="shampoo conditioner packs" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">shampoo conditioner packs</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">cosmetics</a>
-            
-                      <div class="price-box">
-                        <p class="price">$20.00</p>
-                        <del>$30.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                  <div class="showcase">
-            
-                    <a href="#" class="showcase-img-box">
-                      <img src="./assets/images/products/jewellery-1.jpg" alt="rose gold peacock earrings" class="showcase-img"
-                        width="70">
-                    </a>
-            
-                    <div class="showcase-content">
-            
-                      <a href="#">
-                        <h4 class="showcase-title">Rose Gold Peacock Earrings</h4>
-                      </a>
-            
-                      <a href="#" class="showcase-category">jewellery</a>
-            
-                      <div class="price-box">
-                        <p class="price">$20.00</p>
-                        <del>$30.00</del>
-                      </div>
-            
-                    </div>
-            
-                  </div>
-            
-                </div>
-            
-              </div>
-            
-            </div> -->
-
-          </div>
-
-
-
-
-
-
-          <!--
-            - PRODUCT GRID
-          -->
-
-          <?php
-
-          $stmt = $conn->prepare("SELECT * FROM products");
-
-          $stmt->execute();
-
-          $products = $stmt->get_result();
-
-
-?>
-
-
-
-          <div class="product-main">
-
-            <h2 class="title">Products</h2>
-
-            <div class="product-grid">
-              <?php while($row = $products->fetch_assoc()){ ?>
-      
-    <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-  <div class="showcase">
-    <div class="showcase-banner">
-     
-
-      <img src="../admin/<?php echo $row['product_image']; ?>" alt="Product Image" width="300" class="product-img default">
-      <img src="../admin/<?php echo $row['product_image2']; ?>" alt="Product Image Hover" width="300" class="product-img hover">
-
-      <div class="showcase-actions">
-        <button type="button" class="btn-action">
-          <ion-icon name="heart-outline"></ion-icon>
-        </button>
-
-        <button type="submit" class="btn-action" name="addtocart">
-          <ion-icon name="bag-add-outline"></ion-icon>
-        </button>
-      </div>
-    </div>
-
-    <div class="showcase-content">
-      <p class="showcase-category"><?php echo $row['product_name']; ?></p>
-      <h3 class="showcase-title"><?php echo $row['product_description']; ?></h3>
-
-      <!-- <div class="showcase-rating">
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
-      </div> -->
-
-      <div class="price-box">
-        <p class="price">₱<?php echo $row['product_price']; ?></p>
-      </div>
-    </div>
-  </div>
-  </a>
-
-              <?php } ?>
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/shirt-1.jpg" alt="Pure Garment Dyed Cotton Shirt" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/shirt-2.jpg" alt="Pure Garment Dyed Cotton Shirt" class="product-img hover"
-                    width="300">
-              
-                  <p class="showcase-badge angle black">sale</p>
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">shirt</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Pure Garment Dyed Cotton Shirt</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$45.00</p>
-                    <del>$56.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/jacket-5.jpg" alt="MEN Yarn Fleece Full-Zip Jacket" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/jacket-6.jpg" alt="MEN Yarn Fleece Full-Zip Jacket" class="product-img hover"
-                    width="300">
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">Jacket</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">MEN Yarn Fleece Full-Zip Jacket</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$58.00</p>
-                    <del>$65.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/clothes-3.jpg" alt="Black Floral Wrap Midi Skirt" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/clothes-4.jpg" alt="Black Floral Wrap Midi Skirt" class="product-img hover"
-                    width="300">
-              
-                  <p class="showcase-badge angle pink">new</p>
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">skirt</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Black Floral Wrap Midi Skirt</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$25.00</p>
-                    <del>$35.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/shoe-2.jpg" alt="Casual Men's Brown shoes" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/shoe-2_1.jpg" alt="Casual Men's Brown shoes" class="product-img hover"
-                    width="300">
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">casual</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Casual Men's Brown shoes</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$99.00</p>
-                    <del>$105.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/watch-3.jpg" alt="Pocket Watch Leather Pouch" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/watch-4.jpg" alt="Pocket Watch Leather Pouch" class="product-img hover"
-                    width="300">
-              
-                  <p class="showcase-badge angle black">sale</p>
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">watches</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Pocket Watch Leather Pouch</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$150.00</p>
-                    <del>$170.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/watch-1.jpg" alt="Smart watche Vital Plus" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/watch-2.jpg" alt="Smart watche Vital Plus" class="product-img hover" width="300">
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">watches</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Smart watche Vital Plus</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$100.00</p>
-                    <del>$120.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/party-wear-1.jpg" alt="Womens Party Wear Shoes" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/party-wear-2.jpg" alt="Womens Party Wear Shoes" class="product-img hover"
-                    width="300">
-              
-                  <p class="showcase-badge angle black">sale</p>
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">party wear</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Womens Party Wear Shoes</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$25.00</p>
-                    <del>$30.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/jacket-1.jpg" alt="Mens Winter Leathers Jackets" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/jacket-2.jpg" alt="Mens Winter Leathers Jackets" class="product-img hover"
-                    width="300">
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">jacket</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Mens Winter Leathers Jackets</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$32.00</p>
-                    <del>$45.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/sports-2.jpg" alt="Trekking & Running Shoes - black" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/sports-4.jpg" alt="Trekking & Running Shoes - black" class="product-img hover"
-                    width="300">
-              
-                  <p class="showcase-badge angle black">sale</p>
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">sports</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Trekking & Running Shoes - black</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$58.00</p>
-                    <del>$64.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/shoe-1.jpg" alt="Men's Leather Formal Wear shoes" class="product-img default"
-                    width="300">
-                  <img src="./assets/images/products/shoe-1_1.jpg" alt="Men's Leather Formal Wear shoes" class="product-img hover"
-                    width="300">
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">formal</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Men's Leather Formal Wear shoes</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$50.00</p>
-                    <del>$65.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-              <!-- <div class="showcase">
-              
-                <div class="showcase-banner">
-                  <img src="./assets/images/products/shorts-1.jpg" alt="Better Basics French Terry Sweatshorts"
-                    class="product-img default" width="300">
-                  <img src="./assets/images/products/shorts-2.jpg" alt="Better Basics French Terry Sweatshorts"
-                    class="product-img hover" width="300">
-              
-                  <p class="showcase-badge angle black">sale</p>
-              
-                  <div class="showcase-actions">
-                    <button class="btn-action">
-                      <ion-icon name="heart-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="eye-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="repeat-outline"></ion-icon>
-                    </button>
-              
-                    <button class="btn-action">
-                      <ion-icon name="bag-add-outline"></ion-icon>
-                    </button>
-                  </div>
-                </div>
-              
-                <div class="showcase-content">
-                  <a href="#" class="showcase-category">shorts</a>
-              
-                  <h3>
-                    <a href="#" class="showcase-title">Better Basics French Terry Sweatshorts</a>
-                  </h3>
-              
-                  <div class="showcase-rating">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                    <ion-icon name="star-outline"></ion-icon>
-                  </div>
-              
-                  <div class="price-box">
-                    <p class="price">$78.00</p>
-                    <del>$85.00</del>
-                  </div>
-              
-                </div>
-              
-              </div> -->
-
-            </div>
-
-          </div>
-
+         
+         
         </div>
-
       </div>
+    <?php } 
+  } ?>
+                
+                  
+                
+                 
+                
+                </div>
 
-    </div>
+              </div>
+
+            </div>
+
+
+
+            
+          </div>
+
+
+
+
+
+
+
+
+
+          
 
 
 

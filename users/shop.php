@@ -425,6 +425,10 @@ if (mysqli_num_rows($sql) > 0) {
             <a href="customize.php" class="menu-title">CREATE YOUR'S</a>
           </li>
 
+          <li class="menu-category">
+          <a href="orders.php" class="menu-title">My Order</a>
+        </li>
+
         </ul>
 
       </div>
@@ -532,6 +536,9 @@ if (mysqli_num_rows($sql) > 0) {
         
         <li class="menu-category">
           <a href="customize.php" class="menu-title">Create Your's</a>
+        </li>
+        <li class="menu-category">
+          <a href="orders.php" class="menu-title">My Order</a>
         </li>
 
     <!-- diara -->
@@ -1034,7 +1041,7 @@ if (mysqli_num_rows($sql) > 0) {
 
             <h3 class="showcase-heading">best sellers</h3>
 
-            <div class="showcase-wrapper">
+            <!-- <div class="showcase-wrapper">
 
               <div class="showcase-container">
 
@@ -1157,7 +1164,7 @@ if (mysqli_num_rows($sql) > 0) {
 
               </div>
 
-            </div>
+            </div> -->
 
           </div>
 
