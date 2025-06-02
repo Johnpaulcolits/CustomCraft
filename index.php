@@ -20,6 +20,13 @@
 
 <html lang="en">
 <head>
+  <style>
+    /* Center Google Sign-In button */
+.g_id_signin {
+  display: flex !important;
+  justify-content: center !important;
+}
+  </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">  
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -70,7 +77,8 @@
         </div>
       </form>
       <div class="link">Already signed up? <a href="login.php">Login now</a></div>
-      <div style="text-align:center; margin-bottom: 16px;">
+      <!-- Centering container -->
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
   <div id="g_id_onload"
        data-client_id="296791958684-qj9s5b7qu9lsps2vvf0g8elg5s70epof.apps.googleusercontent.com"
        data-context="signup"

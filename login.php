@@ -21,12 +21,10 @@ if (isset($_SESSION['usertype'])) {
 <html lang="en">
 <head>
   <style>
-    /* Center the Google Sign-In container and button */
-.g-signin-center {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+   /* Center Google Sign-In button */
+.g_id_signin {
+  display: flex !important;
+  justify-content: center !important;
 }
   </style>
   <meta charset="UTF-8">
@@ -60,7 +58,8 @@ if (isset($_SESSION['usertype'])) {
       </form>
       <div class="link">Not yet signed up? <a href="index.php">Signup now</a></div>
       <div class="link">Forgot Password? <a href="otpsent.php">Reset it now</a></div>
-      <div style="text-align:center; margin-bottom: 16px;">
+      <!-- Centering container -->
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; margin-bottom: 16px;">
   <div id="g_id_onload"
        data-client_id="296791958684-qj9s5b7qu9lsps2vvf0g8elg5s70epof.apps.googleusercontent.com"
        data-context="signup"
