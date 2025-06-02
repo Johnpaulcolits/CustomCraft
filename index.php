@@ -28,6 +28,7 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
   <link rel="shortcut icon" href="./admin/assets/images/logo/icon-logo.png" type="image/x-icon" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
   <div class="wrapper">
@@ -59,6 +60,7 @@
           <input type="password" name="confirm_password" placeholder="Confirm your password" required>
           <i class="fas fa-eye"></i>
         </div>
+        
         <!-- <div class="field image">
           <label>Select Image</label>
           <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg,image/jpg" required >
@@ -68,11 +70,33 @@
         </div>
       </form>
       <div class="link">Already signed up? <a href="login.php">Login now</a></div>
+      <div style="text-align:center; margin-bottom: 16px;">
+  <div id="g_id_onload"
+       data-client_id="296791958684-qj9s5b7qu9lsps2vvf0g8elg5s70epof.apps.googleusercontent.com"
+       data-context="signup"
+       data-ux_mode="popup"
+       data-callback="handleGoogleSignIn"
+       data-auto_prompt="false">
+  </div>
+  <div class="g_id_signin"
+       data-type="standard"
+       data-shape="rectangular"
+       data-theme="outline"
+       data-text="continue_with"
+       data-size="large"
+       data-logo_alignment="left">
+  </div>
+</div>
     </section>
+
+    
   </div>    
+
+
 
   <script src="javascript/pass-show-hide.js"></script>
   <script src="javascript/signup.js"></script>
+  <script src="javascript/google.js"></script>
 </body>
 </html>
 

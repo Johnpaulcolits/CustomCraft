@@ -23,7 +23,16 @@
               $row = mysqli_fetch_assoc($sql);
             }
           ?>
-          <img src="../../php/images/<?php echo $row['img']; ?>" alt="">
+                    <?php
+// After fetching $row from the database:
+$img = $row['img'];
+if (filter_var($img, FILTER_VALIDATE_URL)) {
+    $profileImg = $img; // Google profile image (full URL)
+} else {
+    $profileImg = "../../php/images/" . $img; // Local image
+}
+?>
+<img src="<?php echo $profileImg; ?>" class="profile-image" onclick="toggleMenu()" id="profile">
           <div class="details">
             <span><?php echo $row['fname']. " " . $row['lname'] ?></span>
             <p><?php echo $row['status']; ?></p>

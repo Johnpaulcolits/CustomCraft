@@ -29,10 +29,15 @@
       <div class="chat-box">
 
       </div>
-      <form action="#" class="typing-area">
+       <form action="#" class="typing-area" enctype="multipart/form-data" autocomplete="off">
         <input type="text" class="incoming_id" name="incoming_id" value="<?php echo $user_id; ?>" hidden>
         <input type="text" name="message" class="input-field" placeholder="Type a message here..." autocomplete="off">
-        <button><i class="fab fa-telegram-plane"></i></button>
+         <button type="submit"><i class="fab fa-telegram-plane"></i></button>
+        <label for="file-input" style="cursor: pointer; margin-left: 10px;" >
+          <i class="fas fa-file" style="font-size: 45px; color:gray;"></i>
+        </label>
+        <input type="file" name="file-input" id="file-input" style="display: none; " multiple>
+       
       </form>
     </section>
   </div>

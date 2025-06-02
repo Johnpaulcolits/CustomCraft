@@ -1,40 +1,47 @@
 const form = document.querySelector(".typing-area"),
-incoming_id = form.querySelector(".incoming_id").value,
-inputField = form.querySelector(".input-field"),
-sendBtn = form.querySelector("button"),
-chatBox = document.querySelector(".chat-box");
+      incoming_id = form.querySelector(".incoming_id").value,
+      inputField = form.querySelector(".input-field"),
+      sendBtn = form.querySelector("button"),
+      chatBox = document.querySelector(".chat-box"),
+      fileInput = document.getElementById("file-input");
 
 form.onsubmit = (e)=>{
     e.preventDefault();
-}
-
-inputField.focus();
-inputField.onkeyup = ()=>{
-    if(inputField.value != ""){
-        sendBtn.classList.add("active");
-    }else{
-        sendBtn.classList.remove("active");
-    }
-}
-
-sendBtn.onclick = ()=>{
+    let formData = new FormData(form);
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "php/insert-chat.php", true);
     xhr.onload = ()=>{
       if(xhr.readyState === XMLHttpRequest.DONE){
           if(xhr.status === 200){
               inputField.value = "";
+              fileInput.value = "";
+              sendBtn.classList.remove("active");
               scrollToBottom();
           }
       }
     }
-    let formData = new FormData(form);
     xhr.send(formData);
 }
+
+inputField.onkeyup = ()=>{
+    if(inputField.value != "" || fileInput.files.length > 0){
+        sendBtn.classList.add("active");
+    }else{
+        sendBtn.classList.remove("active");
+    }
+}
+
+fileInput.onchange = ()=>{
+    if(inputField.value != "" || fileInput.files.length > 0){
+        sendBtn.classList.add("active");
+    }else{
+        sendBtn.classList.remove("active");
+    }
+}
+
 chatBox.onmouseenter = ()=>{
     chatBox.classList.add("active");
 }
-
 chatBox.onmouseleave = ()=>{
     chatBox.classList.remove("active");
 }
@@ -59,5 +66,4 @@ setInterval(() =>{
 
 function scrollToBottom(){
     chatBox.scrollTop = chatBox.scrollHeight;
-  }
-  
+}

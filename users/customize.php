@@ -288,6 +288,9 @@ if (!isset($_SESSION['unique_id'])) {
                         <span id="font-size-value">30</span>
                     </div>
                 </div>
+            
+
+
             </div>
         </div>
     </div>
@@ -448,6 +451,7 @@ if (!isset($_SESSION['unique_id'])) {
             ctx.stroke();
             ctx.restore();
         }
+       
     </script>
 </body>
 </html>

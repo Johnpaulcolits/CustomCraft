@@ -71,7 +71,16 @@ if (mysqli_num_rows($sql) > 0) {
         
             <div class="position-relative d-inline-block">
               <label for="imageUpload">
-                <img src="../php/images/<?php echo $row['img']; ?>" id="profileImage" class="profile-img" title="Choose a new profile picture">
+                <!-- <img src="../php/images/<?php echo $row['img']; ?>" id="profileImage" class="profile-img" title="Choose a new profile picture"> -->
+                  <?php
+$img = $row['img'];
+if (filter_var($img, FILTER_VALIDATE_URL)) {
+    $profileImg = $img; // Google profile image (full URL)
+} else {
+    $profileImg = "../php/images/" . $img; // Local image
+}
+?>
+<img src="<?php echo $profileImg; ?>" class="profile-image" onclick="toggleMenu()" id="profileImage" title="Choose a new profile picture">
               </label>
               <input type="file" id="imageUpload" name="imageUpload" class="upload-input" accept="image/*" onchange="previewImage(event)">
             </div>
