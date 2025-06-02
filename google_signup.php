@@ -15,9 +15,9 @@ if (!$token) {
 
 // Verify token with Google
 //localhost
-// $client_id = "296791958684-qj9s5b7qu9lsps2vvf0g8elg5s70epof.apps.googleusercontent.com";
+$client_id = "296791958684-qj9s5b7qu9lsps2vvf0g8elg5s70epof.apps.googleusercontent.com";
 // Live server
-$client_id = "29493722479-hso2iovdrvq601nsri0p7p2gh7am4047.apps.googleusercontent.com";
+// $client_id = "29493722479-hso2iovdrvq601nsri0p7p2gh7am4047.apps.googleusercontent.com";
 $google_api_url = "https://oauth2.googleapis.com/tokeninfo?id_token=" . $token;
 $google_response = file_get_contents($google_api_url);
 $userinfo = json_decode($google_response, true);
