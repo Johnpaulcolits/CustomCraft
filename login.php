@@ -20,6 +20,15 @@ if (isset($_SESSION['usertype'])) {
 
 <html lang="en">
 <head>
+  <style>
+    /* Center the Google Sign-In container and button */
+.g-signin-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+  </style>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
