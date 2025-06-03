@@ -542,7 +542,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
         </li>
         
         <li class="menu-category">
-          <a href="customize.php" class="menu-title">Create Your's</a>
+          <a href="../create/index.php" class="menu-title">Create Your's</a>
         </li>
         <li class="menu-category">
           <a href="orders.php" class="menu-title">My Order</a>
