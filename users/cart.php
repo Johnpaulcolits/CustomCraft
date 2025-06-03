@@ -261,7 +261,7 @@ if (mysqli_num_rows($sql) > 0) {
           
 
           <li class="menu-category">
-            <a href="customize.php" class="menu-title">CREATE YOURS</a>
+            <a href="../create/index.php" class="menu-title">CREATE YOURS</a>
           </li>
           <li class="menu-category">
             <a href="orders.php" class="menu-title">MY ORDER</a>
@@ -376,7 +376,7 @@ if (mysqli_num_rows($sql) > 0) {
         </li>
         
         <li class="menu-category">
-          <a href="customize.php" class="menu-title">Create Yours</a>
+          <a href="../create/index.php" class="menu-title">Create Yours</a>
         </li>
         <li class="menu-category">
           <a href="orders.php" class="menu-title">My Order</a>

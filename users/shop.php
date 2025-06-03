@@ -242,11 +242,29 @@ if (mysqli_num_rows($sql) > 0) {
 
           <button class="action-btn ">
             <!-- <ion-icon name="person-outline"></ion-icon> -->
-            <img src="../php/images/<?php echo $row['img'] ?>" class="profile-image" onclick="toggleMenu()" id="profile">
+           <?php
+// After fetching $row from the database:
+$img = $row['img'];
+if (filter_var($img, FILTER_VALIDATE_URL)) {
+    $profileImg = $img; // Google profile image (full URL)
+} else {
+    $profileImg = "../php/images/" . $img; // Local image
+}
+?>
+<img src="<?php echo $profileImg; ?>" class="profile-image" onclick="toggleMenu()" id="profile">
            <div class="sub-menu-wrap" id="subMenu">
               <div class="sub-menu">
                 <div class="user-info">
-                <img src="../php/images/<?php echo $row['img'] ?>" class="profile-image">
+                                <?php
+// After fetching $row from the database:
+$img = $row['img'];
+if (filter_var($img, FILTER_VALIDATE_URL)) {
+    $profileImg = $img; // Google profile image (full URL)
+} else {
+    $profileImg = "../php/images/" . $img; // Local image
+}
+?>
+<img src="<?php echo $profileImg; ?>" class="profile-image" onclick="toggleMenu()" id="profile">
                 <h2 class="user-name"><?php echo $row['fname'] ?></h2>
                 </div>
                 <hr>
@@ -422,7 +440,7 @@ if (mysqli_num_rows($sql) > 0) {
           
 
           <li class="menu-category">
-            <a href="customize.php" class="menu-title">CREATE YOUR'S</a>
+            <a href="../create/index.php" class="menu-title">CREATE YOUR'S</a>
           </li>
 
           <li class="menu-category">
@@ -488,11 +506,29 @@ if (mysqli_num_rows($sql) > 0) {
 
       <div class="menu-top">
        
-      <img src="../php/images/<?php echo $row['img'] ?>" class="profile-image" onclick="toggleMenus()" id="profiles">
+                          <?php
+// After fetching $row from the database:
+$img = $row['img'];
+if (filter_var($img, FILTER_VALIDATE_URL)) {
+    $profileImg = $img; // Google profile image (full URL)
+} else {
+    $profileImg = "../php/images/" . $img; // Local image
+}
+?>
+<img src="<?php echo $profileImg; ?>" class="profile-image" onclick="toggleMenu()" id="profile">
            <div class="sub-menu-wrap" id="subMenus">
               <div class="sub-menu">
                 <div class="user-info">
-                <img src="../php/images/<?php echo $row['img'] ?>" class="profile-image">
+                                <?php
+// After fetching $row from the database:
+$img = $row['img'];
+if (filter_var($img, FILTER_VALIDATE_URL)) {
+    $profileImg = $img; // Google profile image (full URL)
+} else {
+    $profileImg = "../php/images/" . $img; // Local image
+}
+?>
+<img src="<?php echo $profileImg; ?>" class="profile-image" onclick="toggleMenu()" id="profile">
                 <h2 class="user-name"><?php echo $row['fname'] ?></h2>
                 </div>
                 <hr>
@@ -535,7 +571,7 @@ if (mysqli_num_rows($sql) > 0) {
         </li>
         
         <li class="menu-category">
-          <a href="customize.php" class="menu-title">Create Your's</a>
+          <a href="../create/index.php" class="menu-title">Create Your's</a>
         </li>
         <li class="menu-category">
           <a href="orders.php" class="menu-title">My Order</a>

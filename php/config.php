@@ -11,7 +11,7 @@
   $password = "Cr@ft_0123!";
   $dbname = "u330866214_craft";
   
-  //gffff
+
 
 
   $conn = mysqli_connect($hostname, $username, $password, $dbname);
