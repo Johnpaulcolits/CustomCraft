@@ -73,6 +73,12 @@ if (mysqli_num_rows($sql) > 0) {
               <li>
                 <a href="index.php" class="active"> Craft Dashboard </a>
               </li>
+                <li>
+                <a href="top_selling.php" class="active"> Top Selling Products</a>
+              </li>
+               <li>
+               <a href="sales_history.php" class="active"> Sales History</a>
+              </li>
             </ul>
           </li>
           <li class="nav-item nav-item-has-children">
@@ -581,7 +587,7 @@ $result = $stmt->get_result();
 $row = $result->fetch_assoc();
 $total_products = $row['total_products']; 
   ?>
-                  <h6 class="mb-10">New Orders</h6>
+                  <h6 class="mb-10">Total Orders</h6>
                   <h3 class="text-bold mb-10"><?php echo $total_products ?></h3>
                   <p class="text-sm text-success">
                     <!-- <i class="lni lni-arrow-up"></i> +2.00%
@@ -742,24 +748,26 @@ setInterval(updateYearlyTotal, 10000);
                 <!-- End Chart -->
               </div>
             </div>
+
+        
             <!-- End Col -->
           </div>
           <!-- End Row -->
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-lg-5">
               <div class="card-style mb-30">
                 <div class="title d-flex justify-content-between align-items-center">
                   <div class="left">
                     <h6 class="text-medium mb-30">Sells by State</h6>
                   </div>
-                </div>
+                </div> -->
                 <!-- End Title -->
-                <div id="map" style="width: 100%; height: 400px; overflow: hidden;"></div>
+                <!-- <div id="map" style="width: 100%; height: 400px; overflow: hidden;"></div>
                 <p>Last updated: 7 days ago</p>
               </div>
-            </div>
+            </div> -->
             <!-- End Col -->
-            <div class="col-lg-7">
+            <!-- <div class="col-lg-7">
               <div class="card-style mb-30">
                 <div class="title d-flex flex-wrap justify-content-between align-items-center">
                   <div class="left">
@@ -774,12 +782,12 @@ setInterval(updateYearlyTotal, 10000);
                           <option value="">Weekly</option>
                         </select>
                       </div>
-                    </div>
+                    </div> -->
                     <!-- end select -->
-                  </div>
-                </div>
+                  <!-- </div>
+                </div> -->
                 <!-- End Title -->
-                <div class="table-responsive">
+                <!-- <div class="table-responsive">
                   <table class="table top-selling-table">
                     <thead>
                       <tr>
@@ -976,30 +984,45 @@ setInterval(updateYearlyTotal, 10000);
                         </td>
                       </tr>
                     </tbody>
-                  </table>
+                  </table> -->
                   <!-- End Table -->
-                </div>
+                <!-- </div>
               </div>
-            </div>
+            </div> -->
             <!-- End Col -->
-          </div>
+          <!-- </div> -->
+
+          <!--End of Top Selling Products Row -->
+          
+
+
+          <style>
+.bg-color.red-bg {
+  background-color: #ff4d4f !important;
+}
+
+.bg-color.green-bg {
+  background-color: #52c41a !important;
+}
+
+</style>
           <!-- End Row -->
           <div class="row">
             <div class="col-lg-7">
               <div class="card-style mb-30">
                 <div class="title d-flex flex-wrap align-items-center justify-content-between">
                   <div class="left">
-                    <h6 class="text-medium mb-2">Sales Forecast</h6>
+                    <h6 class="text-medium mb-2">Product Ratings</h6>
                   </div>
                   <div class="right">
                     <div class="select-style-1 mb-2">
-                      <div class="select-position select-sm">
+                      <!-- <div class="select-position select-sm">
                         <select class="light-bg">
-                          <option value="">Last Month</option>
+                          <option value="All Products">All Products</option>
                           <option value="">Last 3 Months</option>
                           <option value="">Last Year</option>
                         </select>
-                      </div>
+                      </div> -->
                     </div>
                     <!-- end select -->
                   </div>
@@ -1007,41 +1030,58 @@ setInterval(updateYearlyTotal, 10000);
                 <!-- End Title -->
                 <div class="chart">
                   <div id="legend3">
-                    <ul class="legend3 d-flex flex-wrap align-items-center mb-30">
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color primary-bg"> </span>
-                          <div class="text">
-                            <p class="text-sm text-success">
-                              <span class="text-dark">Revenue</span> +25.55%
-                              <i class="lni lni-arrow-up"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color purple-bg"></span>
-                          <div class="text">
-                            <p class="text-sm text-success">
-                              <span class="text-dark">Net Profit</span> +45.55%
-                              <i class="lni lni-arrow-up"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="d-flex">
-                          <span class="bg-color orange-bg"></span>
-                          <div class="text">
-                            <p class="text-sm text-danger">
-                              <span class="text-dark">Order</span> -4.2%
-                              <i class="lni lni-arrow-down"></i>
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
+                  <ul class="legend3 d-flex flex-wrap align-items-center mb-30">
+  <li>
+    <div class="d-flex">
+      <span class="bg-color primary-bg"> </span>
+      <div class="text">
+        <p class="text-sm text-success">
+          <span class="text-dark">Five (5)</span>
+        </p>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="d-flex">
+      <span class="bg-color purple-bg"></span>
+      <div class="text">
+        <p class="text-sm text-success">
+          <span class="text-dark">Four (4)</span>
+        </p>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="d-flex">
+      <span class="bg-color orange-bg"></span>
+      <div class="text">
+        <p class="text-sm text-danger">
+          <span class="text-dark">Three (3)</span>
+        </p>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="d-flex">
+      <span class="bg-color green-bg"></span>
+      <div class="text">
+        <p class="text-sm text-danger">
+          <span class="text-dark">Two (2)</span>
+        </p>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="d-flex">
+      <span class="bg-color red-bg"></span>
+      <div class="text">
+        <p class="text-sm text-danger">
+          <span class="text-dark">One (1)</span>
+        </p>
+      </div>
+    </div>
+  </li>
+</ul>
                   </div>
                   <canvas id="Chart3" style="width: 100%; height: 450px; margin-left: -35px;"></canvas>
                 </div>
@@ -1052,16 +1092,16 @@ setInterval(updateYearlyTotal, 10000);
               <div class="card-style mb-30">
                 <div class="title d-flex flex-wrap align-items-center justify-content-between">
                   <div class="left">
-                    <h6 class="text-medium mb-2">Traffic</h6>
+                    <h6 class="text-medium mb-2">Top 5 Selling Products</h6>
                   </div>
                   <div class="right">
                     <div class="select-style-1 mb-2">
                       <div class="select-position select-sm">
-                        <select class="bg-ligh">
-                          <option value="">Last 6 Months</option>
-                          <option value="">Last 3 Months</option>
-                          <option value="">Last Year</option>
-                        </select>
+                       <select class="bg-ligh" id="topSellingRange">
+  <option value="yearly">Yearly</option>
+  <option value="monthly">Monthly</option>
+  <option value="weekly">Weekly</option>
+</select>
                       </div>
                     </div>
                     <!-- end select -->
@@ -1070,7 +1110,7 @@ setInterval(updateYearlyTotal, 10000);
                 <!-- End Title -->
                 <div class="chart">
                   <div id="legend4">
-                    <ul class="legend3 d-flex flex-wrap gap-3 gap-sm-0 align-items-center mb-30">
+                    <!-- <ul class="legend3 d-flex flex-wrap gap-3 gap-sm-0 align-items-center mb-30">
                       <li>
                         <div class="d-flex">
                           <span class="bg-color primary-bg"> </span>
@@ -1096,7 +1136,7 @@ setInterval(updateYearlyTotal, 10000);
                           </div>
                         </div>
                       </li>
-                    </ul>
+                    </ul> -->
                   </div>
                   <canvas id="Chart4" style="width: 100%; height: 420px; margin-left: -35px;"></canvas>
                 </div>
@@ -1658,242 +1698,281 @@ const chart2 = new Chart(ctx2, {
 });
       // =========== chart two end
 
-      // =========== chart three start
+// =========== chart three start
+let chart3; // Make chart3 accessible for updates
+
+function getBarColors(data) {
+  return data.map(val => {
+    if (val < 2) return "#ff4d4f";      // Red
+    if (val < 3) return "#52c41a";      // Green
+    if (val < 4) return "#faad14";      // Orange
+    if (val < 5) return "#722ed1";      // Purple
+    return "#365CF5";                   // Blue for 5
+  });
+}
+
+function fetchAndUpdateChart3() {
+  fetch('./phpfunction/get_product_ratings.php')
+    .then(response => response.json())
+    .then(res => {
       const ctx3 = document.getElementById("Chart3").getContext("2d");
-      const chart3 = new Chart(ctx3, {
-        type: "line",
-        data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "May",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          datasets: [
-            {
-              label: "Revenue",
-              backgroundColor: "transparent",
-              borderColor: "#365CF5",
-              data: [80, 120, 110, 100, 130, 150, 115, 145, 140, 130, 160, 210],
-              pointBackgroundColor: "transparent",
-              pointHoverBackgroundColor: "#365CF5",
-              pointBorderColor: "transparent",
-              pointHoverBorderColor: "#365CF5",
-              pointHoverBorderWidth: 3,
-              pointBorderWidth: 5,
-              pointRadius: 5,
-              pointHoverRadius: 8,
-              fill: false,
-              tension: 0.4,
-            },
-            {
-              label: "Profit",
-              backgroundColor: "transparent",
-              borderColor: "#9b51e0",
-              data: [
-                120, 160, 150, 140, 165, 210, 135, 155, 170, 140, 130, 200,
-              ],
-              pointBackgroundColor: "transparent",
-              pointHoverBackgroundColor: "#9b51e0",
-              pointBorderColor: "transparent",
-              pointHoverBorderColor: "#9b51e0",
-              pointHoverBorderWidth: 3,
-              pointBorderWidth: 5,
-              pointRadius: 5,
-              pointHoverRadius: 8,
-              fill: false,
-              tension: 0.4,
-            },
-            {
-              label: "Order",
-              backgroundColor: "transparent",
-              borderColor: "#f2994a",
-              data: [180, 110, 140, 135, 100, 90, 145, 115, 100, 110, 115, 150],
-              pointBackgroundColor: "transparent",
-              pointHoverBackgroundColor: "#f2994a",
-              pointBorderColor: "transparent",
-              pointHoverBorderColor: "#f2994a",
-              pointHoverBorderWidth: 3,
-              pointBorderWidth: 5,
-              pointRadius: 5,
-              pointHoverRadius: 8,
-              fill: false,
-              tension: 0.4,
-            },
-          ],
-        },
-        options: {
-          plugins: {
-            tooltip: {
-              intersect: false,
-              backgroundColor: "#fbfbfb",
-              titleColor: "#8F92A1",
-              bodyColor: "#272727",
-              titleFont: {
-                size: 16,
-                family: "Plus Jakarta Sans",
-                weight: "400",
+      const barColors = getBarColors(res.data);
+      if (chart3) {
+        chart3.data.labels = res.labels;
+        chart3.data.datasets[0].data = res.data;
+        chart3.data.datasets[0].backgroundColor = barColors;
+        chart3.update();
+      } else {
+        chart3 = new Chart(ctx3, {
+          type: "bar",
+          data: {
+            labels: res.labels,
+            datasets: [
+              {
+                label: "Average Rating",
+                backgroundColor: barColors,
+                borderColor: barColors,
+                data: res.data,
+                borderRadius: 10,
+                barThickness: 30,
+                maxBarThickness: 40,
+              }
+            ],
+          },
+          options: {
+            plugins: {
+              tooltip: {
+                intersect: false,
+                backgroundColor: "#fbfbfb",
+                titleColor: "#8F92A1",
+                bodyColor: "#272727",
+                titleFont: {
+                  size: 16,
+                  family: "Plus Jakarta Sans",
+                  weight: "400",
+                },
+                bodyFont: {
+                  family: "Plus Jakarta Sans",
+                  size: 16,
+                },
+                multiKeyBackground: "transparent",
+                displayColors: true,
+                padding: {
+                  x: 30,
+                  y: 15,
+                },
+                borderColor: "rgba(143, 146, 161, .1)",
+                borderWidth: 1,
+                enabled: true,
               },
-              bodyFont: {
-                family: "Plus Jakarta Sans",
-                size: 16,
+              title: {
+                display: false,
               },
-              multiKeyBackground: "transparent",
-              displayColors: false,
+              legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                  usePointStyle: true,
+                  padding: 20,
+                }
+              },
+            },
+            layout: {
               padding: {
-                x: 30,
-                y: 15,
+                top: 0,
               },
-              borderColor: "rgba(143, 146, 161, .1)",
-              borderWidth: 1,
-              enabled: true,
             },
+            responsive: true,
+            scales: {
+              y: {
+                min: 0, // <-- Set to 0 for Y-axis
+                max: 5,
+                grid: {
+                  display: false,
+                  drawTicks: false,
+                  drawBorder: false,
+                },
+                ticks: {
+                  padding: 35,
+                  stepSize: 1,
+                },
+                title: {
+                  display: true,
+                  text: 'Rating (0-5)'
+                }
+              },
+              x: {
+                grid: {
+                  drawBorder: false,
+                  color: "rgba(143, 146, 161, .1)",
+                  drawTicks: false,
+                  zeroLineColor: "rgba(143, 146, 161, .1)",
+                },
+                ticks: {
+                  padding: 20,
+                },
+              },
+            },
+          },
+        });
+      }
+    });
+}
+
+// Initial load
+fetchAndUpdateChart3();
+// Poll every 10 seconds (10000 ms)
+setInterval(fetchAndUpdateChart3, 200);
+
+let previousCounts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+
+function updateLegendCounts() {
+  fetch('./phpfunction/get_rating_counts.php')
+    .then(response => response.json())
+    .then(counts => {
+      // Legend order: 5, 4, 3, 2, 1
+      const ratingNames = ["One (1)", "Two (2)", "Three (3)", "Four (4)", "Five (5)"];
+      [5,4,3,2,1].forEach((num, idx) => {
+        const count = counts[num] || 0;
+        let colorClass = "";
+        if (count > previousCounts[num]) {
+          colorClass = "text-success"; // green
+        } else if (count < previousCounts[num]) {
+          colorClass = "text-danger"; // red
+        }
+        // Find the corresponding legend <p> tag
+        const legend = document.querySelector(`#legend3 .legend3 li:nth-child(${6-num}) .text-sm`);
+        if (legend) {
+          legend.innerHTML = `
+            <span class="text-dark">${ratingNames[num-1]}</span>
+            <span class="ms-2 ${colorClass}">Total: <b>${count}</b></span>
+          `;
+        }
+        previousCounts[num] = count;
+      });
+    });
+}
+
+// Initial load
+updateLegendCounts();
+// Update every 200ms
+setInterval(updateLegendCounts, 200);
+
+
+
+
+
+
+// =========== chart three end
+     
+
+    // ================== chart four start
+const ctx4 = document.getElementById("Chart4").getContext("2d");
+let chart4;
+let topSellingRange = 'yearly'; // default
+
+function fetchAndUpdateChart4(range = 'yearly') {
+  fetch('./phpfunction/get_top_selling_products.php?range=' + encodeURIComponent(range))
+    .then(response => response.json())
+    .then(res => {
+      if (chart4) {
+        chart4.data.labels = res.labels;
+        chart4.data.datasets[0].data = res.data;
+        chart4.update();
+      } else {
+        chart4 = new Chart(ctx4, {
+          type: "bar",
+          data: {
+            labels: res.labels,
+            datasets: [
+              {
+                label: "Units Sold",
+                backgroundColor: "#365CF5",
+                borderColor: "transparent",
+                borderRadius: 20,
+                borderWidth: 5,
+                barThickness: 20,
+                maxBarThickness: 20,
+                data: res.data,
+              }
+            ],
+          },
+          options: {
+            plugins: {
+              tooltip: {
+                backgroundColor: "#F3F6F8",
+                titleColor: "#8F92A1",
+                titleFontSize: 12,
+                bodyColor: "#171717",
+                bodyFont: {
+                  weight: "bold",
+                  size: 16,
+                },
+                multiKeyBackground: "transparent",
+                displayColors: false,
+                padding: {
+                  x: 30,
+                  y: 10,
+                },
+                bodyAlign: "center",
+                titleAlign: "center",
+                enabled: true,
+              },
+              legend: {
+                display: false,
+              },
+            },
+            layout: {
+              padding: {
+                top: 0,
+              },
+            },
+            responsive: true,
             title: {
               display: false,
             },
-            legend: {
-              display: false,
-            },
-          },
-          layout: {
-            padding: {
-              top: 0,
-            },
-          },
-          responsive: true,
-          // maintainAspectRatio: false,
-          legend: {
-            display: false,
-          },
-          scales: {
-            y: {
-              grid: {
-                display: false,
-                drawTicks: false,
-                drawBorder: false,
+            scales: {
+              y: {
+                grid: {
+                  display: false,
+                  drawTicks: false,
+                  drawBorder: false,
+                },
+                ticks: {
+                  padding: 35,
+                  min: 0,
+                },
               },
-              ticks: {
-                padding: 35,
-              },
-              max: 350,
-              min: 50,
-            },
-            x: {
-              grid: {
-                drawBorder: false,
-                color: "rgba(143, 146, 161, .1)",
-                drawTicks: false,
-                zeroLineColor: "rgba(143, 146, 161, .1)",
-              },
-              ticks: {
-                padding: 20,
+              x: {
+                grid: {
+                  display: false,
+                  drawBorder: false,
+                  color: "rgba(143, 146, 161, .1)",
+                  zeroLineColor: "rgba(143, 146, 161, .1)",
+                },
+                ticks: {
+                  padding: 20,
+                },
               },
             },
           },
-        },
-      });
-      // =========== chart three end
+        });
+      }
+    });
+}
 
-      // ================== chart four start
-      const ctx4 = document.getElementById("Chart4").getContext("2d");
-      const chart4 = new Chart(ctx4, {
-        type: "bar",
-        data: {
-          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-          datasets: [
-            {
-              label: "",
-              backgroundColor: "#365CF5",
-              borderColor: "transparent",
-              borderRadius: 20,
-              borderWidth: 5,
-              barThickness: 20,
-              maxBarThickness: 20,
-              data: [600, 700, 1000, 700, 650, 800],
-            },
-            {
-              label: "",
-              backgroundColor: "#d50100",
-              borderColor: "transparent",
-              borderRadius: 20,
-              borderWidth: 5,
-              barThickness: 20,
-              maxBarThickness: 20,
-              data: [690, 740, 720, 1120, 876, 900],
-            },
-          ],
-        },
-        options: {
-          plugins: {
-            tooltip: {
-              backgroundColor: "#F3F6F8",
-              titleColor: "#8F92A1",
-              titleFontSize: 12,
-              bodyColor: "#171717",
-              bodyFont: {
-                weight: "bold",
-                size: 16,
-              },
-              multiKeyBackground: "transparent",
-              displayColors: false,
-              padding: {
-                x: 30,
-                y: 10,
-              },
-              bodyAlign: "center",
-              titleAlign: "center",
-              enabled: true,
-            },
-            legend: {
-              display: false,
-            },
-          },
-          layout: {
-            padding: {
-              top: 0,
-            },
-          },
-          responsive: true,
-          // maintainAspectRatio: false,
-          title: {
-            display: false,
-          },
-          scales: {
-            y: {
-              grid: {
-                display: false,
-                drawTicks: false,
-                drawBorder: false,
-              },
-              ticks: {
-                padding: 35,
-                max: 1200,
-                min: 0,
-              },
-            },
-            x: {
-              grid: {
-                display: false,
-                drawBorder: false,
-                color: "rgba(143, 146, 161, .1)",
-                zeroLineColor: "rgba(143, 146, 161, .1)",
-              },
-              ticks: {
-                padding: 20,
-              },
-            },
-          },
-        },
-      });
-        // =========== chart four end
+// Initial load
+fetchAndUpdateChart4(topSellingRange);
+
+// Listen for dropdown changes
+document.getElementById('topSellingRange').addEventListener('change', function() {
+  topSellingRange = this.value;
+  fetchAndUpdateChart4(topSellingRange);
+});
+
+// Optionally, poll every 10 seconds
+setInterval(() => fetchAndUpdateChart4(topSellingRange), 200);
+// ================== chart four end
     </script>
   </body>
 </html>

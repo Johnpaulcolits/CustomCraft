@@ -292,7 +292,7 @@ if (mysqli_num_rows($sql) > 0) {
 
       <a href="cart.php">
       <button class="action-btn">
-        <ion-icon name="bag-handle-outline"></ion-icon>
+         <ion-icon name="cart-outline"></ion-icon>
 
         <span class="count"><?php echo $row['count'] ?></span>
       </button>
@@ -776,7 +776,39 @@ $stmt->close();
 $conn->close();
 ?>
 
+<?php if (isset($_GET['order'])): ?>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    <?php if ($_GET['order'] === 'success'): ?>
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Order placed successfully!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    <?php elseif ($_GET['order'] === 'error'): ?>
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Failed to place order",
+        text: "<?php echo isset($_GET['msg']) ? htmlspecialchars($_GET['msg']) : 'An error occurred.'; ?>",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    <?php endif; ?>
 
+    // Remove ?order=... from URL after showing the alert
+    window.addEventListener('DOMContentLoaded', function() {
+      if (window.history.replaceState) {
+        const url = new URL(window.location);
+        url.searchParams.delete('order');
+        url.searchParams.delete('msg');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      }
+    });
+  </script>
+<?php endif; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>

@@ -235,14 +235,25 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
       <!-- <button class="action-btn" data-mobile-menu-open-btn>
         <ion-icon name="menu-outline"></ion-icon>
       </button> -->
-<a href="cart.php">
-    
-<button class="action-btn">
-        <ion-icon name="bag-handle-outline"></ion-icon>
 
-        <span class="count">0</span>
-      </button>
-</a>
+ </button> 
+          <?php 
+       $user_id = $_SESSION['unique_id']; // Assuming user is logged in
+
+       // Query to check if the cart has items
+       $sql = "SELECT COUNT(*) as count FROM cart WHERE unique_id = ?";
+       $stmt = $conn->prepare($sql);
+       $stmt->bind_param("s", $user_id); // Change "i" to "s" if unique_id is a string
+       $stmt->execute();
+       $result = $stmt->get_result();
+       $row = $result->fetch_assoc();
+       ?>
+          <a href="cart.php">
+          <button class="action-btn">
+            <ion-icon name="bag-handle-outline"></ion-icon>
+            <span class="count"><?php echo $row['count']; ?></span>
+          </button>         
+          </a>
 
 <a href="index.php">
 <button class="action-btn">
@@ -629,7 +640,39 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
 
 
 
+<?php if (isset($_GET['cart'])): ?>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    <?php if ($_GET['cart'] === 'success'): ?>
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Product added to cart!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    <?php elseif ($_GET['cart'] === 'error'): ?>
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Failed to add to cart",
+        text: "<?php echo isset($_GET['msg']) ? htmlspecialchars($_GET['msg']) : 'An error occurred.'; ?>",
+        showConfirmButton: false,
+        timer: 2000
+      });
+    <?php endif; ?>
 
+    // Remove ?cart=... from URL after showing the alert
+    window.addEventListener('DOMContentLoaded', function() {
+      if (window.history.replaceState) {
+        const url = new URL(window.location);
+        url.searchParams.delete('cart');
+        url.searchParams.delete('msg');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+      }
+    });
+  </script>
+<?php endif; ?>
 
 
               

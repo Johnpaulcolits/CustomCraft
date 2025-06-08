@@ -36,9 +36,14 @@ if (isset($_POST['order'])) {
             $delete_stmt->execute();
             $delete_stmt->close();
 
-            echo "<div class='alert alert-success'>Order placed successfully and cart cleared!</div>";
+            // echo "<div class='alert alert-success'>Order placed successfully and cart cleared!</div>";
+              header("Location: ../cart.php?order=success");
+             exit();
         } else {
-            echo "<div class='alert alert-danger'>Failed to place order.</div>";
+            // echo "<div class='alert alert-danger'>Failed to place order.</div>";
+
+             header("Location: ../cart.php.php?order=error&msg=Failed to place order.");
+    exit();
         }
 
         if (isset($stmt)) {

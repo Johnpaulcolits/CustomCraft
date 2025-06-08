@@ -75,6 +75,12 @@ if (mysqli_num_rows($sql) > 0) {
               <li>
                 <a href="index.php" class="active"> Craft Dashboard </a>
               </li>
+                <li>
+                <a href="top_selling.php" class="active"> Top Selling Products</a>
+              </li>
+               <li>
+               <a href="sales_history.php" class="active"> Sales History</a>
+              </li>
             </ul>
           </li>
           <li class="nav-item nav-item-has-children">
@@ -534,17 +540,130 @@ if (mysqli_num_rows($sql) > 0) {
           </div>
           <!-- ========== title-wrapper end ========== -->
           
-         
+     
+          <style>
+            .bg-success {
+  background-color: #d4edda !important;
+}
+.text-success {
+  color: #28a745 !important;
+}
+          </style>
+       <?php
 
 
+$sql = "SELECT o.*, u.fname, u.lname, p.product_name, p.product_category, p.product_price, p.product_image
+        FROM orders o
+        JOIN users u ON o.unique_id = u.unique_id
+        JOIN products p ON o.product_id = p.product_id
+        ORDER BY o.unique_id, o.order_date DESC, o.order_id DESC";
+$result = $conn->query($sql);
+
+$current_user = null;
+$current_order = null;
+?>
+
+<div class="col-lg-7">
+  <div class="card-style mb-30">
+    <div class="table-responsive">
+      <?php while($row = $result->fetch_assoc()): ?>
+        <?php
+          // Group by user
+          if ($current_user !== $row['unique_id']) {
+            if ($current_user !== null) {
+              // Close previous order and user table
+              echo '</tbody></table><hr style="border-top:2px solid #bbb; margin:30px 0;">';
+            }
+            $current_user = $row['unique_id'];
+            $current_order = null;
+            echo '<h5 class="mb-2 mt-4 text-primary">Client: ' . htmlspecialchars($row['fname'] . ' ' . $row['lname']) . '</h5>';
+          }
+          // Group by order (date/time)
+          if ($current_order !== $row['order_date']) {
+            if ($current_order !== null) {
+              // Close previous order table
+              echo '</tbody></table><hr style="border-top:1px dashed #ccc; margin:15px 0;">';
+              // Show user name for new order (even if same user)
+              echo '<h5 class="mb-2 mt-4 text-primary">Client: ' . htmlspecialchars($row['fname'] . ' ' . $row['lname']) . '</h5>';
+            }
+            $current_order = $row['order_date'];
+        ?>
+        <!-- User and Order Info -->
+        <div class="mb-2 d-flex align-items-center">
+          <div>
+            <strong>Order Date:</strong> <?php echo date('Y-m-d H:i:s', strtotime($row['order_date'])); ?>
+            <span class="ms-3"><strong>Order Ref:</strong> <?php echo htmlspecialchars($row['order_id']); ?></span>
+          </div>
+          <div class="ms-3">
+            <!-- Actions Dropdown for the whole order group -->
+            <form action="update.status.php" method="POST" style="display:inline;">
+              <input type="hidden" name="unique_id" value="<?php echo $row['unique_id']; ?>">
+              <input type="hidden" name="order_date" value="<?php echo $row['order_date']; ?>">
+              <button type="button" class="more-btn ml-10 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="lni lni-more-alt"></i>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li>
+                  <button type="submit" class="dropdown-item" name="status" value="Approved">Approve</button>
+<button type="submit" class="dropdown-item" name="status" value="Declined">Decline</button>
+                </li>
+              </ul>
+            </form>
+          </div>
+        </div>
+        <table class="table top-selling-table mb-3">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+        <?php } ?>
+        <?php
+          $status = htmlspecialchars($row['status']);
+          $status_class = ($status === 'Approved') ? 'bg-success text-success' : '';
+        ?>
+        <tr>
+          <td>
+            <div class="product">
+              <div class="image">
+                <img src="<?php echo htmlspecialchars($row['product_image']); ?>" alt="" width="40" />
+              </div>
+              <p class="text-sm"><?php echo htmlspecialchars($row['product_name']); ?></p>
+            </div>
+          </td>
+          <td>
+            <p class="text-sm"><?php echo htmlspecialchars($row['product_category']); ?></p>
+          </td>
+          <td>
+            <p class="text-sm">₱ <?php echo number_format($row['product_price'], 2); ?></p>
+          </td>
+          <td>
+            <span class="status-btn close-btn <?php echo $status_class; ?>"><?php echo $status; ?></span>
+          </td>
+          <td>
+            <div class="action justify-content-end">
+              <!-- Per-product actions if needed -->
+            </div>
+          </td>
+        </tr>
+      <?php endwhile; ?>
+      <?php if ($current_user !== null) echo '</tbody></table>'; ?>
+    </div>
+  </div>
+</div>
 
 
         
-<style>
+<!-- <style>
   .table-light th, 
   .table-light td {
       text-align: center;
-      vertical-align: middle; /* Ensures vertical centering */
+      vertical-align: middle; 
   }
 
   .table-light img {
@@ -575,22 +694,22 @@ if (mysqli_num_rows($sql) > 0) {
     width: 40px;
   
   }
-</style>
+</style> -->
 
 
 <?php
 
-$stmt = $conn->prepare("SELECT * FROM orders ORDER BY order_id DESC");
+// $stmt = $conn->prepare("SELECT * FROM orders ORDER BY order_id DESC");
 
-$stmt->execute();
+// $stmt->execute();
 
-$products = $stmt->get_result();
+// $products = $stmt->get_result();
 
 
 ?>
 
 
-<table class="table table-light">
+<!-- <table class="table table-light">
   <thead>
     <tr>
     <th scope="col">Image</th>
@@ -601,46 +720,52 @@ $products = $stmt->get_result();
       
     </tr>
   </thead>
-  <tbody>
-  <?php while($row = $products->fetch_assoc()) {
-        $product_id = $row['product_id'];
-        // Fetch product details
-    $stmt_product = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
-    $stmt_product->bind_param("i", $product_id);
-    $stmt_product->execute();
-    $product_result = $stmt_product->get_result();
+  <tbody> -->
+  <?php 
+  // while($row = $products->fetch_assoc()) {
+  //       $product_id = $row['product_id'];
 
-    if ($product = $product_result->fetch_assoc()) { ?>
+  //   $stmt_product = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
+  //   $stmt_product->bind_param("i", $product_id);
+  //   $stmt_product->execute();
+  //   $product_result = $stmt_product->get_result();
+
+  //   if ($product = $product_result->fetch_assoc()) { 
+      ?>
 
 
         
-    <tr id="product-<?php echo $product['product_id']; ?>">
+    <!-- <tr id="product-<?php echo $product['product_id']; ?>">
         <td><img src="<?php echo  $product['product_image']; ?>" width="60"></td>
         <td><?php echo $product['product_name']; ?></td>
         <td><?php echo $product['product_price']; ?></td>
         <td><?php echo $row['status']; ?></td>
-        <td>
+        <td> -->
             <!-- <button class="button" onclick="deleteProduct(<?php echo $product['product_id']; ?>)"><img src="https://img.icons8.com/?size=100&id=67884&format=png&color=FA5252" class="delete-image" style="width: 30px;"></button> -->
-            <form action="update.status.php" method="POST" style="display: flex;">
-            <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>"> <!-- Example order ID -->
+            <!-- <form action="update.status.php" method="POST" style="display: flex;">
+            <input type="hidden" name="order_id" value="<?php echo $row['order_id']; ?>"> 
     <button type="submit" class="btn btn-danger" name="status" value="on_hold">On Hold</button>
     <button type="submit" class="btn btn-info" name="status" value="To Deliver">To Deliver</button>
     <button type="submit" class="btn btn-secondary" name="status" value="Delivered">Delivered</button>
 </form>
             </form>
 
-        </td>
+        </td> -->
         <!-- Button to trigger modal -->
-        <td>
+        <!-- <td>
 
-</td>
+</td> -->
         <!-- <td><button class="button"><img src="https://img.icons8.com/?size=100&id=11684&format=png&color=228BE6" style="width: 40px"></button></td> -->
         <!-- <td><button class="button"><img src="https://img.icons8.com/?size=100&id=fhXWXkFdxrRk&format=png&color=1A1A1A" style="width: 30px"></button></td> -->
     </tr>
-    <?php } ?>
-<?php } ?>
-  </tbody>
-</table>
+    <?php
+  //  }
+    ?>
+<?php 
+// } 
+?>
+  <!-- </tbody>
+</table> -->
 
 
 

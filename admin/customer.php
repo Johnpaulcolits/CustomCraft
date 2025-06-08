@@ -73,6 +73,12 @@ if (mysqli_num_rows($sql) > 0) {
               <li>
                 <a href="index.php" class="active"> Craft Dashboard </a>
               </li>
+                <li>
+                <a href="top_selling.php" class="active"> Top Selling Products</a>
+              </li>
+               <li>
+               <a href="sales_history.php" class="active"> Sales History</a>  
+              </li>
             </ul>
           </li>
           <li class="nav-item nav-item-has-children">

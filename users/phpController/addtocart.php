@@ -30,9 +30,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addtocart'])) {
             $update_stmt->bind_param("iis", $new_quantity, $product_id, $unique_id);
 
             if ($update_stmt->execute()) {
-                echo "<script>alert('Product quantity updated in cart.'); window.location.href = '../single.product.php';</script>";
+                // echo "<script>alert('Product quantity updated in cart.'); window.location.href = '../single.product.php';</script>";
+                 header("Location: ../single.product.php?product_id=$product_id&cart=success");
+                exit();
             } else {
-                echo "<script>alert('Error: " . $update_stmt->error . "'); window.location.href = '../single.product.php';</script>";
+                // echo "<script>alert('Error: " . $update_stmt->error . "'); window.location.href = '../single.product.php';</script>";
+                 header("Location: ../single.product.php?product_id=$product_id&cart=error&msg=" . urlencode($update_stmt->error));
+                exit();
             }
             $update_stmt->close();
         } else {
@@ -43,9 +47,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['addtocart'])) {
             $insert_stmt->bind_param("issdsis", $product_id, $product_name, $product_description, $product_price, $unique_id, $product_quantity, $product_image);
 
             if ($insert_stmt->execute()) {
-                echo "<script>alert('Product successfully added to cart.'); window.location.href = '../single.product.php';</script>";
+                // echo "<script>alert('Product successfully added to cart.'); window.location.href = '../single.product.php';</script>";
+                header("Location: ../single.product.php?product_id=$product_id&cart=success");
+                exit();
             } else {
-                echo "<script>alert('Error: " . $insert_stmt->error . "'); window.location.href = '../single.product.php';</script>";
+                // echo "<script>alert('Error: " . $insert_stmt->error . "'); window.location.href = '../single.product.php';</script>";
+                 header("Location: ../single.product.php?product_id=$product_id&cart=error&msg=" . urlencode($insert_stmt->error));
+                exit();
             }
             $insert_stmt->close();
         }

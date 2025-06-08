@@ -295,7 +295,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
 
           <a href="../users.php">
     <button class="action-btn">
-      <i class="fab fa-facebook-messenger" style="font-size: 30x; color: #0084ff;"></i>
+      <i class="fas fa-comments" style="font-size:40px; color:#02766f;"></i>
 
         <!-- <span class="count">0</span> -->
       </button>
@@ -313,7 +313,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
        ?>
         <a href="cart.php">
         <button class="action-btn">
-            <ion-icon name="bag-handle-outline"></ion-icon>
+             <ion-icon name="cart-outline"></ion-icon>
             <span class="count"><?php echo $row['count']; ?></span>
           </button>
         </a>         
@@ -472,7 +472,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
 
       <a href="cart.php">
       <button class="action-btn">
-        <ion-icon name="bag-handle-outline"></ion-icon>
+         <ion-icon name="cart-outline"></ion-icon>
 
         <span class="count"><?php echo $row['count'] ?></span>
       </button>
@@ -485,7 +485,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
    </a>
 
    <a href="../users.php">   <button class="action-btn">
-       <i class="fab fa-facebook-messenger" style="font-size: 30x; color: #0084ff;"></i>
+     <i class="fas fa-comments" style="font-size:40px; color:#02766f;"></i>
             <!-- <span class="count">0</span> -->
           </button></a>
 

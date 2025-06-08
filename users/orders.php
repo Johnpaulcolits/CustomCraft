@@ -290,7 +290,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
           </button>
 
        <a href="../users.php">   <button class="action-btn">
-       <i class="fab fa-facebook-messenger" style="font-size: 30x; color: #0084ff;"></i>
+        <i class="fas fa-comments" style="font-size:40px; color:#02766f;"></i>
             <!-- <span class="count">0</span> -->
           </button></a>
           
@@ -307,7 +307,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
        ?>
         <a href="cart.php">
         <button class="action-btn">
-            <ion-icon name="bag-handle-outline"></ion-icon>
+            <ion-icon name="cart-outline"></ion-icon>
             <span class="count"><?php echo $row['count']; ?></span>
           </button>
         </a>         
@@ -466,7 +466,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
 
       <a href="cart.php">
       <button class="action-btn">
-        <ion-icon name="bag-handle-outline"></ion-icon>
+         <ion-icon name="cart-outline"></ion-icon>
 
         <span class="count"><?php echo $row['count'] ?></span>
       </button>
@@ -480,7 +480,7 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
 
     <a href="../users.php">
     <button class="action-btn">
-      <i class="fab fa-facebook-messenger" style="font-size: 30x; color: #0084ff;"></i>
+       <i class="fas fa-comments" style="font-size:40px; color:#02766f;"></i>
 
         <!-- <span class="count">0</span> -->
       </button>
@@ -1493,71 +1493,80 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
             - PRODUCT MINIMAL
           -->
 
-          <div class="product-minimal">
+<style>
+.showcase-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.showcase {
+  border: 1px solid #eee;
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+.showcase-img {
+  border-radius: 6px;
+}
+.order-header {
+  margin: 30px 0 10px 0;
+  font-weight: bold;
+  font-size: 18px;
+  color: #02766f;
+}
+</style>
 
-            <div class="product-showcase">
+<div class="product-minimal">
+  <div class="product-showcase">
+    <h2 class="title" style="text-align: center;">My Orders</h2>
+    <div class="showcase-wrapper has-scrollbar">
+      <div class="showcase-container">
+        <?php
+        $user_id = $_SESSION['unique_id'];
+        $stmt = $conn->prepare("SELECT * FROM orders WHERE unique_id = ? ORDER BY order_date DESC, order_id DESC");
+        $stmt->bind_param("s", $user_id);
+        $stmt->execute();
+        $orders = $stmt->get_result();
 
-              <h2 class="title" style="text-align: center;">My Orders</h2>
+        $last_order_date = null;
+        while ($order = $orders->fetch_assoc()) {
+            // If this is a new order date, print the header
+            if ($last_order_date !== $order['order_date']) {
+                echo '<div class="order-header">Order Date: ' . date('Y-m-d H:i:s', strtotime($order['order_date'])) . '</div>';
+                $last_order_date = $order['order_date'];
+            }
+            $product_id = $order['product_id'];
+            $stmt_product = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
+            $stmt_product->bind_param("i", $product_id);
+            $stmt_product->execute();
+            $product_result = $stmt_product->get_result();
 
-              <div class="showcase-wrapper has-scrollbar">
-
-              <?php 
-// Fetch orders
-$stmt = $conn->prepare("SELECT * FROM orders ORDER BY unique_id DESC");
-$stmt->execute();
-$orders = $stmt->get_result();
-?>
- 
-<div class="showcase-container">
-  <?php while ($order = $orders->fetch_assoc()) { 
-    $product_id = $order['product_id'];
-
-    // Fetch product details
-    $stmt_product = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
-    $stmt_product->bind_param("i", $product_id);
-    $stmt_product->execute();
-    $product_result = $stmt_product->get_result();
-
-    if ($product = $product_result->fetch_assoc()) { ?>
-      <div class="showcase">
-       
+            if ($product = $product_result->fetch_assoc()) {
+        ?>
+        <div class="showcase">
           <img src="../admin/<?php echo $product['product_image']; ?>" alt="<?php echo htmlspecialchars($product['product_name']); ?>" class="showcase-img" width="70">
-        
-
-        <div class="showcase-content">
-         
+          <div class="showcase-content">
             <h4 class="showcase-title"><?php echo htmlspecialchars($product['product_name']); ?></h4>
-        
-
-        
             <p class="showcase-category">Quantity: (<?php echo htmlspecialchars($order['quantity']); ?>)</p>
-        
-
-         
-            <p class="showcase-category">Unit Price ₱(<?php echo htmlspecialchars($order['price']); ?>)</p>
-            
-          
-            <p class="showcase-category">Status : <?php echo htmlspecialchars($order['status']) ; ?>.00</p>
-            <p class="showcase-category">Payment Method : <?php echo htmlspecialchars($order['method']); ?>.00</p>
+            <p class="showcase-category">Unit Price ₱<?php echo htmlspecialchars($order['price']); ?></p>
+            <p class="showcase-category">Payment Method: <?php echo htmlspecialchars($order['method']); ?></p>
             <div class="price-box">
-              <p class="price">Total Price ₱<?php echo htmlspecialchars($order['subtotal'] + $order['shipping_fee']); ?>.00</p>
+              <p class="price">Total Price ₱<?php echo htmlspecialchars($order['subtotal'] + $order['shipping_fee']); ?></p>
             </div>
-         
-         
+          </div>
         </div>
+        <?php
+            }
+            $stmt_product->close();
+        }
+        ?>
       </div>
-    <?php } 
-  } ?>
-                
-                  
-                
-                 
-                
-                </div>
-
-              </div>
-
-            </div>
+    </div>
+  </div>
 
 
 

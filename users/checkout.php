@@ -546,59 +546,77 @@ if (empty($user['phone_number']) || empty($user['address'])): ?>
         <?php echo htmlspecialchars($user['address']); ?></p>
     </div>
 
-    <?php if (isset($_POST['order'])): ?>
-        <?php
-        $selected_cart_ids = $_POST['product_ids'] ?? [];
-        $all_cart_ids = $_POST['product_ids_full'];
-        $product_names = $_POST['product_names'];
-        $product_images = $_POST['product_images'];
-        $product_prices = $_POST['product_prices'];
-        $quantities = $_POST['quantities'];
-        $total = 0;
-        $shipping_fee = 29;
-        ?>
+<?php if (isset($_POST['order'])): ?>
+    <?php
+    $selected_cart_ids = $_POST['product_ids'] ?? [];
+$all_cart_ids = $_POST['product_ids_full'] ?? [];
+$all_product_ids = $_POST['product_ids_actual'] ?? [];
+$product_names = $_POST['product_names'] ?? [];
+$product_images = $_POST['product_images'] ?? [];
+$product_prices = $_POST['product_prices'] ?? [];
+$quantities = $_POST['quantities'] ?? [];
+$total = 0;
+$shipping_fee = 29;
 
-        <?php if (!empty($selected_cart_ids)): ?>
-            <div class="row">
-                <?php foreach ($all_cart_ids as $index => $cart_id): ?>
-                    <?php if (!in_array($cart_id, $selected_cart_ids)) continue; ?>
-                    <?php
-                    $product_name = htmlspecialchars($product_names[$index]);
-                    $product_image = htmlspecialchars($product_images[$index]);
-                    $product_price = (float)$product_prices[$index];
-                    $quantity = (int)$quantities[$index];
-                    $subtotal = $product_price * $quantity;
-                    $total += $subtotal;
-                    ?>
-                    <div class="col-md-4 mb-4">
-                        <div class="card h-100">
-                            <img src="../admin/<?= $product_image ?>" class="card-img-top" alt="<?= $product_name ?>">
-                            <div class="card-body">
-                                <h5 class="card-title"><?= $product_name ?></h5>
-                                <p class="card-text">Unit Price: ₱<?= number_format($product_price, 2) ?></p>
-                                <p class="card-text">Quantity: <?= $quantity ?></p>
-                                <p class="card-text"><strong>Subtotal: ₱<?= number_format($subtotal, 2) ?></strong></p>
-                            </div>
+// Build arrays for only the selected products
+$final_product_ids = [];
+$final_quantities = [];
+$final_product_prices = [];
+foreach ($all_cart_ids as $index => $cart_id) {
+    if (!in_array($cart_id, $selected_cart_ids)) continue;
+    $final_product_ids[] = $all_product_ids[$index]; // <-- Use product_id, not cart_id
+    $final_quantities[] = (int)$quantities[$index];
+    $final_product_prices[] = (float)$product_prices[$index];
+}
+    ?>
+
+    <?php if (!empty($selected_cart_ids)): ?>
+        <div class="row">
+            <?php foreach ($all_cart_ids as $index => $cart_id): ?>
+                <?php if (!in_array($cart_id, $selected_cart_ids)) continue; ?>
+                <?php
+                $product_name = htmlspecialchars($product_names[$index]);
+                $product_image = htmlspecialchars($product_images[$index]);
+                $product_price = (float)$product_prices[$index];
+                $quantity = (int)$quantities[$index];
+                $subtotal = $product_price * $quantity;
+                $total += $subtotal;
+                ?>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="../admin/<?= $product_image ?>" class="card-img-top" alt="<?= $product_name ?>">
+                        <div class="card-body">
+                            <h5 class="card-title"><?= $product_name ?></h5>
+                            <p class="card-text">Unit Price: ₱<?= number_format($product_price, 2) ?></p>
+                            <p class="card-text">Quantity: <?= $quantity ?></p>
+                            <p class="card-text"><strong>Subtotal: ₱<?= number_format($subtotal, 2) ?></strong></p>
                         </div>
                     </div>
-                <?php endforeach; ?>
-            </div>
-            <div class="card p-4 mt-4">
-                <p>Shipping Option: Standard Local (₱<?= number_format($shipping_fee, 2) ?>)</p>
-                <h3>Order Total: ₱<?= number_format($total + $shipping_fee, 2) ?></h3>
-                <form action="./phpController/check_function.php" method="post">
-                    <input type="hidden" name="unique_id" value="<?= htmlspecialchars($user_id) ?>">
-                    <input type="hidden" name="total" value="<?= $total ?>">
-                    <input type="hidden" name="shipping_fee" value="<?= $shipping_fee ?>">
-                    <button type="submit" name="order" class="btn btn-primary w-100 mt-3">Place Order</button>
-                </form>
-            </div>
-        <?php else: ?>
-            <div class="alert alert-warning text-center">No products selected.</div>
-            <script>setTimeout(() => window.location.href = 'cart.php', 1500);</script>
-        <?php endif; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="card p-4 mt-4">
+            <p>Shipping Option: Standard Local (₱<?= number_format($shipping_fee, 2) ?>)</p>
+            <h3>Order Total: ₱<?= number_format($total + $shipping_fee, 2) ?></h3>
+            <form action="./phpController/check_function.php" method="post">
+                <input type="hidden" name="unique_id" value="<?= htmlspecialchars($user_id) ?>">
+                <input type="hidden" name="total" value="<?= $total ?>">
+                <input type="hidden" name="shipping_fee" value="<?= $shipping_fee ?>">
+                <input type="hidden" name="selected_cart_ids" value='<?= json_encode($selected_cart_ids) ?>'>
+                <input type="hidden" name="product_ids" value='<?= json_encode($final_product_ids) ?>'>
+                <input type="hidden" name="quantities" value='<?= json_encode($final_quantities) ?>'>
+                <input type="hidden" name="product_prices" value='<?= json_encode($final_product_prices) ?>'>
+                <button type="submit" name="order" class="btn btn-primary w-100 mt-3">Place Order</button>
+            </form>
+        </div>
+    <?php else: ?>
+        <div class="alert alert-warning text-center">No products selected.</div>
+        <script>setTimeout(() => window.location.href = 'cart.php', 1500);</script>
     <?php endif; ?>
+<?php endif; ?>
 </div>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
