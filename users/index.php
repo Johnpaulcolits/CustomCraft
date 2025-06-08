@@ -2055,51 +2055,63 @@ $orders = $stmt->get_result();
 
 
           <div class="product-main">
-
-            <h2 class="title">Products</h2>
-
-            <div class="product-grid">
-              <?php while($row = $products->fetch_assoc()){ ?>
-      
+  <h2 class="title">Products</h2>
+  <div class="product-grid">
+    <?php while($row = $products->fetch_assoc()){ 
+      // Get average rating for this product
+      $stmt_rating = $conn->prepare("SELECT AVG(rating) as avg_rating, COUNT(*) as total_ratings FROM ratings WHERE product_id = ?");
+      $stmt_rating->bind_param("i", $row['product_id']);
+      $stmt_rating->execute();
+      $rating_result = $stmt_rating->get_result();
+      $rating_data = $rating_result->fetch_assoc();
+      $avg_rating = $rating_data['avg_rating'] ? round($rating_data['avg_rating'], 1) : 0;
+      $total_ratings = $rating_data['total_ratings'];
+      $stmt_rating->close();
+    ?>
     <a href="single.product.php?product_id=<?php echo $row['product_id']; ?>">
-  <div class="showcase">
-    <div class="showcase-banner">
-     
-
-      <img src="../admin/<?php echo $row['product_image']; ?>" alt="Product Image" width="300" class="product-img default">
-      <img src="../admin/<?php echo $row['product_image2']; ?>" alt="Product Image Hover" width="300" class="product-img hover">
-
-      <div class="showcase-actions">
-        <button type="button" class="btn-action">
-          <ion-icon name="heart-outline"></ion-icon>
-        </button>
-
-        <button type="submit" class="btn-action" name="addtocart">
-          <ion-icon name="bag-add-outline"></ion-icon>
-        </button>
+      <div class="showcase">
+        <div class="showcase-banner">
+          <img src="../admin/<?php echo $row['product_image']; ?>" alt="Product Image" width="300" class="product-img default">
+          <img src="../admin/<?php echo $row['product_image2']; ?>" alt="Product Image Hover" width="300" class="product-img hover">
+          <div class="showcase-actions">
+            <button type="button" class="btn-action">
+              <ion-icon name="heart-outline"></ion-icon>
+            </button>
+            <button type="submit" class="btn-action" name="addtocart">
+              <ion-icon name="bag-add-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+        <div class="showcase-content">
+          <p class="showcase-category"><?php echo $row['product_name']; ?></p>
+          <h3 class="showcase-title"><?php echo $row['product_description']; ?></h3>
+          <div class="showcase-rating">
+            <?php
+              // Show filled stars for the average rating, half star if needed, then empty stars
+              $fullStars = floor($avg_rating);
+              $halfStar = ($avg_rating - $fullStars) >= 0.5 ? 1 : 0;
+              $emptyStars = 5 - $fullStars - $halfStar;
+              for ($i = 0; $i < $fullStars; $i++) {
+                  echo '<ion-icon name="star" style="color:gold;"></ion-icon>';
+              }
+              if ($halfStar) {
+                  echo '<ion-icon name="star-half-outline" style="color:gold;"></ion-icon>';
+              }
+              for ($i = 0; $i < $emptyStars; $i++) {
+                  echo '<ion-icon name="star-outline" style="color:gold;"></ion-icon>';
+              }
+            ?>
+            <!-- <span style="font-size:13px;color:#888;">
+              <?php echo $avg_rating; ?> (<?php echo $total_ratings; ?>)
+            </span> -->
+          </div>
+          <div class="price-box">
+            <p class="price">₱<?php echo $row['product_price']; ?></p>
+          </div>
+        </div>
       </div>
-    </div>
-
-    <div class="showcase-content">
-      <p class="showcase-category"><?php echo $row['product_name']; ?></p>
-      <h3 class="showcase-title"><?php echo $row['product_description']; ?></h3>
-
-      <!-- <div class="showcase-rating">
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
-        <ion-icon name="star-outline"></ion-icon>
-      </div> -->
-
-      <div class="price-box">
-        <p class="price">₱<?php echo $row['product_price']; ?></p>
-      </div>
-    </div>
-  </div>
-  </a>
-
-              <?php } ?>
+    </a>
+    <?php } ?>
 
               <!-- <div class="showcase">
               

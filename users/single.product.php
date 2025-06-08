@@ -546,97 +546,96 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
     </style>
 
 
-          <!--
-            - PRODUCT FEATURED
-          -->
-                <?php while($row = $featured_products->fetch_assoc()){ ?>
+    <!-- PRODUCT FEATURED -->
+<?php while($row = $featured_products->fetch_assoc()){ ?>
+<?php
+    // Get average rating and total ratings for this product
+    $stmt_rating = $conn->prepare("SELECT AVG(rating) as avg_rating, COUNT(*) as total_ratings FROM ratings WHERE product_id = ?");
+    $stmt_rating->bind_param("i", $row['product_id']);
+    $stmt_rating->execute();
+    $rating_result = $stmt_rating->get_result();
+    $rating_data = $rating_result->fetch_assoc();
+    $avg_rating = $rating_data['avg_rating'] ? round($rating_data['avg_rating'], 1) : 0;
+    $total_ratings = $rating_data['total_ratings'];
+    $stmt_rating->close();
 
-                    <form action="./phpController/addtocart.php" method="POST">
-                        <input type="hidden" value="<?php echo $row['product_id'] ?>" name="product_id">
-                        <input type="hidden" value="<?php echo $row['product_name']?>" name="product_name">
-                        <input type="hidden" value="<?php echo $row['product_description']?>" name="product_description">
-                        <input type="hidden" value="<?php echo $row['product_price']?>" name="product_price">
-                        <input type="hidden" value="<?php echo $_SESSION['unique_id'] ?>" name="unique_id">
-                         <input type="hidden" value="<?php echo $row['product_image']; ?>" name="product_image">
-          <div class="product-featured">
-
-            <!-- <h2 class="title">Deal of the day</h2> -->
-
-            <div class="showcase-wrapper has-scrollbar">
-
-              <div class="showcase-container">
-
-                <div class="showcase">
-                  
-                  <div class="showcase-banner">
-                    <img src="../admin/<?php echo $row['product_image']; ?>" alt="shampoo, conditioner & facewash packs" class="showcase-img">
-                  </div>
-
-                  <div class="showcase-content">
-                    
-                    <!-- <div class="showcase-rating">
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                      <ion-icon name="star-outline"></ion-icon>
-                    </div> -->
-
-                
-                      <h3 class="showcase-title"><?php echo $row['product_name'] ?></h3>
-             
-
-                    <p class="showcase-desc">
-                     <?php echo $row['product_description'] ?>
-                    </p>
-
-                    <div class="price-box">
-                      <p class="price">₱<?php echo $row['product_price'] ?></p>
-
-                  
-                    </div>
-                    <div class="counter">
-                    <h1 class="minus">-</h1>
-                     <input type="number" value="1" min="1" class="quantity" readonly name="product_quantity">
-                    <h1 class="plus">+</h1>
-                    </div>
-                    <br>
-
-
-                    
-                    <button  class="add-cart-btn" name="addtocart">add to cart</button>
-<!-- 
-                    <div class="showcase-status">
-                      <div class="wrapper">
-                        <p>
-                          already sold: <b>20</b>
-                        </p>
-
-                        <p>
-                          available: <b>40</b>
-                        </p>
-                      </div>
-
-                      <div class="showcase-status-bar"></div>
-                    </div> -->
-
-
-                  </div>
-
-                </div>
-
-              </div>
-
-          
-
-
-            
+    // Get all comments for this product (LEFT JOIN to show reviews even if user is missing)
+    $stmt_comments = $conn->prepare("SELECT r.rating, r.comment, r.created_at, u.fname FROM ratings r LEFT JOIN users u ON r.user_id = u.user_id WHERE r.product_id = ? ORDER BY r.created_at DESC");
+    $stmt_comments->bind_param("i", $row['product_id']);
+    $stmt_comments->execute();
+    $comments_result = $stmt_comments->get_result();
+?>
+<form action="./phpController/addtocart.php" method="POST">
+    <input type="hidden" value="<?php echo $row['product_id'] ?>" name="product_id">
+    <input type="hidden" value="<?php echo $row['product_name']?>" name="product_name">
+    <input type="hidden" value="<?php echo $row['product_description']?>" name="product_description">
+    <input type="hidden" value="<?php echo $row['product_price']?>" name="product_price">
+    <input type="hidden" value="<?php echo $_SESSION['unique_id'] ?>" name="unique_id">
+    <input type="hidden" value="<?php echo $row['product_image']; ?>" name="product_image">
+    <div class="product-featured">
+      <div class="showcase-wrapper has-scrollbar">
+        <div class="showcase-container">
+          <div class="showcase">
+            <div class="showcase-banner">
+              <img src="../admin/<?php echo $row['product_image']; ?>" alt="Product Image" class="showcase-img">
             </div>
-
+            <div class="showcase-content">
+              <!-- Product Rating -->
+              <div class="showcase-rating" style="margin-bottom:5px;">
+                <?php
+                  $fullStars = floor($avg_rating);
+                  $halfStar = ($avg_rating - $fullStars) >= 0.5 ? 1 : 0;
+                  $emptyStars = 5 - $fullStars - $halfStar;
+                  for ($i = 0; $i < $fullStars; $i++) {
+                      echo '<ion-icon name="star" style="color:gold;"></ion-icon>';
+                  }
+                  if ($halfStar) {
+                      echo '<ion-icon name="star-half-outline" style="color:gold;"></ion-icon>';
+                  }
+                  for ($i = 0; $i < $emptyStars; $i++) {
+                      echo '<ion-icon name="star-outline" style="color:gold;"></ion-icon>';
+                  }
+                ?>
+                <span style="font-size:13px;color:#888;">
+                  <?php echo $avg_rating; ?> (<?php echo $total_ratings; ?>)
+                </span>
+              </div>
+              <h3 class="showcase-title"><?php echo $row['product_name'] ?></h3>
+              <p class="showcase-desc">
+                <?php echo $row['product_description'] ?>
+              </p>
+              <div class="price-box">
+                <p class="price">₱<?php echo $row['product_price'] ?></p>
+              </div>
+              <div class="counter">
+                <h1 class="minus">-</h1>
+                <input type="number" value="1" min="1" class="quantity" readonly name="product_quantity">
+                <h1 class="plus">+</h1>
+              </div>
+              <br>
+              <button class="add-cart-btn" name="addtocart">add to cart</button>
+            </div>
           </div>
-          </form>
-            <?php }?>
-
+        </div>
+      </div>
+      <!-- Customer Reviews -->
+<div class="product-comments" style="margin:20px 0 0 0;">
+  <h4 style="font-size:16px;">Customer Reviews</h4>
+  <?php if ($comments_result->num_rows > 0): ?>
+    <?php while($comment = $comments_result->fetch_assoc()): ?>
+      <div class="comment" style="border-bottom:1px solid #eee; margin-bottom:10px; padding-bottom:8px;">
+        <strong><?php echo htmlspecialchars($comment['fname'] ?? 'Unknown User'); ?></strong>
+        <span style="font-size:12px;color:#888;"><?php echo date('Y-m-d', strtotime($comment['created_at'])); ?></span>
+        <div><?php echo nl2br(htmlspecialchars($comment['comment'])); ?></div>
+      </div>
+    <?php endwhile; ?>
+  <?php else: ?>
+    <div style="color:#888;">No reviews yet.</div>
+  <?php endif; ?>
+</div>
+    </div>
+</form>
+<?php } ?>
 
 
 

@@ -12,6 +12,9 @@ if (isset($_POST['order'])) {
     $product_prices = json_decode($_POST['product_prices'], true);
     $total_amount = $total + $shipping_fee;
 
+    // Generate a unique reference for this order batch
+    $reference = 'ORD' . date('Ymd') . strtoupper(substr(uniqid(), -6));
+
     if ($unique_id && !empty($selected_cart_ids) && !empty($product_ids) && !empty($quantities) && !empty($product_prices)) {
         $order_placed = false;
 
@@ -22,8 +25,8 @@ if (isset($_POST['order'])) {
             $subtotal = $product_price * $quantity;
 
             if ($product_id && $quantity > 0) {
-                $stmt = $conn->prepare("INSERT INTO orders (unique_id, product_id, quantity, price, subtotal, shipping_fee, total_amount) VALUES (?, ?, ?, ?, ?, ?, ?)");
-                $stmt->bind_param("ssiddid", $unique_id, $product_id, $quantity, $product_price, $subtotal, $shipping_fee, $total_amount);
+                $stmt = $conn->prepare("INSERT INTO orders (unique_id, product_id, quantity, price, subtotal, shipping_fee, total_amount, reference) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+                $stmt->bind_param("ssiddids", $unique_id, $product_id, $quantity, $product_price, $subtotal, $shipping_fee, $total_amount, $reference);
                 if ($stmt->execute()) {
                     $order_placed = true;
                 }
@@ -36,14 +39,11 @@ if (isset($_POST['order'])) {
             $delete_stmt->execute();
             $delete_stmt->close();
 
-            // echo "<div class='alert alert-success'>Order placed successfully and cart cleared!</div>";
-              header("Location: ../cart.php?order=success");
-             exit();
+            header("Location: ../cart.php?order=success");
+            exit();
         } else {
-            // echo "<div class='alert alert-danger'>Failed to place order.</div>";
-
-             header("Location: ../cart.php.php?order=error&msg=Failed to place order.");
-    exit();
+            header("Location: ../cart.php.php?order=error&msg=Failed to place order.");
+            exit();
         }
 
         if (isset($stmt)) {

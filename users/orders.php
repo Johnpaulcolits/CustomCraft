@@ -1518,6 +1518,20 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
   font-size: 18px;
   color: #02766f;
 }
+.cancel-btn {
+  background: #e74c3c;
+  color: #fff;
+  border: none;
+  padding: 6px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.cancel-btn[disabled] {
+  background: #ccc;
+  cursor: not-allowed;
+}
 </style>
 
 <div class="product-minimal">
@@ -1533,11 +1547,26 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
         $orders = $stmt->get_result();
 
         $last_order_date = null;
+        $last_order_status = null;
         while ($order = $orders->fetch_assoc()) {
-            // If this is a new order date, print the header
+            // If this is a new order date, print the header and the cancel button
             if ($last_order_date !== $order['order_date']) {
-                echo '<div class="order-header">Order Date: ' . date('Y-m-d H:i:s', strtotime($order['order_date'])) . '</div>';
+                // Show Cancel button only if not already cancelled or delivered
+                $show_cancel = ($order['status'] !== 'Cancelled' && $order['status'] !== 'Delivered');
+                echo '<div class="order-header">Order Date: ' . date('Y-m-d H:i:s', strtotime($order['order_date']));
+                if ($show_cancel) {
+                    // Use a form to POST the order_date for cancellation
+                    echo '
+                    <form method="post" action="" style="display:inline;">
+                        <input type="hidden" name="cancel_order_date" value="' . htmlspecialchars($order['order_date']) . '">
+                        <button type="submit" class="cancel-btn" onclick="return confirm(\'Are you sure you want to cancel this order?\')">Cancel Order</button>
+                    </form>';
+                } else {
+                    echo ' <span style="color:#e74c3c;font-size:14px;">[' . htmlspecialchars($order['status']) . ']</span>';
+                }
+                echo '</div>';
                 $last_order_date = $order['order_date'];
+                $last_order_status = $order['status'];
             }
             $product_id = $order['product_id'];
             $stmt_product = $conn->prepare("SELECT * FROM products WHERE product_id = ?");
@@ -1563,15 +1592,20 @@ if (filter_var($img, FILTER_VALIDATE_URL)) {
             }
             $stmt_product->close();
         }
+
+        // Handle cancellation POST
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_order_date'])) {
+            $cancel_date = $_POST['cancel_order_date'];
+            $cancel_stmt = $conn->prepare("UPDATE orders SET status='Cancelled' WHERE unique_id=? AND order_date=? AND status NOT IN ('Cancelled','Delivered')");
+            $cancel_stmt->bind_param("ss", $user_id, $cancel_date);
+            $cancel_stmt->execute();
+            echo "<script>window.location.href=window.location.href;</script>"; // Refresh to show updated status
+        }
         ?>
       </div>
     </div>
   </div>
-
-
-
-            
-          </div>
+</div>
 
 
 

@@ -567,7 +567,7 @@ $current_order = null;
   <div class="card-style mb-30">
     <div class="table-responsive">
       <?php while($row = $result->fetch_assoc()): ?>
-        <?php
+         <?php
           // Group by user
           if ($current_user !== $row['unique_id']) {
             if ($current_user !== null) {
@@ -589,11 +589,23 @@ $current_order = null;
             $current_order = $row['order_date'];
         ?>
         <!-- User and Order Info -->
-        <div class="mb-2 d-flex align-items-center">
+        <div class="mb-2 d-flex align-items-center justify-content-between">
           <div>
             <strong>Order Date:</strong> <?php echo date('Y-m-d H:i:s', strtotime($row['order_date'])); ?>
-            <span class="ms-3"><strong>Order Ref:</strong> <?php echo htmlspecialchars($row['order_id']); ?></span>
+            <span class="ms-3"><strong>Order Ref:</strong> <?php echo htmlspecialchars($row['reference']); ?></span>
           </div>
+<?php if ($row['status'] === 'Approved'): ?>
+  <div style="min-width:130px; text-align:center;">
+    <img 
+      src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=<?php echo urlencode($row['reference']); ?>" 
+      alt="QR Code" 
+      width="120" height="120"
+      style="border:1px solid #ccc; padding:4px; background:#fff; display:block; margin:auto;"
+      onerror="this.onerror=null;this.src='https://via.placeholder.com/120?text=No+QR';"
+    />
+    <div style="font-size:12px; text-align:center;">Reference QR</div>
+  </div>
+<?php endif; ?>
           <div class="ms-3">
             <!-- Actions Dropdown for the whole order group -->
             <form action="update.status.php" method="POST" style="display:inline;">
@@ -605,7 +617,7 @@ $current_order = null;
               <ul class="dropdown-menu dropdown-menu-end">
                 <li>
                   <button type="submit" class="dropdown-item" name="status" value="Approved">Approve</button>
-<button type="submit" class="dropdown-item" name="status" value="Declined">Decline</button>
+                  <button type="submit" class="dropdown-item" name="status" value="Declined">Decline</button>
                 </li>
               </ul>
             </form>
@@ -656,7 +668,6 @@ $current_order = null;
     </div>
   </div>
 </div>
-
 
         
 <!-- <style>
